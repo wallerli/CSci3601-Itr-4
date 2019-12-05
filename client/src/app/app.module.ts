@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
+import {WelcomeComponent} from './welcome/welcome.component';
 import {UserListComponent} from './users/user-list.component';
 import {UserListService} from './users/user-list.service';
 import {HomeService} from './home/home.service';
@@ -49,6 +50,7 @@ import {CookieService} from 'ngx-cookie-service';
   declarations: [
     AppComponent,
     HomeComponent,
+    WelcomeComponent,
     UserListComponent,
     AddUserComponent,
     HomeDialog,
