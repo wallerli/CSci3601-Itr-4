@@ -73,17 +73,14 @@
       bottom: 10px;
     }
 
-    .vacant {
-      color: #00ee55 !important;
-    }
+  }
 
-    .inUse {
-      color: #ffc520 !important;
-    }
+  .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+    color: mat-color($accent);
+  }
 
-    .unavailable {
-      color: #aaaaaa !important;
-    }
+  .mat-icon.inUse {
+    color: mat-color($warn)
   }
 
   .roomHeading {
@@ -215,17 +212,7 @@ mat-icon {
   margin-left: 9px;
 }
 
-.vacant {
-  color: #007700;
-}
 
-.inUse {
-  color: #a1a100;
-}
-
-.unavailable {
-  color: #555555;
-}
 
 .map.mat-card {
   margin-left: auto !important;
