@@ -41,7 +41,7 @@
   }
 
   @if $is-dark {
-    #app-title {
+    #app-title button {
       font-style: italic;
       font-weight: 400;
     }
@@ -382,7 +382,7 @@ mat-dialog-container .reportButton {
   font-style: italic;
 }
 
-#app-title {
+#app-title button {
   padding: 12px;
 }
 
