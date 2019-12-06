@@ -16,8 +16,19 @@
   z-index: 1;
 }
 
-.app-title {
-  padding-left: 20px;
+.app-title button {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.app-title button:hover {
+  text-decoration: underline;
 }
 
 .main-content {

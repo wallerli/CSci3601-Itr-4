@@ -12,7 +12,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 import {Subscription} from './subscription';
 import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
-
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: 'home.component.html',
@@ -75,7 +76,8 @@ export class HomeComponent implements OnInit {
   ];
 
   // tslint:disable-next-line:max-line-length
-  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog, private cookieService: CookieService) {
+  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog
+              , private cookieService: CookieService, private activatedRoute: ActivatedRoute, private location: Location) {
     this.subscriptionDisabled = true;
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
@@ -198,6 +200,7 @@ export class HomeComponent implements OnInit {
     // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
     this.scroll('mainBody');
+    this.location.replaceState('/home/' + newId);
   }
 
   private updateMachines(): void {
@@ -532,6 +535,15 @@ export class HomeComponent implements OnInit {
       } else {
         document.getElementById('loadCover').style.display = 'none';
         this.buildChart();
+
+        this.activatedRoute.params.subscribe((params) => {
+          if (params['room']) {
+            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
+            if (name !== undefined) {
+              this.updateRoom(params['room'], name);
+            }
+          }
+        });
       }
     })();
   }
@@ -569,7 +581,9 @@ export class HomeComponent implements OnInit {
   }
 
   scroll(id: string) {
-    this.delay(150).then(() => document.getElementById(id).scrollIntoView());
+    this.delay(150).then(() => {
+      return document.getElementById(id).scrollIntoView();
+    });
   }
 
   hideSelector() {

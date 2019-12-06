@@ -13,6 +13,8 @@ import {CookieService} from 'ngx-cookie-service';
 import {Subscription} from './subscription';
 import {FormBuilder, NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 describe('Home page', () => {
 
@@ -47,6 +49,12 @@ describe('Home page', () => {
 
   let windowStub: {
     innerWidth: '1000px';
+  }
+
+  let activatedRouteStub: {};
+
+  let locationStub: {
+    replaceState: (arg0: String) => null;
   };
 
   // @ts-ignore
@@ -469,6 +477,12 @@ describe('Home page', () => {
       set: (name, cookieID) => null,
     };
 
+    activatedRouteStub = {};
+
+    locationStub = {
+      replaceState: (url) => null,
+    };
+
     TestBed.configureTestingModule({
       imports: [CustomModule],
       declarations: [HomeComponent], // declare the test component
@@ -476,6 +490,8 @@ describe('Home page', () => {
         {provide: HomeService, useValue: homeServiceStub},
         {provide: CookieService, useValue: cookieServiceStub},
         {provide: Window, useValue: windowStub}
+        {provide: ActivatedRoute, useValue: activatedRouteStub},
+        {provide: Location, useValue: locationStub}
       ]
     });
 
