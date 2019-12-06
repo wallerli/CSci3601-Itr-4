@@ -635,6 +635,9 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
+    if (window.innerWidth >= 769) {
+      return Math.min(window.innerWidth / 800, 4);
+    }
     return Math.min(window.innerWidth / 400, 4);
   }
 
