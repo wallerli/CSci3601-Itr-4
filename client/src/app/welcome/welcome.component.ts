@@ -4,6 +4,7 @@ import {Room} from '../home/room';
 import {Observable} from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: 'welcome.component.html',
@@ -14,7 +15,7 @@ export class WelcomeComponent implements OnInit {
 
   public rooms: Room[];
 
-  constructor(public homeService: HomeService, private cookieService: CookieService, private router: Router) {}
+  constructor(public homeService: HomeService, private cookieService: CookieService, private router: Router, private location: Location) {}
 
   loadAllRooms(): void {
     const rooms: Observable<Room[]> = this.homeService.getRooms();
@@ -34,6 +35,8 @@ export class WelcomeComponent implements OnInit {
       if (this.router.url !== '/welcome' && this.cookieService.get('room_name') !== ''
         && this.cookieService.get('room_name') !== 'All Rooms') {
         await this.router.navigateByUrl('/home');
+      } else {
+        this.location.replaceState('/welcome');
       }
     }) ();
   }

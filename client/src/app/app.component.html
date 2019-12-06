@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
-    <mat-toolbar class="topBar" color="primary" style="height: 60px">
+    <mat-toolbar class="topBar" color="primary" style="height: 60px" *ngIf="this.router.url !== '/welcome' && this.router.url !== '/'">
       <span class="app-title" id="app-title">
         Morris Laundry Facilities</span>
     </mat-toolbar>
