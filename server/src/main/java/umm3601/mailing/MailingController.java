@@ -70,7 +70,7 @@ public class MailingController {
   }
 
   private void sendMachineNotification(String email, String roomName, String machineName, String type) throws IOException {
-    String subject = "Status change of the " + type + "you subscribed";
+    String subject = "A " + type + " is available now!";
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
@@ -270,7 +270,7 @@ public class MailingController {
   }
 
   private void sendRoomNotification(String email, String roomName, String machineName, String type) throws IOException {
-    String subject = "Status change of " + type + "s in " + roomName;
+    String subject = "A " + type + " is available in " + roomName + " now!";
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
