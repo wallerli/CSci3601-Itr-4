@@ -1,3 +1,60 @@
 .room mat-card {
   background-color: transparent !important;
 }
+.logotop {
+  width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+.logobottom {
+  width: 180px;
+  display: block;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  left: 50%;
+  position: absolute;
+  margin-left: -90px;
+}
+
+.welcomeRoom {
+  height: 40px;
+  border-radius: 20px;
+}
+
+#welcomeGreetings{
+  font-family: 'Libre Baskerville', serif;
+  text-align: center;
+  border-radius: 10px;
+  font-size: x-large;
+}
+
+@media screen and (min-width: 500px) {
+  .logobottom {
+    width: 180px;
+    display: block;
+    bottom: 0;
+    position: fixed;
+    left: 50%;
+    margin-left: -90px;
+    padding-bottom: 50px;
+    padding-top: 200px;
+    z-index: -1;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .welcomeRoom{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 182px;
+  }
+}
+
+.room.mat-card {
+  text-align: center !important;
+}
