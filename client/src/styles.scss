@@ -73,6 +73,9 @@
       bottom: 10px;
     }
 
+    .welcomeRoom {
+      background-color: #8C1919;
+    }
   }
 
   .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
@@ -211,8 +214,6 @@ mat-icon {
 .menuLabel.mat-icon.notranslate.material-icons.mat-icon-no-color {
   margin-left: 9px;
 }
-
-
 
 .map.mat-card {
   margin-left: auto !important;
