@@ -274,6 +274,10 @@ mat-grid-tile mat-card {
 }
 
 .machineName {
+  width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 2px;
   white-space: nowrap;
 }
 
@@ -393,7 +397,8 @@ mat-dialog-container .reportButton {
 }
 
 .machineIdentity a {
-  padding-bottom: 5px;
+  display: block;
+  max-width: 200px;
 }
 
 .defaultRoomButton {
