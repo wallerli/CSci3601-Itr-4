@@ -641,8 +641,11 @@ export class HomeComponent implements OnInit {
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
   }
-}
 
+  moveHeader() {
+    return Math.round(Math.min(window.innerWidth / 680, 2)) === 2;
+  }
+}
 
 @Component({
   templateUrl: 'home.dialog.html',
