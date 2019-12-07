@@ -50,53 +50,54 @@
     </div>
 
     <mat-accordion *ngIf="this.moveHeader() === false" class="roomHeader">
-    <mat-card *ngIf="this.roomId != ''"
-              style="margin-top: -50px; max-height: min-content !important;" class="roomHeading">
+      <mat-card *ngIf="this.roomId != ''"
+                style="margin-top: -50px; max-height: min-content !important;" class="roomHeading">
 
-      <mat-card-title id="roomTitle"
-                      style="font-weight: 200; font-size: 30px; margin-top: 5px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">
+        <mat-card-title id="roomTitle"
+                        style="font-weight: 200; font-size: 30px; margin-top: 5px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">
 
-        {{this.roomName}}
-        <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)" style="font-size: 50%; font-weight: initial" >default</mat-accordion>
-      </mat-card-title>
+          {{this.roomName}}
+          <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)" style="font-size: 50%; font-weight: initial">
+            default
+          </mat-accordion>
+        </mat-card-title>
 
-      <mat-card-content style="height: 15px; margin-left: 2px">
-        <a class="roomStatus">
-          <mat-icon class="vacant">check_circle_outline</mat-icon>
-          {{this.roomVacant}} vacant</a>
-        <a class="roomStatus">
-          <mat-icon class="inUse">schedule</mat-icon>
-          {{this.roomRunning}} running</a>
-        <a class="roomStatus">
-          <mat-icon class="unavailable">highlight_off</mat-icon>
-          {{this.roomBroken}} broken</a>
-      </mat-card-content>
-    </mat-card>
+        <mat-card-content style="height: 15px; margin-left: 2px">
+          <a class="roomStatus">
+            <mat-icon class="vacant">check_circle_outline</mat-icon>
+            {{this.roomVacant}} vacant</a>
+          <a class="roomStatus">
+            <mat-icon class="inUse">schedule</mat-icon>
+            {{this.roomRunning}} running</a>
+          <a class="roomStatus">
+            <mat-icon class="unavailable">highlight_off</mat-icon>
+            {{this.roomBroken}} broken</a>
+        </mat-card-content>
+      </mat-card>
 
-    <mat-card *ngIf="this.roomId === ''"
-              style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
-      <mat-card-title
-        style="font-weight: 300; font-size: 35px; margin-top: 5px; margin-left: 8px; line-height: 1.15">Greetings!
-      </mat-card-title>
-      <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
-        Welcome to Morris Laundry Facilities!
-      </mat-card-content>
-    </mat-card>
+      <mat-card *ngIf="this.roomId === ''"
+                style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
+        <mat-card-title id="roomTitle"
+          style="font-weight: 300; font-size: 35px; margin-top: 5px; margin-left: 8px; line-height: 1.15">Greetings!
+        </mat-card-title>
+        <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
+          Welcome to Morris Laundry Facilities!
+        </mat-card-content>
+      </mat-card>
 
-    <div id="default-selector" *ngIf="this.roomId !== ''">
-      <button *ngIf="!defaultSet(roomName)" mat-button id="defaultRoomButton" class="defaultRoomButton"
-              (click)="updateCookies(roomId,roomName)">
-        <mat-icon style="margin-top: 7px">check_box_outline_blank</mat-icon>
-        <a class="default-selector-text">Remember current room on your next visit</a>
-      </button>
-      <button *ngIf="defaultSet(roomName)" mat-button id="unsetDefaultRoomButton" class="defaultRoomButton"
-              (click)="updateCookies('','All Rooms')">
-        <mat-icon color="warn" style="margin-top: 7px">check_box</mat-icon>
-        <a class="default-selector-text">Remember current room on your next visit</a>
-      </button>
-    </div>
+      <div id="default-selector" *ngIf="this.roomId !== ''">
+        <button *ngIf="!defaultSet(roomName)" mat-button id="defaultRoomButton" class="defaultRoomButton"
+                (click)="updateCookies(roomId,roomName)">
+          <mat-icon style="margin-top: 7px">check_box_outline_blank</mat-icon>
+          <a class="default-selector-text">Remember current room on your next visit</a>
+        </button>
+        <button *ngIf="defaultSet(roomName)" mat-button id="unsetDefaultRoomButton" class="defaultRoomButton"
+                (click)="updateCookies('','All Rooms')">
+          <mat-icon color="warn" style="margin-top: 7px">check_box</mat-icon>
+          <a class="default-selector-text">Remember current room on your next visit</a>
+        </button>
+      </div>
     </mat-accordion>
-
 
 
     <mat-grid-list cols="{{this.getGraphCols()}}" rowHeight="280px">
@@ -110,12 +111,14 @@
               <mat-card-title id="roomTitle"
                               style=" font-weight: 300; font-size: 40px; line-height: 1.15">
                 {{this.roomName}}
-                <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)" style="font-size: 75%; font-weight: initial" >default</mat-accordion>
+                <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)"
+                               style="font-size: 75%; font-weight: initial">default
+                </mat-accordion>
               </mat-card-title>
             </div>
 
             <mat-card-content style="height: 15px; margin-left: 2px">
-              <div  class="statusHolder">
+              <div class="statusHolder">
                 <a class="roomStatus">
                   <mat-icon class="vacant">check_circle_outline</mat-icon>
                   {{this.roomVacant}} vacant</a>
@@ -131,7 +134,7 @@
           </mat-card>
 
           <mat-card *ngIf="this.roomId === ''">
-            <mat-card-title
+            <mat-card-title id="roomTitle"
               style="font-weight: 300; font-size: 35px; margin-top: 5px;  line-height: 1.15">Greetings!
             </mat-card-title>
             <mat-card-content style="font-weight: 300; font-size: 25px; height: 20px; line-height: 2.15">
@@ -154,8 +157,8 @@
           <a id="roomSubHolder " *ngIf="this.roomId !== ''">
             <button mat-button id="subscribeButton" class="subscribeButton"
                     [disabled]="subscriptionDisabled" (click)="openSubscription(this.roomId)">
-              <mat-accordion class="subscribeButtonText" *ngIf="isSubscribed">Subscribed </mat-accordion>
-              <mat-accordion class="subscribeButtonText" *ngIf="!isSubscribed">Subscribe </mat-accordion>
+              <mat-accordion class="subscribeButtonText" *ngIf="isSubscribed">Subscribed</mat-accordion>
+              <mat-accordion class="subscribeButtonText" *ngIf="!isSubscribed">Subscribe</mat-accordion>
               <mat-icon style="margin: 0">
                 <mat-accordion *ngIf="(!isSubscribed || isSubscribed === undefined) && !subscriptionDisabled"
                                matTooltip="Click to subscribe when there is an available machine.">
@@ -454,5 +457,6 @@
 
 <div id="loadCover"
      style="z-index: 2; position: fixed; top:0; left: 0; bottom: 0; right: 0; display: block; background: rgba(30,30,30,0.75)">
-  <mat-spinner color="warn" mode="indeterminate" strokeWidth="3" style="top: 50%; margin: -65px auto auto;"></mat-spinner>
+  <mat-spinner color="warn" mode="indeterminate" strokeWidth="3"
+               style="top: 50%; margin: -65px auto auto;"></mat-spinner>
 </div>
