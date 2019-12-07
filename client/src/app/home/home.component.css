@@ -42,3 +42,30 @@
     bottom: 25px;
   }
 }
+.mat-progress-bar{
+  border-radius: 2px;
+}
+
+/*bottom logo stuff*/
+.logobottom {
+  width: 180px;
+  display: block;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  left: 50%;
+  position: fixed;
+  margin-left: -90px;
+}
+@media screen and (min-width: 500px) {
+  .logobottom {
+    width: 180px;
+    display: block;
+    bottom: 0;
+    position: fixed;
+    left: 50%;
+    margin-left: -90px;
+    padding-bottom: 50px;
+    padding-top: 200px;
+    z-index: -1;
+  }
+}

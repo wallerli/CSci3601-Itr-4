@@ -1,7 +1,7 @@
 <div layout-gt-sm="row" class="home">
   <div flex-gt-sm="80" flex-offset-gt-sm="10" id="mainBody" style="margin-bottom: 70px">
 
-    <button mat-raised-button color="warn" id="all-rooms"
+    <button mat-raised-button  id="all-rooms"
             (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
       <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
     </button>
@@ -89,7 +89,7 @@
       </button>
       <button *ngIf="defaultSet(roomName)" mat-button id="unsetDefaultRoomButton" class="defaultRoomButton"
               (click)="updateCookies('','All Rooms')">
-        <mat-icon color="warn" style="margin-top: 7px">check_box</mat-icon>
+        <mat-icon class ="defaultCheck" style="margin-top: 7px">check_box</mat-icon>
         <a class="default-selector-text">Remember current room on your next visit</a>
       </button>
     </div>
@@ -303,7 +303,7 @@
                       Time remaining <a class="time"
                                         style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                     </p>
-                    <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
+                    <mat-progress-bar class="runningMachine" color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                   </div>
                   <a class="reportButton" mat-button
                      href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
@@ -406,7 +406,7 @@
                       Time remaining <a class="time"
                                         style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                     </p>
-                    <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
+                    <mat-progress-bar class="runningMachine" color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
                   <a id="reportId" class="reportButton" mat-button
                      href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
@@ -482,6 +482,7 @@
         </mat-icon>
         <br><a style="font-size: 16px;">Please select a laundry room to view</a></div>
     </ng-template>
+    <img class="logobottom" src="https://i.imgur.com/rEmFstw.png" alt="UMM Text Logo">
   </div>
 </div>
 
