@@ -509,24 +509,31 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let readCookie = true;
     (async () => {
       this.setSelector(0);
       this.loadAllRooms();
       this.loadAllMachines();
       this.loadAllHistory();
-
       await this.delay(500); // wait 0.5s for loading data
-
       if (this.rooms !== undefined && this.machines !== undefined && this.history !== undefined) {
         this.updateMachines();
         this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
         this.updateCounter();
         this.updateTime();
-        if (this.cookieService.get('room_id') !== '') {
+        this.activatedRoute.params.subscribe((params) => {
+          if (params['room']) {
+            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
+            if (name !== undefined) {
+              this.updateRoom(params['room'], name);
+              readCookie = false;
+            }
+          }
+        });
+        if (readCookie && this.cookieService.get('room_id') !== '') {
           this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
         }
       }
-
       await this.delay(500); // wait 0.5s for loading data
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
         await this.delay(5000); // loading error retry every 5s
@@ -535,17 +542,8 @@ export class HomeComponent implements OnInit {
       } else {
         document.getElementById('loadCover').style.display = 'none';
         this.buildChart();
-
-        this.activatedRoute.params.subscribe((params) => {
-          if (params['room']) {
-            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
-            if (name !== undefined) {
-              this.updateRoom(params['room'], name);
-            }
-          }
-        });
       }
-    })();
+    }) ();
   }
 
   updateTime(): void {
