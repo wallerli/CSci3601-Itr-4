@@ -151,7 +151,27 @@
               <a class="default-selector-text">Remember current room on your next visit</a>
             </button>
           </div>
-
+          <a id="roomSubHolder " *ngIf="this.roomId !== ''">
+            <button mat-button id="subscribeButton" class="subscribeButton"
+                    [disabled]="subscriptionDisabled" (click)="openSubscription(this.roomId)">
+              <mat-accordion class="subscribeButtonText" *ngIf="isSubscribed">Subscribed </mat-accordion>
+              <mat-accordion class="subscribeButtonText" *ngIf="!isSubscribed">Subscribe </mat-accordion>
+              <mat-icon style="margin: 0">
+                <mat-accordion *ngIf="(!isSubscribed || isSubscribed === undefined) && !subscriptionDisabled"
+                               matTooltip="Click to subscribe when there is an available machine.">
+                  notifications_none
+                </mat-accordion>
+                <mat-accordion *ngIf="isSubscribed"
+                               matTooltip="You will receive an message when there is an available machine.">
+                  notifications_active
+                </mat-accordion>
+                <mat-accordion *ngIf="(!isSubscribed || isSubscribed === undefined) && subscriptionDisabled"
+                               matTooltip="Cannot subscribe when there is available dryers and washers.">
+                  notifications_none
+                </mat-accordion>
+              </mat-icon>
+            </button>
+          </a>
         </mat-card>
       </mat-grid-tile>
 
