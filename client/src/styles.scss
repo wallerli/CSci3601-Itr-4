@@ -36,9 +36,15 @@
     //color: $light-primary-text !important;
   }
 
-  #default-mark {
-    color: mat-color($primary);
+  #default-mark, .defaultCheck{
+    color: mat-color($mat-umn-maroon, 300);
   }
+
+  #all-rooms{
+    background-color: mat-color($mat-umn-maroon, 300);
+    color: white;
+  }
+
 
   @if $is-dark {
     #app-title {
