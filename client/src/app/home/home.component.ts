@@ -10,6 +10,7 @@ import {CookieService} from 'ngx-cookie-service';
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {HomeDialog} from './home.dialog';
+import {SubscriptionDialog} from './home.subscription';
 
 import {Subscription} from './subscription';
 import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
@@ -660,68 +661,4 @@ export class HomeComponent implements OnInit {
 }
 
 
-@Component({
-  templateUrl: 'home.subscription.html',
-})
-// tslint:disable-next-line:component-class-suffix
-export class SubscriptionDialog {
 
-  options: FormGroup;
-  addSubForm: FormGroup;
-  name: string;
-  outOfWashers: boolean;
-  outOfDryers: boolean;
-
-  constructor(
-    public dialogRef: MatDialogRef<SubscriptionDialog>,
-    // tslint:disable-next-line:max-line-length
-    @Inject(MAT_DIALOG_DATA) public data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string }, private fb: FormBuilder) {
-
-    this.outOfWashers = data.noWasher;
-    this.outOfDryers = data.noDryer;
-    this.name = data.roomName;
-
-    if (this.outOfWashers) {
-      data.subscription.type = 'washer';
-    } else {
-      data.subscription.type = 'dryer';
-    }
-    // data.subscription.type = 'dryer';
-
-    this.options = fb.group({
-      type: data.subscription.type,
-    });
-
-    // console.log(this.outOfDryers);
-    // console.log(this.outOfWashers);
-
-    this.ngOnInit();
-  }
-
-  add_sub_validation_messages = {
-    'email': [
-      {type: 'required', message: 'Email is required'},
-      {type: 'email', message: 'Email must be formatted properly'},
-    ]
-  };
-
-  createForms() {
-
-    // add user form validations
-    this.addSubForm = this.fb.group({
-      // We don't need a special validator just for our app here, but there is a default one for email.
-      email: new FormControl('email', Validators.compose([
-        Validators.required,
-        Validators.email
-      ])),
-
-    });
-
-    // console.log(this.addSubForm);
-  }
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit() {
-    this.createForms();
-  }
-}

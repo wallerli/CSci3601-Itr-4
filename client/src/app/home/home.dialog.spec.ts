@@ -1,4 +1,3 @@
-import {HomeComponent, SubscriptionDialog} from "./home.component";
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {Subscription} from "./subscription";
 import {FormBuilder, NgForm} from "@angular/forms";
