@@ -40,7 +40,15 @@
     color: mat-color($warn);
   }
 
+  .detailButton {
+    background-color: #fff;
+  }
+
   @if $is-dark {
+    .detailButton {
+      background-color: #424242;
+    }
+
     #app-title button {
       font-style: italic;
       font-weight: 400;
@@ -73,6 +81,9 @@
       bottom: 10px;
     }
 
+    .unavailable {
+      color: #aaaaaa !important;
+    }
   }
 
   .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
@@ -212,7 +223,9 @@ mat-icon {
   margin-left: 9px;
 }
 
-
+.unavailable {
+  color: #555555;
+}
 
 .map.mat-card {
   margin-left: auto !important;
@@ -266,6 +279,10 @@ mat-grid-tile mat-card {
 }
 
 .machineName {
+  width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 2px;
   white-space: nowrap;
 }
 
@@ -385,7 +402,8 @@ mat-dialog-container .reportButton {
 }
 
 .machineIdentity a {
-  padding-bottom: 5px;
+  display: block;
+  max-width: 200px;
 }
 
 .defaultRoomButton {
