@@ -424,3 +424,26 @@ mat-dialog-container .reportButton {
 .mat-card, .mat-expansion-panel, #all-rooms {
   box-shadow: none !important;
 }
+
+.statusHolder {
+  left: -10px !important;
+  position: absolute;
+}
+.roomNamer {
+  left: -10px !important;
+}
+
+@media only screen and (min-width: 1020px) {
+  .roomStatus mat-icon{
+    font-size: 16px;
+    margin-right: 0;
+    margin-left: 22px;
+    text-align: end;
+  }
+  #default-selector mat-icon{
+    font-size: 16px;
+    margin-right: 0;
+    margin-left: 10px;
+    text-align: end;
+  }
+}

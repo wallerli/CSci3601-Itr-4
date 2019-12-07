@@ -101,37 +101,40 @@
 
     <mat-grid-list cols="{{this.getGraphCols()}}" rowHeight="280px">
 
-      <mat-grid-tile>
+      <mat-grid-tile *ngIf="this.moveHeader()" class="roomHeader">
         <mat-card id="roomInfo" style="width: 100%; height: 80%;">
 
-
           <mat-card *ngIf="this.roomId != ''">
-            <mat-card-title id="roomTitle"
-                            style=" font-weight: 300; font-size: 40px; line-height: 1.15">
-              {{this.roomName}}
-              <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)" style="font-size: 75%; font-weight: initial" >default</mat-accordion>
-            </mat-card-title>
+
+            <div class="roomNamer">
+              <mat-card-title id="roomTitle"
+                              style=" font-weight: 300; font-size: 40px; line-height: 1.15">
+                {{this.roomName}}
+                <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)" style="font-size: 75%; font-weight: initial" >default</mat-accordion>
+              </mat-card-title>
+            </div>
 
             <mat-card-content style="height: 15px; margin-left: 2px">
-              <a class="roomStatus">
-                <mat-icon class="vacant">check_circle_outline</mat-icon>
-                {{this.roomVacant}} vacant</a>
-              <a class="roomStatus">
-                <mat-icon class="inUse">schedule</mat-icon>
-                {{this.roomRunning}} running</a>
-              <a class="roomStatus">
-                <mat-icon class="unavailable">highlight_off</mat-icon>
-                {{this.roomBroken}} broken</a>
+              <div  class="statusHolder">
+                <a class="roomStatus">
+                  <mat-icon class="vacant">check_circle_outline</mat-icon>
+                  {{this.roomVacant}} vacant</a>
+                <a class="roomStatus">
+                  <mat-icon class="inUse">schedule</mat-icon>
+                  {{this.roomRunning}} running</a>
+                <a class="roomStatus">
+                  <mat-icon class="unavailable">highlight_off</mat-icon>
+                  {{this.roomBroken}} broken</a>
+              </div>
             </mat-card-content>
 
           </mat-card>
 
-
           <mat-card *ngIf="this.roomId === ''">
             <mat-card-title
-              style="font-weight: 300; font-size: 35px; margin-top: 5px; margin-left: 8px; line-height: 1.15">Greetings!
+              style="font-weight: 300; font-size: 35px; margin-top: 5px;  line-height: 1.15">Greetings!
             </mat-card-title>
-            <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
+            <mat-card-content style="font-weight: 300; font-size: 25px; height: 20px; line-height: 2.15">
               Welcome to Morris Laundry Facilities!
             </mat-card-content>
           </mat-card>
@@ -150,9 +153,6 @@
           </div>
 
         </mat-card>
-
-
-
       </mat-grid-tile>
 
       <mat-grid-tile>
