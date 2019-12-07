@@ -13,7 +13,7 @@ import {APP_BASE_HREF} from '@angular/common';
 
 import {CustomModule} from './custom.module';
 import {AddUserComponent} from './users/add-user.component';
-import {HomeDialog} from './home/home.component';
+import {HomeDialog} from './home/home.dialog';
 import {SubscriptionDialog} from './home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
