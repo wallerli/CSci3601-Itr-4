@@ -223,7 +223,11 @@ mat-icon {
   margin: 5px !important;
 }
 
-.allMachinesPanel .mat-expansion-panel-body {
+.washerMachinesPanel .mat-expansion-panel-body {
+  padding: 0;
+}
+
+.dryerMachinesPanel .mat-expansion-panel-body {
   padding: 0;
 }
 

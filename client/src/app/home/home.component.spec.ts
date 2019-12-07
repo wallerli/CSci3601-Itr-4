@@ -23,11 +23,13 @@ describe('Home page', () => {
   let de: DebugElement;
   let df: DebugElement;
   let dg: DebugElement;
-  let dh: DebugElement;
+  let di: DebugElement;
+  let dj: DebugElement;
   let el: HTMLElement;
   let fl: HTMLElement;
   let gl: HTMLElement;
-  let hl: HTMLElement;
+  let il: HTMLElement;
+  let jl: HTMLElement;
 
   let name: String;
   let cookieID: String;
@@ -496,11 +498,13 @@ describe('Home page', () => {
     de = fixture.debugElement.query(By.css('#home-rooms-card'));
     df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
     dg = fixture.debugElement.query(By.css('#roomMap'));
-    dh = fixture.debugElement.query(By.css('#machines-grid'));
+    di = fixture.debugElement.query(By.css('#washer-grid'));
+    dj = fixture.debugElement.query(By.css('#dryer-grid'));
     el = de.nativeElement;
     fl = df.nativeElement;
     gl = dg.nativeElement;
-    hl = dh.nativeElement;
+    il = di.nativeElement;
+    jl = dj.nativeElement;
 
     name = 'room_id';
     cookieID = 'gay';
@@ -523,7 +527,12 @@ describe('Home page', () => {
 
   it('displays a text of broken machines', () => {
     fixture.detectChanges();
-    expect(hl.textContent).toContain('Machines at All rooms');
+    expect(il.textContent).toContain('Washers Within All rooms');
+  });
+
+  it('displays a text of broken machines', () => {
+    fixture.detectChanges();
+    expect(jl.textContent).toContain('Dryers Within All rooms');
   });
 
   it('load all the machines', () => {
@@ -682,7 +691,11 @@ describe('Home page', () => {
 
 
   it('should return the number of grid columns given different a window length', () => {
-    expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
+    if (window.innerWidth >= 769) {
+      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 800), 4));
+    } else {
+      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
+    }
   });
 
   it('should return the number of graph columns given different a window length', () => {
