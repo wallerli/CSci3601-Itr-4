@@ -47,10 +47,6 @@ describe('Home page', () => {
     set: (arg0: String, arg1: String) => null;
   };
 
-  let windowStub: {
-    innerWidth: '1000px';
-  }
-
   let activatedRouteStub: {};
 
   let locationStub: {
@@ -489,7 +485,6 @@ describe('Home page', () => {
       providers: [
         {provide: HomeService, useValue: homeServiceStub},
         {provide: CookieService, useValue: cookieServiceStub},
-        {provide: Window, useValue: windowStub}
         {provide: ActivatedRoute, useValue: activatedRouteStub},
         {provide: Location, useValue: locationStub}
       ]
