@@ -691,10 +691,10 @@ describe('Home page', () => {
 
 
   it('should return the number of grid columns given different a window length', () => {
-    if (window.innerWidth >= 769) {
-      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 800), 4));
+    if (window.innerWidth >= 800) {
+      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 800), 2));
     } else {
-      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
+      expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 2));
     }
   });
 
