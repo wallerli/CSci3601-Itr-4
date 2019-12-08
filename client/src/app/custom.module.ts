@@ -15,13 +15,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
 
-import {FlexLayoutModule, } from '@angular/flex-layout';
+import { FlexLayoutModule, } from '@angular/flex-layout';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const FLEX_LAYOUT_MODULES: any[] = [
   FlexLayoutModule,

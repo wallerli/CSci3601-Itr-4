@@ -9,10 +9,13 @@ import {CookieService} from 'ngx-cookie-service';
 
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {HomeDialog} from './home.dialog';
+import {SubscriptionDialog} from './home.subscription';
 
 import {Subscription} from './subscription';
 import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
-
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: 'home.component.html',
@@ -75,7 +78,8 @@ export class HomeComponent implements OnInit {
   ];
 
   // tslint:disable-next-line:max-line-length
-  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog, private cookieService: CookieService) {
+  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog
+              , private cookieService: CookieService, private activatedRoute: ActivatedRoute, private location: Location) {
     this.subscriptionDisabled = true;
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
@@ -198,6 +202,7 @@ export class HomeComponent implements OnInit {
     // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
     this.scroll('mainBody');
+    this.location.replaceState('/home/' + newId);
   }
 
   private updateMachines(): void {
@@ -506,24 +511,31 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let readCookie = true;
     (async () => {
       this.setSelector(0);
       this.loadAllRooms();
       this.loadAllMachines();
       this.loadAllHistory();
-
       await this.delay(500); // wait 0.5s for loading data
-
       if (this.rooms !== undefined && this.machines !== undefined && this.history !== undefined) {
         this.updateMachines();
         this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
         this.updateCounter();
         this.updateTime();
-        if (this.cookieService.get('room_id') !== '') {
+        this.activatedRoute.params.subscribe((params) => {
+          if (params['room']) {
+            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
+            if (name !== undefined) {
+              this.updateRoom(params['room'], name);
+              readCookie = false;
+            }
+          }
+        });
+        if (readCookie && this.cookieService.get('room_id') !== '') {
           this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
         }
       }
-
       await this.delay(500); // wait 0.5s for loading data
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
         await this.delay(5000); // loading error retry every 5s
@@ -533,7 +545,7 @@ export class HomeComponent implements OnInit {
         document.getElementById('loadCover').style.display = 'none';
         this.buildChart();
       }
-    })();
+    }) ();
   }
 
   updateTime(): void {
@@ -569,7 +581,9 @@ export class HomeComponent implements OnInit {
   }
 
   scroll(id: string) {
-    this.delay(150).then(() => document.getElementById(id).scrollIntoView());
+    this.delay(150).then(() => {
+      return document.getElementById(id).scrollIntoView();
+    });
   }
 
   hideSelector() {
@@ -635,7 +649,10 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 400, 4);
+    if (window.innerWidth >= 1200) {
+      return Math.min(window.innerWidth / 800, 2);
+    }
+    return Math.min(window.innerWidth / 400, 3);
   }
 
   getGraphCols() {
@@ -644,163 +661,4 @@ export class HomeComponent implements OnInit {
 }
 
 
-@Component({
-  templateUrl: 'home.dialog.html',
-})
-// tslint:disable-next-line:component-class-suffix
-export class HomeDialog {
 
-  constructor(
-    public homeService: HomeService,
-    public dialogRef: MatDialogRef<HomeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: { machine: Machine, newMachineSub: Subscription },
-    private fb: FormBuilder) {
-
-    this.ngOnInit();
-  }
-
-  addSubForm: FormGroup;
-
-  add_sub_validation_messages = {
-    'email': [
-      {type: 'required', message: 'Email is required'},
-      {type: 'email', message: 'Email must be formatted properly'},
-    ]
-  };
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  addNewSubscription() {
-    if (this.data.newMachineSub != null) {
-      this.data.machine.isSubscribed = true;
-      this.homeService.addNewSubscription(this.data.newMachineSub).subscribe(
-        () => {
-          // this.machines.filter(m => m.id === this.data.machine.id)[0].isSubscribed = true;
-          // this.updateRoom(this.roomId, this.roomName);
-        },
-        err => {
-          // This should probably be turned into some sort of meaningful response.
-          console.log('There was an error adding the subscription.');
-          console.log('The newSub or dialogResult was ' + this.data.newMachineSub);
-          console.log('The error was ' + JSON.stringify(err));
-        }
-      );
-    }
-    this.ngOnInit();
-  }
-
-  generateCustomLink(machineRoomID: string, machineType: string, machineID: string): string {
-    if (machineRoomID === 'The Apartments') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Gay Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton A. Gay&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Green Prairie Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Green Prairie Community&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Pine Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Pine&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Independence Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=David C. Johnson Independence&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Spooner Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Spooner&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Blakely Hall') {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else {
-      // tslint:disable-next-line:max-line-length
-      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    }
-  }
-
-  createForms() {
-    // add user form validations
-    this.addSubForm = this.fb.group({
-      // We don't need a special validator just for our app here, but there is a default one for email.
-      email: new FormControl('email', Validators.compose([
-        Validators.required,
-        Validators.email
-      ])),
-
-    });
-
-    // console.log(this.addSubForm);
-  }
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit() {
-    this.createForms();
-  }
-}
-
-@Component({
-  templateUrl: 'home.subscription.html',
-})
-// tslint:disable-next-line:component-class-suffix
-export class SubscriptionDialog {
-
-  options: FormGroup;
-  addSubForm: FormGroup;
-  name: string;
-  outOfWashers: boolean;
-  outOfDryers: boolean;
-
-  constructor(
-    public dialogRef: MatDialogRef<SubscriptionDialog>,
-    // tslint:disable-next-line:max-line-length
-    @Inject(MAT_DIALOG_DATA) public data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string }, private fb: FormBuilder) {
-
-    this.outOfWashers = data.noWasher;
-    this.outOfDryers = data.noDryer;
-    this.name = data.roomName;
-
-    if (this.outOfWashers) {
-      data.subscription.type = 'washer';
-    } else {
-      data.subscription.type = 'dryer';
-    }
-    // data.subscription.type = 'dryer';
-
-    this.options = fb.group({
-      type: data.subscription.type,
-    });
-
-    // console.log(this.outOfDryers);
-    // console.log(this.outOfWashers);
-
-    this.ngOnInit();
-  }
-
-  add_sub_validation_messages = {
-    'email': [
-      {type: 'required', message: 'Email is required'},
-      {type: 'email', message: 'Email must be formatted properly'},
-    ]
-  };
-
-  createForms() {
-
-    // add user form validations
-    this.addSubForm = this.fb.group({
-      // We don't need a special validator just for our app here, but there is a default one for email.
-      email: new FormControl('email', Validators.compose([
-        Validators.required,
-        Validators.email
-      ])),
-
-    });
-
-    // console.log(this.addSubForm);
-  }
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit() {
-    this.createForms();
-  }
-}
