@@ -62,17 +62,36 @@
           </mat-accordion>
         </mat-card-title>
 
-        <mat-card-content style="height: 15px; margin-left: 2px">
-          <a class="roomStatus">
-            <mat-icon class="vacant">check_circle_outline</mat-icon>
-            {{this.roomVacant}} vacant</a>
-          <a class="roomStatus">
-            <mat-icon class="inUse">schedule</mat-icon>
-            {{this.roomRunning}} running</a>
-          <a class="roomStatus">
-            <mat-icon class="unavailable">highlight_off</mat-icon>
-            {{this.roomBroken}} broken</a>
-        </mat-card-content>
+        <div id="washerAvail">
+          <mat-card-content style="height: 15px; margin-left: 2px">
+            Washer
+            <a class="roomStatus">
+              <mat-icon class="vacant">check_circle_outline</mat-icon>
+              {{this.roomWasherVacant}} vacant</a>
+            <a class="roomStatus">
+              <mat-icon class="inUse">schedule</mat-icon>
+              {{this.roomWasherRunning}} running</a>
+            <a class="roomStatus">
+              <mat-icon class="unavailable">highlight_off</mat-icon>
+              {{this.roomWasherBroken}} broken</a>
+          </mat-card-content>
+        </div>
+
+        <div id="dryerAvail">
+          <mat-card-content style="height: 15px; margin-left: 2px">
+            Dryer
+            <a class="roomStatus">
+              <mat-icon class="vacant">check_circle_outline</mat-icon>
+              {{this.roomDryerVacant}} vacant</a>
+            <a class="roomStatus">
+              <mat-icon class="inUse">schedule</mat-icon>
+              {{this.roomDryerRunning}} running</a>
+            <a class="roomStatus">
+              <mat-icon class="unavailable">highlight_off</mat-icon>
+              {{this.roomDryerBroken}} broken</a>
+          </mat-card-content>
+        </div>
+
       </mat-card>
 
       <mat-card *ngIf="this.roomId === ''"
@@ -105,11 +124,14 @@
       <mat-grid-tile *ngIf="this.moveHeader()" class="roomHeader">
         <mat-card id="roomInfo" style="width: 100%; height: 80%;">
 
+          <mat-card-title *ngIf="this.roomId != ''" id="greetingsTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Machine Availability For
+          </mat-card-title>
+
           <mat-card *ngIf="this.roomId != ''">
 
             <div class="roomNamer">
               <mat-card-title id="roomTitle"
-                              style=" font-weight: 300; font-size: 40px; line-height: 1.15">
+                              style="font-weight: 200; font-size: 30px; margin-top: 5px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15; font-style: italic">
                 {{this.roomName}}
                 <mat-accordion id="default-mark" *ngIf="defaultSet(roomName)"
                                style="font-size: 75%; font-weight: initial">default
@@ -117,19 +139,35 @@
               </mat-card-title>
             </div>
 
-            <mat-card-content style="height: 15px; margin-left: 2px">
-              <div class="statusHolder">
+            <div id="washerAvail">
+              <mat-card-content style="height: 15px; margin-left: 2px; font-style: italic">
+                Washer
                 <a class="roomStatus">
                   <mat-icon class="vacant">check_circle_outline</mat-icon>
-                  {{this.roomVacant}} vacant</a>
+                  {{this.roomWasherVacant}} vacant</a>
                 <a class="roomStatus">
                   <mat-icon class="inUse">schedule</mat-icon>
-                  {{this.roomRunning}} running</a>
+                  {{this.roomWasherRunning}} running</a>
                 <a class="roomStatus">
                   <mat-icon class="unavailable">highlight_off</mat-icon>
-                  {{this.roomBroken}} broken</a>
-              </div>
-            </mat-card-content>
+                  {{this.roomWasherBroken}} broken</a>
+              </mat-card-content>
+            </div>
+
+            <div id="dryerAvail">
+              <mat-card-content style="height: 15px; margin-left: 2px; font-style: italic">
+                Dryer
+                <a class="roomStatus">
+                  <mat-icon class="vacant">check_circle_outline</mat-icon>
+                  {{this.roomDryerVacant}} vacant</a>
+                <a class="roomStatus">
+                  <mat-icon class="inUse">schedule</mat-icon>
+                  {{this.roomDryerRunning}} running</a>
+                <a class="roomStatus">
+                  <mat-icon class="unavailable">highlight_off</mat-icon>
+                  {{this.roomDryerBroken}} broken</a>
+              </mat-card-content>
+            </div>
 
           </mat-card>
 

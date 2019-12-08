@@ -42,6 +42,12 @@ export class HomeComponent implements OnInit {
   public roomVacant: number;
   public roomRunning: number;
   public roomBroken: number;
+  public roomWasherVacant: number;
+  public roomWasherRunning: number;
+  public roomWasherBroken: number;
+  public roomDryerVacant: number;
+  public roomDryerRunning: number;
+  public roomDryerBroken: number;
 
   public roomId = '';
   public roomName = 'All rooms';
@@ -181,9 +187,12 @@ export class HomeComponent implements OnInit {
         r.isSubscribed = false;
       }
     });
-    this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
-    this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
-    this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
+    this.roomWasherVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
+    this.roomDryerVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
     if (this.roomId !== undefined && this.roomId !== '') {
       // tslint:disable-next-line:max-line-length
       const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer' && m.status === 'normal' && m.running === false).length;

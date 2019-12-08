@@ -42,3 +42,19 @@
     bottom: 25px;
   }
 }
+
+@media screen and (min-width: 1200px) {
+  .washerMachinesPanel {
+    width: 50%;
+    float: left;
+  }
+
+  .dryerMachinesPanel {
+    width: 50%;
+    float: right;
+  }
+}
+
+#washerAvail, #washerTitle, #dryerAvail, #dryerTitle {
+  text-align: left;
+}

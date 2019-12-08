@@ -1,1257 +1,818 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {HomeComponent, SubscriptionDialog} from './home.component';
-import {DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
-import {CustomModule} from '../custom.module';
-import {HomeService} from './home.service';
-import {Machine} from './machine';
+import {Component, OnInit, Inject} from '@angular/core';
 import {Room} from './room';
 import {History} from './history';
+import {Machine} from './machine';
 import {Observable} from 'rxjs';
+import {HomeService} from './home.service';
+
 import {CookieService} from 'ngx-cookie-service';
 
+import * as Chart from 'chart.js';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import {Subscription} from './subscription';
-import {FormBuilder, NgForm} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
 
-describe('Home page', () => {
 
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
-  let de: DebugElement;
-  let df: DebugElement;
-  let dg: DebugElement;
-  let dh: DebugElement;
-  let el: HTMLElement;
-  let fl: HTMLElement;
-  let gl: HTMLElement;
-  let hl: HTMLElement;
+@Component({
+  templateUrl: 'home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
 
-  let name: String;
-  let cookieID: String;
+  /*
+   * This is a switch for the E2E test
+   * before running the tests
+   * set autoRefresh to be true,
+   * after testing, set the boolean
+   * back to true in order to make
+   * the functionality works.
+   */
+  private autoRefresh = true;
 
-  let homeServiceStub: {
-    getRooms: () => Observable<Room[]>;
-    getMachines: () => Observable<Machine[]>;
-    getAllHistory: () => Observable<History[]>;
-    updateRunningStatus;
-    // addNewSubscription: (newSub: Subscription) => Observable<string>;
-  };
+  public machineListTitle: string;
+  public brokenMachineListTitle: string;
+  public rooms: Room[];
+  public machines: Machine[];
+  public filteredMachines: Machine[];
+  public numOfBroken: number;
+  public numOfWashers: number;
+  public numOfDryers: number;
 
-  let cookieServiceStub: {
-    getName: (arg0: String) => String;
-    set: (arg0: String, arg1: String) => null;
-  };
+  public roomVacant: number;
+  public roomRunning: number;
+  public roomBroken: number;
+  public roomWasherVacant: number;
+  public roomWasherRunning: number;
+  public roomWasherBroken: number;
+  public roomDryerVacant: number;
+  public roomDryerRunning: number;
+  public roomDryerBroken: number;
 
-  // @ts-ignore
-  beforeEach(() => {
+  public roomId = '';
+  public roomName = 'All rooms';
+  public selectorState: number;
+  public numOfVacant: number;
+  public numOfAll: number;
 
-    homeServiceStub = {
-      getMachines: () => Observable.of([
-        {
-          id: 'id_1',
-          name: '',
-          running: false,
-          status: 'normal',
-          room_id: 'gay',
-          type: 'washer',
-          position: {
-            x: 0,
-            y: 0,
-          },
-          remainingTime: -1,
-          vacantTime: 10,
-          isSubscribed: undefined
-        }, {
-          id: 'id_2',
-          name: '',
-          running: true,
-          status: 'normal',
-          room_id: 'room_b',
-          type: 'dryer',
-          position: {
-            x: 0,
-            y: 0,
-          },
-          remainingTime: 10,
-          vacantTime: -1,
-          isSubscribed: undefined
-        },
-      ]),
-      getRooms: () => Observable.of([
-        {
-          id: 'gay',
-          name: 'A',
+  public mapWidth: number;
+  public mapHeight: number;
 
-          isSubscribed: false,
+  public isSubscribed: boolean;
+  public subscriptionDisabled: boolean;
 
-          numberOfAllMachines: 1,
-          numberOfAvailableMachines: 1,
-        }, {
-          id: 'room_b',
-          name: 'B',
+  public history: History[];
+  // public filteredHistory: History[];
+  canvas: any;
+  ctx: any;
+  myChart: any;
+  chart = 'myChart';
+  public inputRoom = 'all';
+  public today = new Date();
+  public inputDay: number = this.today.getDay() + 1;
+  Days = [
+    {value: 1, name: 'Sunday'},
+    {value: 2, name: 'Monday'},
+    {value: 3, name: 'Tuesday'},
+    {value: 4, name: 'Wednesday'},
+    {value: 5, name: 'Thursday'},
+    {value: 6, name: 'Friday'},
+    {value: 7, name: 'Saturday'},
+  ];
 
-          isSubscribed: false,
+  // tslint:disable-next-line:max-line-length
+  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog, private cookieService: CookieService) {
+    this.subscriptionDisabled = true;
+    this.machineListTitle = 'available within all rooms';
+    this.brokenMachineListTitle = 'Unavailable machines within all rooms';
+  }
 
-          numberOfAllMachines: 1,
-          numberOfAvailableMachines: 0,
-        },
-      ]),
-      getAllHistory: () => Observable.of([
-        {
-          1: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          2: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          3: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          4: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          5: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          6: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          7: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          '_id': '5dbb7ca7d8ba936a8e8d9e3f',
-          'room_id': 'A'
-        },
-      ]),
-      updateRunningStatus: () => null,
-    };
-
-    cookieServiceStub = {
-      // tslint:disable-next-line:no-shadowed-variable
-      getName: (name) => 'gay',
-      // tslint:disable-next-line:no-shadowed-variable
-      set: (name, cookieID) => null,
-    };
-
-    TestBed.configureTestingModule({
-      imports: [CustomModule],
-      declarations: [HomeComponent], // declare the test component
-      providers: [
-        {provide: HomeService, useValue: homeServiceStub},
-        {provide: CookieService, useValue: cookieServiceStub}
-      ]
+  openSubscription(room_id: string) {
+    // tslint:disable-next-line:max-line-length
+    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
+    // tslint:disable-next-line:max-line-length
+    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
+    const newSub: Subscription = {email: '', type: '', id: room_id};
+    const dialogRef = this.subscription.open(SubscriptionDialog, {
+      width: '500px',
+      data: {
+        subscription: newSub,
+        noWasher: outOfWashers,
+        noDryer: outOfDryers,
+        roomName: this.translateRoomId(this.roomId)
+      },
     });
 
-    fixture = TestBed.createComponent(HomeComponent);
 
-    component = fixture.componentInstance; // BannerComponent test instance
-
-    // query for the link (<a> tag) by CSS element selector
-    de = fixture.debugElement.query(By.css('#home-rooms-card'));
-    df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
-    // dg = fixture.debugElement.query(By.css('#roomTitle'));
-    dh = fixture.debugElement.query(By.css('#machines-grid'));
-    el = de.nativeElement;
-    fl = df.nativeElement;
-    // gl = dg.nativeElement;
-    hl = dh.nativeElement;
-
-    name = 'room_id';
-    cookieID = 'gay';
-  });
-
-  it('displays a text of rooms', () => {
-    fixture.detectChanges();
-    expect(el.textContent).toContain('Select a Laundry Room to View');
-  });
-
-  it('displays a text of busy time\'s title', () => {
-    fixture.detectChanges();
-    expect(fl.textContent).toContain('Busy Time on ');
-  });
-
-  xit('displays a text of the room\'s map', () => {
-    fixture.detectChanges();
-    expect(gl.textContent).toContain(component.roomName);
-  });
-
-  it('displays a text of broken machines', () => {
-    fixture.detectChanges();
-    expect(hl.textContent).toContain('Machines at All rooms');
-  });
-
-  it('load all the machines', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.machines.length).toBe(2);
-  });
-
-  it('load all the rooms', () => {
-    const rooms: Observable<Room[]> = homeServiceStub.getRooms();
-    rooms.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      rooms => {
-        component.rooms = rooms;
-      });
-    expect(component.rooms.length).toBe(2);
-  });
-
-  it('should load and update the time remaining', () => {
-    let spy = spyOn(component, 'ngOnInit');
-    component.ngOnInit();
-    expect(spy).toHaveBeenCalled();
-    spy = spyOn(component, 'updateTime');
-    component.updateTime();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should the machine counters', () => {
-    expect(component.numOfVacant).toBe(undefined);
-    expect(component.numOfAll).toBe(undefined);
-    component.updateCounter();
-    expect(component.numOfVacant).toBe(0);
-    expect(component.numOfAll).toBe(0);
-    const rooms: Observable<Room[]> = homeServiceStub.getRooms();
-    rooms.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      rooms => {
-        component.rooms = rooms;
-      });
-    component.updateCounter();
-    expect(component.numOfVacant).toBe(1);
-    expect(component.numOfAll).toBe(2);
-  });
-
-  it('should return the corresponding room from its id', () => {
-    component.loadAllRooms();
-    expect(component.translateRoomId('gay')).toBe('A');
-  });
-
-  it('should translate the name of a machine name', () => {
-    expect(component.translateMachineName('dorky-gamboge-dog')).toBe('dorky gamboge dog');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('the_apartments', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('gay', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton A. Gay&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-
-    // tslint:disable-next-line:max-line-length
-    expect(component.generateCustomLink('green_prairie', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Green Prairie Community&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('pine', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Pine&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('independence', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=David C. Johnson Independence&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    // tslint:disable-next-line:max-line-length
-    expect(component.generateCustomLink('spooner', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Spooner&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('blakely', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-  it('should generate a custom link corresponding to the machine being reported', () => {
-    const machines: Observable<Machine[]> = homeServiceStub.getMachines();
-    machines.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      machines => {
-        component.machines = machines;
-      });
-    expect(component.generateCustomLink('test', 'dryer', 'the_id'))
-    // tslint:disable-next-line:max-line-length
-      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-  });
-
-
-  it('should return the number of grid columns given different a window length', () => {
-    expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
-  });
-
-  it('should return the number of graph columns given different a window length', () => {
-    expect(component.getGraphCols()).toEqual(Math.min(window.innerWidth / 680, 2));
-  });
-
-  it('should return the chart day based on today\'s day', () => {
-    const current = component.inputDay;
-    component.updateDayByButton(1);
-    let expected = (current + 1) % 7;
-    if (expected === 0) {
-      expected = 7;
-    }
-    expect(component.inputDay).toBe(expected);
-    for (let i = 0; i < 7; ++i) {
-      component.updateDayByButton(-1);
-    }
-    expect(component.inputDay).toBe(expected);
-  });
-
-  it('should return the chart day based on the day selector', () => {
-    component.updateDayBySelector(4);
-    expect(component.inputDay).toBe(4);
-  });
-
-  it('should return the chart day based on the room selector', () => {
-    component.loadAllHistory();
-    expect(component.getWeekDayByRoom('A', 2)[0]).toEqual(10);
-  });
-
-  it('should update machines of selected room', () => {
-    component.loadAllRooms();
-    component.loadAllMachines();
-    component.updateRoom('gay', 'A');
-    expect(component.filteredMachines.length).toEqual(1);
-    component.updateRoom('', 'any');
-    expect(component.filteredMachines.length).toEqual(2);
-  });
-
-  it('should modify array', () => {
-    component.loadAllRooms();
-    component.loadAllMachines();
-    component.updateRoom('gay', 'A');
-    component.buildChart();
-    component.modifyArray([], 2);
-    expect(component.filteredMachines.length).toEqual(1);
-  });
-
-  // Cookie Service :(
-  it('should set a cookie', () => {
-    component.roomId = 'gay';
-    homeServiceStub.updateRunningStatus();
-    component.updateCookies(component.roomId, component.roomName);
-    expect(component.roomId).toBe(cookieServiceStub.getName('room_id'));
-  });
-});
-
-/*
- * We tried to test the add subscription dialog
- * but the subscription dialog cannot read from
- * the MAT_DIALOG_DATA_STUB correctly.
- * Because there is no working example provided
- * we skipped the two dialog specs, which causes
- * that the coverage is slightly lower than the
- * user component spec.
- */
-xdescribe('Add subscription dialog', () => {
-
-  let subscriptionDialog: SubscriptionDialog;
-  // tslint:disable-next-line:no-shadowed-variable
-  let fixture1: ComponentFixture<SubscriptionDialog>;
-
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
-
-  let calledClose: boolean;
-
-  const mockMatDialogRef = {
-    close() {
-      calledClose = true;
-    }
-  };
-
-  // tslint:disable-next-line:prefer-const
-  let MAT_DIALOG_DATA_STUB: {
-    data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string },
-    fb: FormBuilder
-  };
-
-  let homeServiceStub: {
-    getRooms: () => Observable<Room[]>;
-    getMachines: () => Observable<Machine[]>;
-    getAllHistory: () => Observable<History[]>;
-    updateRunningStatus;
-  };
-
-  let cookieServiceStub: {
-    getName: (arg0: String) => String;
-    set: (arg0: String, arg1: String) => null;
-  };
-  // @ts-ignore
-  beforeEach(async(() => {
-
-    homeServiceStub = {
-      getMachines: () => Observable.of([
-        {
-          id: 'id_1',
-          name: '',
-          running: false,
-          status: 'normal',
-          room_id: 'gay',
-          type: 'washer',
-          position: {
-            x: 0,
-            y: 0,
-          },
-          remainingTime: -1,
-          vacantTime: 10,
-          isSubscribed: undefined
-        }, {
-          id: 'id_2',
-          name: '',
-          running: true,
-          status: 'normal',
-          room_id: 'room_b',
-          type: 'washer',
-          position: {
-            x: 0,
-            y: 0,
-          },
-          remainingTime: 10,
-          vacantTime: -1,
-          isSubscribed: undefined
-        },
-      ]),
-      getRooms: () => Observable.of([
-        {
-          id: 'gay',
-          name: 'A',
-
-          isSubscribed: false,
-
-          numberOfAllMachines: 1,
-          numberOfAvailableMachines: 1,
-        }, {
-          id: 'room_b',
-          name: 'B',
-
-          isSubscribed: false,
-
-          numberOfAllMachines: 1,
-          numberOfAvailableMachines: 0,
-        },
-      ]),
-      getAllHistory: () => Observable.of([
-        {
-          1: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          2: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          3: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          4: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          5: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          6: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          7: {
-            0: 10,
-            1: 5,
-            2: 2,
-            3: 2,
-            4: 3,
-            5: 2,
-            6: 6,
-            7: 3,
-            8: 1,
-            9: 8,
-            10: 4,
-            11: 2,
-            12: 3,
-            13: 3,
-            14: 7,
-            15: 2,
-            16: 9,
-            17: 6,
-            18: 0,
-            19: 4,
-            20: 8,
-            21: 8,
-            22: 10,
-            23: 5,
-            24: 10,
-            25: 3,
-            26: 8,
-            27: 1,
-            28: 0,
-            29: 10,
-            30: 2,
-            31: 5,
-            32: 4,
-            33: 3,
-            34: 7,
-            35: 0,
-            36: 1,
-            37: 3,
-            38: 8,
-            39: 5,
-            40: 0,
-            41: 9,
-            42: 0,
-            43: 8,
-            44: 4,
-            45: 4,
-            46: 8,
-            47: 3
-          },
-          '_id': '5dbb7ca7d8ba936a8e8d9e3f',
-          'room_id': 'A'
-        },
-      ]),
-      updateRunningStatus: () => null,
-    };
-
-    cookieServiceStub = {
-      // tslint:disable-next-line:no-shadowed-variable
-      getName: (name) => 'gay',
-      // tslint:disable-next-line:no-shadowed-variable
-      set: (name, cookieID) => null,
-    };
-
-    TestBed.configureTestingModule({
-      imports: [CustomModule],
-      declarations: [HomeComponent, SubscriptionDialog],
-      providers: [
-        {provide: MatDialogRef, useValue: mockMatDialogRef},
-        {provide: MAT_DIALOG_DATA, useValue: MAT_DIALOG_DATA_STUB},
-        {provide: HomeService, useValue: homeServiceStub},
-        {provide: CookieService, useValue: cookieServiceStub}
-      ]
-    }).compileComponents().catch(error => {
-      expect(error).toBeNull();
-    });
-  }));
-
-  beforeEach(() => {
-    calledClose = false;
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    component.loadAllRooms();
-    component.loadAllMachines();
-    component.updateRoom('room_b', 'B');
-    fixture1 = TestBed.createComponent(SubscriptionDialog);
-    subscriptionDialog = fixture1.componentInstance;
-  });
-
-  it('should subscribe to an available room', () => {
-    component.openSubscription('gay');
-    expect(component.isSubscribed === true);
-  });
-
-  it('should not allow to subscribe with an invalid form of email', async(() => {
     // tslint:disable-next-line:no-shadowed-variable
-    const fixture = TestBed.createComponent(SubscriptionDialog);
-    const debug = fixture.debugElement;
-    const input = debug.query(By.css('[name=email]'));
+    dialogRef.afterClosed().subscribe(newSub => {
+      if (newSub != null) {
+        // console.log(newSub);
+        this.homeService.addNewSubscription(newSub).subscribe(
+          () => {
+            this.rooms.filter(m => m.id === this.roomId)[0].isSubscribed = true;
+            this.isSubscribed = true;
+            this.subscriptionDisabled = true;
+          },
+          err => {
+            // This should probably be turned into some sort of meaningful response.
+            console.log('There was an error adding the subscription.');
+            console.log('The newSub or dialogResult was ' + newSub);
+            console.log('The error was ' + JSON.stringify(err));
+          }
+        );
+      }
+    });
+  }
 
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      input.nativeElement.value = 'bad@email.com';
-      dispatchEvent(input.nativeElement);
-      fixture.detectChanges();
-
-      const form: NgForm = debug.children[0].injector.get(NgForm);
-      const control = form.control.get('email');
-      expect(control.hasError('notPeeskillet')).toBe(true);
-      expect(form.control.valid).toEqual(false);
-      expect(form.control.hasError('notPeeskillet', ['email'])).toEqual(true);
-
-      input.nativeElement.value = 'peeskillet@stackoverflow.com';
-      dispatchEvent(input.nativeElement);
-      fixture.detectChanges();
-
-      expect(control.hasError('notPeeskillet')).toBe(false);
-      expect(form.control.valid).toEqual(true);
-      expect(form.control.hasError('notPeeskillet', ['email'])).toEqual(false);
+  openDialog(theMachine: Machine) {
+    const thisMachine: Machine = {
+      id: theMachine.id,
+      name: this.translateMachineName(theMachine.name),
+      running: theMachine.running,
+      status: theMachine.status,
+      room_id: this.translateRoomId(theMachine.room_id),
+      type: theMachine.type,
+      position: theMachine.position,
+      remainingTime: theMachine.remainingTime,
+      vacantTime: theMachine.vacantTime,
+      isSubscribed: theMachine.isSubscribed
+    };
+    const newSub: Subscription = {email: '', type: 'machine', id: thisMachine.id};
+    const dialogRef = this.dialog.open(HomeDialog, {
+      width: '330px',
+      data: {machine: thisMachine, newMachineSub: newSub},
+      autoFocus: false
     });
 
-    it ('should call home service to add new subscription correctly', () => {});
-  }));
-});
+    dialogRef.afterClosed().subscribe(() => {
+      this.machines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
+      this.filteredMachines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
+      // console.log(thisMachine.isSubscribed);
+      // console.log('The dialog was closed');
+    });
+  }
 
-xdescribe('Machine info. Dialog', () => {
-   it ('should generate custom links corresponding to the machine being reported', () => {});
+  public updateCookies(id: string, name: string): void {
+    this.cookieService.set('room_id', id);
+    this.cookieService.set('room_name', name);
+  }
 
-   it ('should allow subscribe to an available machine', () => {});
+  public defaultSet(name: string): boolean {
+    // if (this.cookieService.check('room_id')) {
+    //   return this.cookieService.get('room_id') !== '';
+    // }
+    return this.cookieService.get('room_name') === name;
+  }
 
-   it ('should call home service to add new subscription correctly', () => {});
-});
+  setSelector(state: number) {
+    this.selectorState = state;
+  }
+
+  public updateRoom(newId: string, newName: string): void {
+    this.roomId = newId;
+    this.roomName = newName;
+    this.machineListTitle = 'available within ' + this.roomName;
+    this.brokenMachineListTitle = 'Unavailable machines within ' + this.roomName;
+    if (newId === '') {
+      this.inputRoom = 'all';
+    } else {
+      this.inputRoom = newId;
+    }
+    this.inputDay = this.today.getDay() + 1;
+    this.updateMachines();
+    this.delay(100).then();
+    this.rooms.map(r => {
+      if (r.isSubscribed === undefined) {
+        r.isSubscribed = false;
+      }
+    });
+    this.roomWasherVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
+    this.roomDryerVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
+    if (this.roomId !== undefined && this.roomId !== '') {
+      // tslint:disable-next-line:max-line-length
+      const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer' && m.status === 'normal' && m.running === false).length;
+      // tslint:disable-next-line:max-line-length
+      const dryerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'dryer' && m.status === 'normal' && m.running === false).length;
+      this.isSubscribed = this.rooms.filter(r => r.id === this.roomId)[0].isSubscribed;
+      this.subscriptionDisabled = this.isSubscribed || (washerVacant !== 0 && dryerVacant !== 0);
+    }
+    this.buildChart();
+    this.fakePositions();
+    this.setSelector(1);
+    // document.getElementById('allMachineList').style.display = 'unset';
+    document.getElementById('all-rooms').style.bottom = '2%';
+    this.scroll('mainBody');
+  }
+
+  private updateMachines(): void {
+    // console.log(this.inputRoom);
+    if (this.roomId == null || this.roomId === '') {
+      this.filteredMachines = this.machines;
+    } else {
+      this.filteredMachines = this.machines.filter(machine => machine.room_id === this.roomId);
+    }
+    this.homeService.updateRunningStatus(this.filteredMachines, this.machines);
+    if (this.filteredMachines !== undefined) {
+      this.numOfBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
+      this.numOfWashers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'washer').length;
+      this.numOfDryers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'dryer').length;
+      this.mapHeight = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.y), this.filteredMachines[0].position.y);
+      this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
+    }
+  }
+
+  // filterGraphData() {
+  //   if (this.inputRoom !== 'all') {
+  //     this.filteredHistory = this.history.filter(history => history.room_id === this.inputRoom);
+  //
+  //   } else {
+  //
+  //     this.gayHistory = this.history.filter(history => history.room_id === 'gay');
+  //     this.independenceHistory = this.history.filter(history => history.room_id === 'independence');
+  //     this.blakelyHistory = this.history.filter(history => history.room_id === 'blakely');
+  //     this.spoonerHistory = this.history.filter(history => history.room_id === 'spooner');
+  //     this.greenPrairieHistory = this.history.filter(history => history.room_id === 'green_prairie');
+  //     this.pineHistory = this.history.filter(history => history.room_id === 'pine');
+  //     this.theApartmentsHistory = this.history.filter(history => history.room_id === 'the_apartments');
+  //   }
+  // }
+
+
+  updateDayByButton(num: number) {
+    this.inputDay = (+this.inputDay + +num) % 7;
+    if (this.inputDay === 0) {
+      this.inputDay = 7;
+    }
+    this.buildChart();
+  }
+
+  updateDayBySelector(num: number) {
+    this.inputDay = +num;
+    this.buildChart();
+  }
+
+  getWeekDayByRoom(room, wekd, addition?): number[] {
+    const tempWekd: Array<number> = [];
+    if (this.history !== undefined) {
+      for (let i = 0; i < 48; i++) {
+        tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+      }
+      if (addition !== undefined && addition === true) {
+        ++wekd;
+        if (wekd === 8) {
+          wekd = 1;
+        }
+        for (let i = 0; i < 6; i++) {
+          tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+        }
+      }
+    }
+    return tempWekd;
+  }
+
+  modifyArray(arr, num, addition?): number[] {
+    const temp: Array<number> = [];
+    let i = 0;
+    for (; i < 48; i = i + num) {
+      let sum = 0;
+      for (let j = 0; j < num; j++) {
+        sum = sum + arr[j + i];
+      }
+      temp.push(sum / num);
+    }
+    if (addition !== undefined && addition === true) {
+      for (; i < 54; i = i + num) {
+        let sum = 0;
+        for (let j = 0; j < num; j++) {
+          sum = sum + arr[j + i];
+        }
+        temp.push(sum / num);
+      }
+    }
+    return temp;
+  }
+
+  loadAllMachines(): void {
+    const machines: Observable<Machine[]> = this.homeService.getMachines();
+    machines.subscribe(
+      // tslint:disable-next-line:no-shadowed-variable
+      machines => {
+        this.machines = machines;
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  loadAllRooms(): void {
+    const rooms: Observable<Room[]> = this.homeService.getRooms();
+    rooms.subscribe(
+      // tslint:disable-next-line:no-shadowed-variable
+      rooms => {
+        this.rooms = rooms;
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  loadAllHistory(): void {
+    const histories: Observable<History[]> = this.homeService.getAllHistory();
+    histories.subscribe(
+      history => {
+        this.history = history;
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  buildChart() {
+    if (this.myChart != null) {
+      this.myChart.destroy();
+    }
+    if (this.history !== undefined) {
+      this.canvas = document.getElementById(this.chart);
+      this.ctx = this.canvas;
+
+      let xlabel;
+      let xlabel2;
+      // this.filterGraphData();
+
+      xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
+        '6p', '7p', '8p', '9p', '10p', '11p'];
+
+      xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
+
+      if (this.inputRoom !== 'all') {
+        this.myChart = new Chart(this.ctx, {
+          type: 'bar',
+          data: {
+            labels: xlabel,
+            datasets: [{
+              data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
+              backgroundColor: '#a24d5e'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              enabled: false,
+              // callbacks: {
+              //   label: function(tooltipItem) {
+              //     console.log(tooltipItem);
+              //     return tooltipItem.yLabel;
+              //   }
+              // }
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 8,
+                  fontSize: 15,
+                  fontColor: 'rgb(150, 150, 150)'
+                }
+              }],
+              yAxes: [{
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                  display: false,
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+      } else {
+        this.myChart = new Chart(this.ctx, {
+          type: 'line',
+          data: {
+            labels: xlabel2,
+            datasets: [
+              {
+                label: 'Gay',
+                data: this.modifyArray(this.getWeekDayByRoom('gay', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(255,99,132)',
+                backgroundColor: 'rgb(255,99,132)'
+              },
+              {
+                label: 'Independence',
+                data: this.modifyArray(this.getWeekDayByRoom('independence', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(54, 162, 235)'
+              },
+              {
+                label: 'Blakely',
+                data: this.modifyArray(this.getWeekDayByRoom('blakely', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(255, 206, 86)',
+                backgroundColor: 'rgb(255, 206, 86)'
+              },
+              {
+                label: 'Spooner',
+                data: this.modifyArray(this.getWeekDayByRoom('spooner', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(75, 192, 192)'
+              },
+              {
+                label: 'Green Prairie',
+                data: this.modifyArray(this.getWeekDayByRoom('green_prairie', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(153, 102, 255)',
+                backgroundColor: 'rgb(153, 102, 255)'
+              },
+              {
+                label: 'Pine',
+                data: this.modifyArray(this.getWeekDayByRoom('pine', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(255, 159, 64)',
+                backgroundColor: 'rgb(255, 159, 64)'
+              },
+              {
+                label: 'Apartments',
+                data: this.modifyArray(this.getWeekDayByRoom('the_apartments', this.inputDay, true), 6, true),
+                hidden: false,
+                fill: false,
+                lineTension: 0.2,
+                borderColor: 'rgb(100,100,100)',
+                backgroundColor: 'rgb(100,100,100)'
+              },
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            tooltips: {
+              enabled: false,
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  fontSize: 15,
+                  fontColor: 'rgb(150, 150, 150)'
+                }
+              }],
+              yAxes: [{
+                gridLines: {
+                  display: false,
+                },
+                ticks: {
+                  display: false,
+                  beginAtZero: true
+                }
+              }]
+            },
+            legend: {
+              labels: {
+                fontSize: 12,
+                fontColor: 'rgb(150, 150, 150)',
+              },
+              position: 'right',
+              display: window.innerWidth > 500,
+            }
+          },
+        });
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    (async () => {
+      this.setSelector(0);
+      this.loadAllRooms();
+      this.loadAllMachines();
+      this.loadAllHistory();
+
+      await this.delay(500); // wait 0.5s for loading data
+
+      if (this.rooms !== undefined && this.machines !== undefined && this.history !== undefined) {
+        this.updateMachines();
+        this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
+        this.updateCounter();
+        this.updateTime();
+        if (this.cookieService.get('room_id') !== '') {
+          this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
+        }
+      }
+
+      await this.delay(500); // wait 0.5s for loading data
+      if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
+        await this.delay(5000); // loading error retry every 5s
+        console.log('Retry');
+        this.ngOnInit();
+      } else {
+        document.getElementById('loadCover').style.display = 'none';
+        this.buildChart();
+      }
+    })();
+  }
+
+  updateTime(): void {
+    (async () => {
+      this.loadAllMachines();
+      this.homeService.updateRunningStatus(this.filteredMachines, this.machines);
+      this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
+      this.updateCounter();
+      if (this.autoRefresh) {
+        await this.delay(60000); // hold 60s for the next refresh
+        console.log('Refresh');
+        this.updateTime();
+      }
+    })();
+  }
+
+  updateCounter(): void {
+    this.numOfVacant = 0;
+    this.numOfAll = 0;
+    if (this.rooms !== undefined) {
+      this.rooms.map(r => {
+        this.numOfVacant += r.numberOfAvailableMachines;
+        this.numOfAll += r.numberOfAllMachines;
+      });
+    } else {
+      this.numOfVacant = 0;
+      this.numOfAll = 0;
+    }
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  scroll(id: string) {
+    this.delay(150).then(() => document.getElementById(id).scrollIntoView());
+  }
+
+  hideSelector() {
+    document.getElementById('all-rooms').style.bottom = '-50px';
+  }
+
+  fakePositions() {
+    const w = 5;
+    const machines = this.filteredMachines;
+    for (let i = 0; i < machines.length; ++i) {
+      machines[i].position.x = i % w * 50;
+      machines[i].position.y = Math.floor(i / w) * 50;
+    }
+  }
+
+  translateRoomId(roomId: string): string {
+    const room = this.rooms.filter(r => r.id === roomId)[0];
+    return room.name;
+  }
+
+  translateMachineName(name: string): string {
+    while (name.indexOf('-') !== -1) {
+      name = name.replace('-', ' ');
+    }
+    return name;
+  }
+
+  public generateCustomLink(machineRoomID: string, machineType: string, machineID: string): string {
+    if (machineRoomID === 'the_apartments') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'gay') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton A. Gay&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'green_prairie') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Green Prairie Community&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'pine') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Pine&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'independence') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=David C. Johnson Independence&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'spooner') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Spooner&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'blakely') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    }
+  }
+
+  // getX(machine: Machine) {
+  //   const x = machine.position.x * 20;
+  //   return x + 'px';
+  // }
+
+  // getY(machine: Machine) {
+  //   const y = machine.position.y * 20;
+  //   return y + 'px';
+  // }
+  getGridCols() {
+    return Math.min(window.innerWidth / 400, 4);
+  }
+
+  getGraphCols() {
+    return Math.min(window.innerWidth / 680, 2);
+  }
+
+  moveHeader() {
+    return Math.round(Math.min(window.innerWidth / 680, 2)) === 2;
+  }
+}
+
+@Component({
+  templateUrl: 'home.dialog.html',
+})
+// tslint:disable-next-line:component-class-suffix
+export class HomeDialog {
+
+  constructor(
+    public homeService: HomeService,
+    public dialogRef: MatDialogRef<HomeDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: { machine: Machine, newMachineSub: Subscription },
+    private fb: FormBuilder) {
+
+    this.ngOnInit();
+  }
+
+  addSubForm: FormGroup;
+
+  add_sub_validation_messages = {
+    'email': [
+      {type: 'required', message: 'Email is required'},
+      {type: 'email', message: 'Email must be formatted properly'},
+    ]
+  };
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  addNewSubscription() {
+    if (this.data.newMachineSub != null) {
+      this.data.machine.isSubscribed = true;
+      this.homeService.addNewSubscription(this.data.newMachineSub).subscribe(
+        () => {
+          // this.machines.filter(m => m.id === this.data.machine.id)[0].isSubscribed = true;
+          // this.updateRoom(this.roomId, this.roomName);
+        },
+        err => {
+          // This should probably be turned into some sort of meaningful response.
+          console.log('There was an error adding the subscription.');
+          console.log('The newSub or dialogResult was ' + this.data.newMachineSub);
+          console.log('The error was ' + JSON.stringify(err));
+        }
+      );
+    }
+    this.ngOnInit();
+  }
+
+  generateCustomLink(machineRoomID: string, machineType: string, machineID: string): string {
+    if (machineRoomID === 'The Apartments') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Gay Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton A. Gay&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Green Prairie Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Green Prairie Community&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Pine Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Pine&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Independence Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=David C. Johnson Independence&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Spooner Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Spooner&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else if (machineRoomID === 'Blakely Hall') {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    } else {
+      // tslint:disable-next-line:max-line-length
+      return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
+    }
+  }
+
+  createForms() {
+    // add user form validations
+    this.addSubForm = this.fb.group({
+      // We don't need a special validator just for our app here, but there is a default one for email.
+      email: new FormControl('email', Validators.compose([
+        Validators.required,
+        Validators.email
+      ])),
+
+    });
+
+    // console.log(this.addSubForm);
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit() {
+    this.createForms();
+  }
+}
+
+@Component({
+  templateUrl: 'home.subscription.html',
+})
+// tslint:disable-next-line:component-class-suffix
+export class SubscriptionDialog {
+
+  options: FormGroup;
+  addSubForm: FormGroup;
+  name: string;
+  outOfWashers: boolean;
+  outOfDryers: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<SubscriptionDialog>,
+    // tslint:disable-next-line:max-line-length
+    @Inject(MAT_DIALOG_DATA) public data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string }, private fb: FormBuilder) {
+
+    this.outOfWashers = data.noWasher;
+    this.outOfDryers = data.noDryer;
+    this.name = data.roomName;
+
+    if (this.outOfWashers) {
+      data.subscription.type = 'washer';
+    } else {
+      data.subscription.type = 'dryer';
+    }
+    // data.subscription.type = 'dryer';
+
+    this.options = fb.group({
+      type: data.subscription.type,
+    });
+
+    // console.log(this.outOfDryers);
+    // console.log(this.outOfWashers);
+
+    this.ngOnInit();
+  }
+
+  add_sub_validation_messages = {
+    'email': [
+      {type: 'required', message: 'Email is required'},
+      {type: 'email', message: 'Email must be formatted properly'},
+    ]
+  };
+
+  createForms() {
+
+    // add user form validations
+    this.addSubForm = this.fb.group({
+      // We don't need a special validator just for our app here, but there is a default one for email.
+      email: new FormControl('email', Validators.compose([
+        Validators.required,
+        Validators.email
+      ])),
+
+    });
+
+    // console.log(this.addSubForm);
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit() {
+    this.createForms();
+  }
+}
