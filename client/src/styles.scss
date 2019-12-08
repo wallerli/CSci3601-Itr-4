@@ -56,11 +56,16 @@
     color: white;
   }
   #welcomeGreetings{
-    color: #8C1919;
+    color: #881818;
+    text-shadow: 1px 1px 3px grey;
   }
 
 
   @if $is-dark {
+    #welcomeGreetings{
+      color: #b81a1a;
+      text-shadow: 1px 1px 3px black;
+    }
     #app-title {
       font-style: italic;
       font-weight: 400;
