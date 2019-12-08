@@ -7,7 +7,7 @@
   margin-left: auto;
   margin-right: auto;
   padding-top: 30px;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
 }
 
 .logobottom {
@@ -29,11 +29,11 @@
   font-family: 'Libre Baskerville', serif;
   text-align: center;
   border-radius: 10px;
-  font-size: x-large;
+  font-size: medium;
   width: 500px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 2;
+  line-height: 1.5;
 }
 
 @media screen and (min-width: 500px) {
