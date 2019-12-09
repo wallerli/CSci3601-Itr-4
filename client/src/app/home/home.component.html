@@ -102,7 +102,7 @@
         <mat-accordion *ngIf="machines && numOfWashers > 0; else machinesError" style="width: 100%">
           <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
+              <mat-grid-tile class="vacant" *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
                 <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -123,7 +123,7 @@
                     <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -135,7 +135,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==true">
+              <mat-grid-tile class="inUse" *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==true">
                 <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="inUse" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -157,7 +157,7 @@
                                       value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -174,7 +174,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='broken'&& machine.type==='washer'">
+              <mat-grid-tile class="unavailable" *ngIf="machine.status==='broken'&& machine.type==='washer'">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="unavailable" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -195,7 +195,7 @@
                                       value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -219,7 +219,7 @@
         <mat-accordion *ngIf="machines && numOfDryers > 0; else machinesError" style="width: 100%">
           <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
+              <mat-grid-tile class="vacant" *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -240,7 +240,7 @@
                     <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -252,7 +252,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==true">
+              <mat-grid-tile class="inUse" *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==true">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="inUse" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -274,7 +274,7 @@
                                       value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
                   <a id="reportId" class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -291,7 +291,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='broken'&& machine.type==='dryer'">
+              <mat-grid-tile class="unavailable" *ngIf="machine.status==='broken'&& machine.type==='dryer'">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="unavailable" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -312,7 +312,7 @@
                                       value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
-                     (click)="openDialog(machine)">Details</a>
+                     (click)="openDialog(machine)">Details..</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -413,11 +413,11 @@
         <mat-card *ngIf="this.roomId === ''"
                   style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;"
                   class="roomHeading">
-          <mat-card-title id="roomTitle"
+          <mat-card-title id="roomTitleEmpty"
                           style="font-weight: 300; font-size: 35px; margin-top: 5px; margin-left: 8px; line-height: 1.15">
             Greetings!
           </mat-card-title>
-          <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
+          <mat-card-content id="roomContentEmpty" style="height: 20px; margin-left: 10px; font-size: 18px;">
             Welcome to Morris Laundry Facilities!
           </mat-card-content>
         </mat-card>

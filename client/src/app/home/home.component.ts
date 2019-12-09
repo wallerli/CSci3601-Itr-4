@@ -205,9 +205,9 @@ export class HomeComponent implements OnInit {
     this.buildChart();
     this.fakePositions();
     this.setSelector(1);
-    // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
     this.scroll('mainBody');
+    if (newId === '') {newId = 'all'; }
     this.location.replaceState('/home/' + newId);
   }
 
@@ -531,10 +531,14 @@ export class HomeComponent implements OnInit {
         this.updateTime();
         this.activatedRoute.params.subscribe((params) => {
           if (params['room']) {
-            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
-            if (name !== undefined) {
-              this.updateRoom(params['room'], name);
+            const targetRoom = this.rooms.filter(r => r.id === params['room'])[0];
+            if (targetRoom !== undefined) {
+              this.updateRoom(params['room'], targetRoom.name);
               readCookie = false;
+            } else if (params['room'] === 'all') {
+              this.updateRoom('', 'All Rooms');
+              readCookie = false;
+              console.log('!!!!!!!!!!!');
             }
           }
         });
@@ -645,15 +649,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // getX(machine: Machine) {
-  //   const x = machine.position.x * 20;
-  //   return x + 'px';
-  // }
-
-  // getY(machine: Machine) {
-  //   const y = machine.position.y * 20;
-  //   return y + 'px';
-  // }
   getGridCols() {
     if (window.innerWidth >= 1200) {
       return Math.min(window.innerWidth / 800, 2);
