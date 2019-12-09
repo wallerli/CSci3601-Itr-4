@@ -274,8 +274,8 @@
                     </p>
                     <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
                   </div>
-<!--                  <a class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -308,8 +308,8 @@
                     <mat-progress-bar color="warn" mode="determinate"
                                       value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                   </div>
-<!--                  <a class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -346,8 +346,8 @@
                     <mat-progress-bar color="dark-red" mode="determinate" bufferValue="100"
                                       value="0"></mat-progress-bar>
                   </div>
-<!--                  <a class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -391,8 +391,8 @@
                     </p>
                     <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
                   </div>
-<!--                  <a class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -425,8 +425,8 @@
                     <mat-progress-bar color="warn" mode="determinate"
                                       value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
-<!--                  <a id="reportId" class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a id="reportId" class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
@@ -463,8 +463,8 @@
                     <mat-progress-bar color="dark-red" mode="determinate" bufferValue="100"
                                       value="0"></mat-progress-bar>
                   </div>
-<!--                  <a class="reportButton" mat-button-->
-<!--                     href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>-->
+                  <a class="reportButton" mat-button
+                     (click)="openDialog(machine)">Details</a>
                   <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px"
                      (click)="openDialog(machine)">
                     <mat-icon [id]="'machineSubIcon-'+ machine.name" style="margin: 0">
