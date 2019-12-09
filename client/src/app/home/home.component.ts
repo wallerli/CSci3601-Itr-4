@@ -538,7 +538,6 @@ export class HomeComponent implements OnInit {
             } else if (params['room'] === 'all') {
               this.updateRoom('', 'All Rooms');
               readCookie = false;
-              console.log('!!!!!!!!!!!');
             }
           }
         });
@@ -547,7 +546,7 @@ export class HomeComponent implements OnInit {
         }
       }
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
-        await this.delay(1000); // loading error retry every 1s
+        await this.delay(2000); // loading errored, retry after 2s
         console.log('Retry');
         this.ngOnInit();
       } else {
