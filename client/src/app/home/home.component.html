@@ -102,7 +102,7 @@
         <mat-accordion *ngIf="machines && numOfWashers > 0; else machinesError" style="width: 100%">
           <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
+              <mat-grid-tile class="vacant" *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
                 <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -135,7 +135,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==true">
+              <mat-grid-tile class="inUse" *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==true">
                 <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="inUse" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -174,7 +174,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='broken'&& machine.type==='washer'">
+              <mat-grid-tile class="unavailable" *ngIf="machine.status==='broken'&& machine.type==='washer'">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="unavailable" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -219,7 +219,7 @@
         <mat-accordion *ngIf="machines && numOfDryers > 0; else machinesError" style="width: 100%">
           <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
+              <mat-grid-tile class="vacant" *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -252,7 +252,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==true">
+              <mat-grid-tile class="inUse" *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==true">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="inUse" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
@@ -291,7 +291,7 @@
             </mat-accordion>
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
-              <mat-grid-tile *ngIf="machine.status==='broken'&& machine.type==='dryer'">
+              <mat-grid-tile class="unavailable" *ngIf="machine.status==='broken'&& machine.type==='dryer'">
                 <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="unavailable" style="position: absolute; top: 15px; left: 12px; font-size: 275%">

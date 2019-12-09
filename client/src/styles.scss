@@ -84,6 +84,10 @@
     .unavailable {
       color: #aaaaaa !important;
     }
+
+    .unavailable mat-card {
+      border-left: 4px solid #aaaaaa !important;
+    }
   }
 
   .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
@@ -92,6 +96,14 @@
 
   .mat-icon.inUse {
     color: mat-color($warn)
+  }
+
+  .vacant mat-card {
+    border-left: 4px solid mat-color($accent);
+  }
+
+  .inUse mat-card {
+    border-left: 4px solid mat-color($warn);
   }
 
   .roomHeading {
@@ -222,6 +234,10 @@ mat-icon {
 
 .menuLabel.mat-icon.notranslate.material-icons.mat-icon-no-color {
   margin-left: 9px;
+}
+
+.unavailable mat-card {
+  border-left: 4px solid #555555;
 }
 
 .unavailable {
@@ -518,6 +534,5 @@ mat-dialog-container .reportButton {
   .subscribeButtonText {
     display: none;
   }
-
 }
 
