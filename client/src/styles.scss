@@ -534,6 +534,15 @@ mat-dialog-container .reportButton {
   height: 19px !important;
 }
 
+#roomInfo #roomTitleEmpty {
+  margin-top: 45px !important;
+  font-size: 350% !important;
+}
+
+#roomInfo #roomContentEmpty {
+  font-size: 200% !important;
+}
+
 @media screen and (max-width: 500px) {
   .subscribeButtonText {
     display: none;
