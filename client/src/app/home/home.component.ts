@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Room} from './room';
 import {History} from './history';
 import {Machine} from './machine';
@@ -8,12 +8,11 @@ import {HomeService} from './home.service';
 import {CookieService} from 'ngx-cookie-service';
 
 import * as Chart from 'chart.js';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {HomeDialog} from './home.dialog';
 import {SubscriptionDialog} from './home.subscription';
 
 import {Subscription} from './subscription';
-import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -104,11 +103,9 @@ export class HomeComponent implements OnInit {
       },
     });
 
-
     // tslint:disable-next-line:no-shadowed-variable
     dialogRef.afterClosed().subscribe(newSub => {
       if (newSub != null) {
-        // console.log(newSub);
         this.homeService.addNewSubscription(newSub).subscribe(
           () => {
             this.rooms.filter(m => m.id === this.roomId)[0].isSubscribed = true;
@@ -149,8 +146,6 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.machines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
       this.filteredMachines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
-      // console.log(thisMachine.isSubscribed);
-      // console.log('The dialog was closed');
     });
   }
 
@@ -160,9 +155,6 @@ export class HomeComponent implements OnInit {
   }
 
   public defaultSet(name: string): boolean {
-    // if (this.cookieService.check('room_id')) {
-    //   return this.cookieService.get('room_id') !== '';
-    // }
     return this.cookieService.get('room_name') === name;
   }
 
@@ -212,7 +204,6 @@ export class HomeComponent implements OnInit {
   }
 
   private updateMachines(): void {
-    // console.log(this.inputRoom);
     if (this.roomId == null || this.roomId === '') {
       this.filteredMachines = this.machines;
     } else {
@@ -227,23 +218,6 @@ export class HomeComponent implements OnInit {
       this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
     }
   }
-
-  // filterGraphData() {
-  //   if (this.inputRoom !== 'all') {
-  //     this.filteredHistory = this.history.filter(history => history.room_id === this.inputRoom);
-  //
-  //   } else {
-  //
-  //     this.gayHistory = this.history.filter(history => history.room_id === 'gay');
-  //     this.independenceHistory = this.history.filter(history => history.room_id === 'independence');
-  //     this.blakelyHistory = this.history.filter(history => history.room_id === 'blakely');
-  //     this.spoonerHistory = this.history.filter(history => history.room_id === 'spooner');
-  //     this.greenPrairieHistory = this.history.filter(history => history.room_id === 'green_prairie');
-  //     this.pineHistory = this.history.filter(history => history.room_id === 'pine');
-  //     this.theApartmentsHistory = this.history.filter(history => history.room_id === 'the_apartments');
-  //   }
-  // }
-
 
   updateDayByButton(num: number) {
     this.inputDay = (+this.inputDay + +num) % 7;
@@ -344,7 +318,6 @@ export class HomeComponent implements OnInit {
 
       let xlabel;
       let xlabel2;
-      // this.filterGraphData();
 
       xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
         '6p', '7p', '8p', '9p', '10p', '11p'];
@@ -538,7 +511,6 @@ export class HomeComponent implements OnInit {
             } else if (params['room'] === 'all') {
               this.updateRoom('', 'All Rooms');
               readCookie = false;
-              console.log('!!!!!!!!!!!');
             }
           }
         });
@@ -546,14 +518,12 @@ export class HomeComponent implements OnInit {
           this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
         }
       }
-      await this.delay(500); // wait 0.5s for loading data
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
-        await this.delay(5000); // loading error retry every 5s
+        await this.delay(2000); // loading errored, retry after 2s
         console.log('Retry');
         this.ngOnInit();
       } else {
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart();
       }
     }) ();
   }
