@@ -546,14 +546,12 @@ export class HomeComponent implements OnInit {
           this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
         }
       }
-      await this.delay(500); // wait 0.5s for loading data
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
-        await this.delay(5000); // loading error retry every 5s
+        await this.delay(1000); // loading error retry every 1s
         console.log('Retry');
         this.ngOnInit();
       } else {
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart();
       }
     }) ();
   }
