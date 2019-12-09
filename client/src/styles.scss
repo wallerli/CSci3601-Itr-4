@@ -253,7 +253,7 @@ mat-grid-tile mat-card {
   margin: 10px;
 }
 
-.reportButton {
+.reportButton, .detailTextButton {
   padding: 0 0 !important;
   font-style: italic;
   font-size: 90%;
@@ -264,7 +264,11 @@ mat-grid-tile mat-card {
   border-radius: 18px !important;
 }
 
-.reportButton:hover {
+.detailTextButton {
+  min-width: unset !important;
+}
+
+.reportButton:hover, .detailTextButton:hover {
   text-decoration-line: underline;
 }
 
