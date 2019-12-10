@@ -70,7 +70,7 @@ public class Server {
       } catch (IOException e) {
         System.out.println(e.toString());
       }
-    },                                                                         0,  5, TimeUnit.MINUTES);
+    },                                                                         0,  1, TimeUnit.MINUTES);
 
     //Configure Spark
     port(serverPort);

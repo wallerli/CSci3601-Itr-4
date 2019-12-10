@@ -2,11 +2,16 @@
   <mat-sidenav-content>
     <mat-toolbar class="topBar" color="primary" style="height: 60px" *ngIf="this.router.url !== '/welcome' && this.router.url !== '/'">
       <span class="app-title" id="app-title">
-        Morris Laundry Facilities</span>
+<!--        Morris Laundry Facilities-->
+        <button mat-button (click)="welcome()">
+        Morris Laundry Facilities</button>
+      </span>
     </mat-toolbar>
     <div class="main-content mat-typography">
       <router-outlet></router-outlet>
     </div>
+
+
     <a>
       <div class="colorLayer"></div>
     </a>

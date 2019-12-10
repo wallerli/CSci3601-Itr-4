@@ -54,6 +54,20 @@
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .washerMachinesPanel {
+    width: 50%;
+    float: left;
+  }
+
+  .dryerMachinesPanel {
+    width: 50%;
+    float: right;
+  }
+}
+
+
+
 @media screen and (max-width: 720px) {
   #logoBackground {
     opacity: 0.1;

@@ -7,5 +7,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-constructor(private router: Router) {}
+  constructor(private router: Router) {}
+
+  async welcome() {
+    await this.router.navigateByUrl('/welcome');
+  }
 }
