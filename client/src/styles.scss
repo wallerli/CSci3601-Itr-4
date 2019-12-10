@@ -40,8 +40,16 @@
     color: mat-color($warn);
   }
 
+  .detailButton {
+    background-color: #fff;
+  }
+
   @if $is-dark {
-    #app-title {
+    .detailButton {
+      background-color: #424242;
+    }
+
+    #app-title button {
       font-style: italic;
       font-weight: 400;
     }
@@ -73,28 +81,41 @@
       bottom: 10px;
     }
 
-    .vacant {
-      color: #00ee55 !important;
-    }
-
-    .inUse {
-      color: #ffc520 !important;
-    }
-
     .unavailable {
       color: #aaaaaa !important;
     }
+
+    .unavailable mat-card {
+      border-left: 4px solid #aaaaaa !important;
+    }
+  }
+
+  .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+    color: mat-color($accent);
+  }
+
+  .mat-icon.inUse {
+    color: mat-color($warn)
+  }
+
+  .vacant mat-card {
+    border-left: 4px solid mat-color($accent);
+  }
+
+  .inUse mat-card {
+    border-left: 4px solid mat-color($warn);
   }
 
   .roomHeading {
     padding-top: 5px !important;
-    margin: 0 -5px 10px -5px !important;
+    margin: 0 -5px 0 -5px !important;
     font-style: italic;
     border-radius: 0 !important;
     position: sticky !important;
     top: 60px;
     z-index: 1;
     box-shadow: none !important;
+    padding-bottom: 25px !important;
   }
 
   .topMenu {
@@ -215,12 +236,8 @@ mat-icon {
   margin-left: 9px;
 }
 
-.vacant {
-  color: #007700;
-}
-
-.inUse {
-  color: #a1a100;
+.unavailable mat-card {
+  border-left: 4px solid #555555;
 }
 
 .unavailable {
@@ -236,7 +253,11 @@ mat-icon {
   margin: 5px !important;
 }
 
-.allMachinesPanel .mat-expansion-panel-body {
+.washerMachinesPanel .mat-expansion-panel-body {
+  padding: 0;
+}
+
+.dryerMachinesPanel .mat-expansion-panel-body {
   padding: 0;
 }
 
@@ -249,7 +270,7 @@ mat-grid-tile mat-card {
   margin: 10px;
 }
 
-.reportButton {
+.reportButton, .detailTextButton {
   padding: 0 0 !important;
   font-style: italic;
   font-size: 90%;
@@ -260,7 +281,11 @@ mat-grid-tile mat-card {
   border-radius: 18px !important;
 }
 
-.reportButton:hover {
+.detailTextButton {
+  min-width: unset !important;
+}
+
+.reportButton:hover, .detailTextButton:hover {
   text-decoration-line: underline;
 }
 
@@ -275,12 +300,11 @@ mat-grid-tile mat-card {
 }
 
 .machineName {
+  width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 2px;
   white-space: nowrap;
-}
-
-.roomHeading mat-card {
-  padding: 30px 0 !important;
-  height: auto;
 }
 
 .mat-card-content {
@@ -382,7 +406,7 @@ mat-dialog-container .reportButton {
   font-style: italic;
 }
 
-#app-title {
+#app-title button {
   padding: 12px;
 }
 
@@ -394,7 +418,8 @@ mat-dialog-container .reportButton {
 }
 
 .machineIdentity a {
-  padding-bottom: 5px;
+  display: block;
+  max-width: 200px;
 }
 
 .defaultRoomButton {
@@ -426,9 +451,27 @@ mat-dialog-container .reportButton {
 }
 
 .statusHolder {
-  left: -10px !important;
-  position: absolute;
+  margin-top: 15px !important;
+  padding: 10px !important;
+  height: 20px;
+  border-radius: 20px;
+  margin-left: -3px !important;
 }
+
+#dryerAvail mat-card.statusHolder {
+  margin-top: 45px !important;
+}
+
+.statusHolderTitle {
+  font-weight: normal;
+  font-size: 15px;
+  position: absolute;
+  left: 8px;
+  top: -11px;
+  text-align: left;
+  width: fit-content;
+}
+
 .roomNamer {
   left: -10px !important;
 }
@@ -447,3 +490,62 @@ mat-dialog-container .reportButton {
     text-align: end;
   }
 }
+
+#roomInfo {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+#roomInfo .roomHeading {
+  top: 35px !important;
+  padding: 0;
+  position: initial;
+  z-index: 0;
+  margin-left: 2px !important;
+  margin-right: -11px !important;
+}
+
+#roomInfo #default-selector {
+  z-index: 1;
+  margin-left: 0;
+}
+
+#roomInfo .statusHolder {
+  text-align: center !important;
+}
+
+#roomInfo mat-icon {
+  margin: 0 !important;
+}
+
+#roomInfo .roomStatus {
+  margin: 0 20px;
+}
+
+.subscribeButton {
+  margin-right: 12px !important;
+}
+
+#roomInfo .subscribeButton {
+  margin: 0 !important;
+}
+
+#roomInfo .defaultRoomButton mat-icon {
+  height: 19px !important;
+}
+
+#roomInfo #roomTitleEmpty {
+  margin-top: 45px !important;
+  font-size: 350% !important;
+}
+
+#roomInfo #roomContentEmpty {
+  font-size: 200% !important;
+}
+
+@media screen and (max-width: 500px) {
+  .subscribeButtonText {
+    display: none;
+  }
+}
+

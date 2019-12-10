@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Morris Laundry Facilities</title>
+</head>
+<body>
+<mat-card class="room" style="background-color: transparent">
+  <mat-accordion *ngIf="rooms; else roomsError">
+
+    <button id="roomSelector" mat-stroked-button
+            *ngFor="let room of this.rooms" (click)="navigateTo(room.id)">
+      <a class="roomName" [id]="room.id">
+        <a id="{{room.id + 'Id'}}">{{room.name}}</a><br>
+      </a>
+    </button>
+
+    <button id="allRooms" mat-stroked-button
+            (click)="navigateTo('all')">
+      <a class="roomName" [id]="'empty'">All Rooms</a><br>
+    </button>
+
+  </mat-accordion>
+  <ng-template #roomsError>
+    <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; color:#999">Cannot find
+      any room currently. Please try again later.
+    </div>
+  </ng-template>
+</mat-card>
+</body>
+</html>
