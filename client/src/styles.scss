@@ -36,6 +36,11 @@
     //color: $light-primary-text !important;
   }
 
+  .statusHolderTitle {
+    margin-left: 2px;
+    color: mat-color($light-primary);
+  }
+
   #default-mark, .defaultCheck, #loadingSpinner{
     color: mat-color($mat-umn-maroon, 300);
   }
@@ -60,7 +65,21 @@
     background-color: #fff;
   }
 
+  #welcomeTitle {
+    color: mat-color($light-primary)
+  }
+
   @if $is-dark {
+    .welcomeSelect div {
+      background: #212121 !important;
+      color: #bbb !important;
+      font-style: italic;
+    }
+
+    .morrisAddress {
+      color: #bbb !important;
+      font-style: italic;
+    }
 
     .statusHolderTitle {
       color: white !important;
@@ -163,7 +182,6 @@
     }
   }
 }
-
 
 // Sets up the theming for built in material components with the light theme
 @include angular-material-theme($light-theme);
@@ -429,10 +447,6 @@ mat-dialog-container .reportButton {
 .machineIdentity a {
   display: block;
   max-width: 200px;
-}
-
-#welcomeTitle, .morrisAddress {
-  color: mat-color($light-primary) !important;
 }
 
 .defaultRoomButton {
