@@ -79,7 +79,6 @@ export class HomeComponent implements OnInit {
     {value: 7, name: 'Saturday'},
   ];
 
-  // tslint:disable-next-line:max-line-length
   constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog
               , private cookieService: CookieService, private activatedRoute: ActivatedRoute, private location: Location) {
     this.subscriptionDisabled = true;
@@ -88,10 +87,10 @@ export class HomeComponent implements OnInit {
   }
 
   openSubscription(room_id: string) {
-    // tslint:disable-next-line:max-line-length
-    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
-    // tslint:disable-next-line:max-line-length
-    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
+    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal'
+      && m.type === 'washer' && !m.running).length === 0;
+    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal'
+      && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', id: room_id};
     const dialogRef = this.subscription.open(SubscriptionDialog, {
       width: '500px',
@@ -180,27 +179,31 @@ export class HomeComponent implements OnInit {
         r.isSubscribed = false;
       }
     });
+    this.updateIndicators();
+    if (this.roomId !== undefined && this.roomId !== '') {
+      const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer'
+        && m.status === 'normal' && m.running === false).length;
+      const dryerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'dryer'
+        && m.status === 'normal' && m.running === false).length;
+      this.isSubscribed = this.rooms.filter(r => r.id === this.roomId)[0].isSubscribed;
+      this.subscriptionDisabled = this.isSubscribed || (washerVacant !== 0 && dryerVacant !== 0);
+    }
+    this.buildChart();
+    // this.fakePositions();
+    this.setSelector(1);
+    document.getElementById('all-rooms').style.bottom = '2%';
+    this.scroll('mainBody');
+    if (newId === '') {newId = 'all'; }
+    this.location.replaceState('/home/' + newId);
+  }
+
+  private updateIndicators(): void {
     this.roomWasherVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
     this.roomWasherRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
     this.roomWasherBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
     this.roomDryerVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
     this.roomDryerRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
     this.roomDryerBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
-    if (this.roomId !== undefined && this.roomId !== '') {
-      // tslint:disable-next-line:max-line-length
-      const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer' && m.status === 'normal' && m.running === false).length;
-      // tslint:disable-next-line:max-line-length
-      const dryerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'dryer' && m.status === 'normal' && m.running === false).length;
-      this.isSubscribed = this.rooms.filter(r => r.id === this.roomId)[0].isSubscribed;
-      this.subscriptionDisabled = this.isSubscribed || (washerVacant !== 0 && dryerVacant !== 0);
-    }
-    this.buildChart();
-    this.fakePositions();
-    this.setSelector(1);
-    document.getElementById('all-rooms').style.bottom = '2%';
-    this.scroll('mainBody');
-    if (newId === '') {newId = 'all'; }
-    this.location.replaceState('/home/' + newId);
   }
 
   private updateMachines(): void {
@@ -214,8 +217,8 @@ export class HomeComponent implements OnInit {
       this.numOfBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
       this.numOfWashers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'washer').length;
       this.numOfDryers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'dryer').length;
-      this.mapHeight = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.y), this.filteredMachines[0].position.y);
-      this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
+      // this.mapHeight = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.y), this.filteredMachines[0].position.y);
+      // this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
     }
   }
 
@@ -534,6 +537,7 @@ export class HomeComponent implements OnInit {
       this.homeService.updateRunningStatus(this.filteredMachines, this.machines);
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
+      this.updateIndicators();
       if (this.autoRefresh) {
         await this.delay(60000); // hold 60s for the next refresh
         console.log('Refresh');
@@ -570,14 +574,14 @@ export class HomeComponent implements OnInit {
     document.getElementById('all-rooms').style.bottom = '-50px';
   }
 
-  fakePositions() {
-    const w = 5;
-    const machines = this.filteredMachines;
-    for (let i = 0; i < machines.length; ++i) {
-      machines[i].position.x = i % w * 50;
-      machines[i].position.y = Math.floor(i / w) * 50;
-    }
-  }
+  // fakePositions() {
+  //   const w = 5;
+  //   const machines = this.filteredMachines;
+  //   for (let i = 0; i < machines.length; ++i) {
+  //     machines[i].position.x = i % w * 50;
+  //     machines[i].position.y = Math.floor(i / w) * 50;
+  //   }
+  // }
 
   translateRoomId(roomId: string): string {
     const room = this.rooms.filter(r => r.id === roomId)[0];
