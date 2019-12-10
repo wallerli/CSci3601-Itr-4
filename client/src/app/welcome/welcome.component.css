@@ -5,6 +5,48 @@
 .morrisAddress {
   display: block;
   text-align: center;
+  margin-top: auto;
+  color: #777;
+  font-size: 15px;
+}
+
+#welcomeTitle {
+  display: block;
+  text-align: center;
+  font-size: 110%;
+}
+
+.room {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #aaa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.welcomeSelect {
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  left: 0;
+  top: -12px;
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+}.room {
+  background: transparent;
+}
+
+.morrisAddress {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  color: #777;
+  font-size: 15px;
 }
 
 #welcomeTitle {
@@ -12,13 +54,126 @@
   text-align: center;
 }
 
+.room {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #aaa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .welcomeSelect {
-  text-align: center !important;
-  font-size: 15px !important;
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  left: 0;
+  top: -12px;
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+}
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+  color: #777;
+}
+
+.room button {
+  border-radius: 19px;
+  margin: 5px 0;
+}
+
+#welcomeTitle {
+  margin-top: 200px;
+  font-size: 30px;
 }
 
 @media screen and (max-width: 500px) {
   .room button {
     display: block !important;
+    width: 100%;
   }
+
+  .room button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #welcomeTitle {
+    margin-top: 50px;
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+
+  .room {
+    margin-top: 80px;
+    margin-bottom: 70px;
+  }
+
+  .room button {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+.room {
+  max-width: 750px !important;
+}
+
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+  color: #777;
+}
+
+.room button {
+  border-radius: 19px;
+  margin: 5px 0;
+}
+
+#welcomeTitle {
+  margin-top: 200px;
+  font-size: 30px;
+}
+
+@media screen and (max-width: 500px) {
+  .room button {
+    display: block !important;
+    width: 100%;
+  }
+
+  .room button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #welcomeTitle {
+    margin-top: 50px;
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+
+  .room {
+    margin-top: 80px;
+    margin-bottom: 70px;
+  }
+
+  .room button {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+.room {
+  max-width: 750px !important;
 }

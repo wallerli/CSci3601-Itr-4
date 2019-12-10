@@ -431,6 +431,10 @@ mat-dialog-container .reportButton {
   max-width: 200px;
 }
 
+#welcomeTitle, .morrisAddress {
+  color: mat-color($light-primary) !important;
+}
+
 .defaultRoomButton {
   padding: 0 !important;
   font-style: italic;

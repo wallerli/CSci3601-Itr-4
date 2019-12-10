@@ -11,7 +11,9 @@
   Morris Laundry Facilities
 </div>
 <mat-card class="room">
-  <mat-card-title class="welcomeSelect" style="padding-bottom: 10px">Please Select a Room Below</mat-card-title>
+  <mat-card-title class="welcomeSelect" style="padding-bottom: 10px">
+    <div>Please Select a Room Below</div>
+  </mat-card-title>
   <mat-accordion *ngIf="rooms; else roomsError">
     <a class="roomHolder">
       <button class="welcomeRoom" mat-raised-button
