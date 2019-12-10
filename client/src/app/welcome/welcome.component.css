@@ -1,3 +1,143 @@
-.room mat-card {
-  background-color: transparent !important;
+.room {
+  background: transparent;
+}
+
+.morrisAddress {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  color: #777;
+  font-size: 15px;
+  margin-bottom: 50px;
+}
+
+.room {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #aaa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.welcomeSelect {
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  left: 0;
+  top: -12px;
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+}.room {
+  background: transparent;
+}
+
+.morrisAddress {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  color: #777;
+  font-size: 15px;
+}
+
+.room {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #aaa;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  max-width: 750px !important;
+}
+
+.welcomeSelect {
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  left: 0;
+  top: -12px;
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+}
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+  color: #777;
+}
+
+.room button {
+  border-radius: 19px;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 500px) {
+  .room button {
+    display: block !important;
+    width: 100%;
+  }
+
+  .room button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+  color: #777;
+}
+
+.room button {
+  border-radius: 19px;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 500px) {
+  .room button {
+    display: block !important;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .room {
+    margin-right: 20px;
+    margin-left: 20px;
+    border-color: #999 !important;
+  }
+
+  .morrisAddress {
+    font-size: 95%;
+  }
+}
+
+@media screen and (min-width: 500px) {
+
+  .room {
+    margin-top: 80px;
+    margin-bottom: 70px;
+  }
+
+  .room button {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+.room {
+  max-width: 750px !important;
+}
+
+button {
+  box-shadow: none !important;
 }

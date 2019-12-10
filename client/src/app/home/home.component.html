@@ -1,7 +1,7 @@
 <div layout-gt-sm="row" class="home">
   <div flex-gt-sm="80" flex-offset-gt-sm="10" id="mainBody" style="margin-bottom: 70px">
 
-    <button mat-raised-button color="warn" id="all-rooms"
+    <button mat-raised-button  id="all-rooms"
             (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
       <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
     </button>
@@ -153,7 +153,7 @@
                       Time remaining <a class="time"
                                         style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                     </p>
-                    <mat-progress-bar color="warn" mode="determinate"
+                    <mat-progress-bar class="runningMachine" color="warn" mode="determinate"
                                       value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
@@ -270,7 +270,7 @@
                       Time remaining <a class="time"
                                         style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                     </p>
-                    <mat-progress-bar color="warn" mode="determinate"
+                    <mat-progress-bar class="runninMachine" color="warn" mode="determinate"
                                       value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
                   <a id="reportId" class="detailTextButton" mat-button
@@ -438,9 +438,10 @@
     </ng-template>
   </div>
 </div>
+<!--<img id="logoBackground" src="https://i.imgur.com/AWVK4eh.png" alt="UMM Tricolor Logo">-->
 
 <div id="loadCover"
      style="z-index: 2; position: fixed; top:0; left: 0; bottom: 0; right: 0; display: block; background: rgba(30,30,30,0.75)">
-  <mat-spinner color="warn" mode="indeterminate" strokeWidth="3"
+  <mat-spinner id="loadingSpinner" mode="indeterminate" strokeWidth="3"
                style="top: 50%; margin: -65px auto auto;"></mat-spinner>
 </div>
