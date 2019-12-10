@@ -36,20 +36,60 @@
     //color: $light-primary-text !important;
   }
 
-  #default-mark {
-    color: mat-color($warn);
+  .statusHolderTitle {
+    margin-left: 2px;
+    color: mat-color($light-primary);
+  }
+
+  #default-mark, .defaultCheck, #loadingSpinner{
+    color: mat-color($mat-umn-maroon, 300);
+  }
+
+  #loadCover{
+    z-index: 2;
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    background: rgba(30,30,30,0.75);
+  }
+
+  #all-rooms{
+    background-color: mat-color($mat-umn-maroon, 300);
+    color: white;
   }
 
   .detailButton {
     background-color: #fff;
   }
 
+  #welcomeTitle {
+    color: mat-color($light-primary)
+  }
+
   @if $is-dark {
+    .welcomeSelect div {
+      background: #212121 !important;
+      color: #bbb !important;
+      font-style: italic;
+    }
+
+    .morrisAddress {
+      color: #bbb !important;
+      font-style: italic;
+    }
+
+    .statusHolderTitle {
+      color: white !important;
+    }
+
     .detailButton {
       background-color: #424242;
     }
 
-    #app-title button {
+    #app-title button{
       font-style: italic;
       font-weight: 400;
     }
@@ -86,7 +126,7 @@
     }
 
     .unavailable mat-card {
-      border-left: 4px solid #aaaaaa !important;
+      border-left: 8px solid #aaaaaa !important;
     }
   }
 
@@ -99,11 +139,11 @@
   }
 
   .vacant mat-card {
-    border-left: 4px solid mat-color($accent);
+    border-left: 8px solid mat-color($accent);
   }
 
   .inUse mat-card {
-    border-left: 4px solid mat-color($warn);
+    border-left: 8px solid mat-color($warn);
   }
 
   .roomHeading {
@@ -143,7 +183,6 @@
     }
   }
 }
-
 
 // Sets up the theming for built in material components with the light theme
 @include angular-material-theme($light-theme);
@@ -237,7 +276,7 @@ mat-icon {
 }
 
 .unavailable mat-card {
-  border-left: 4px solid #555555;
+  border-left: 8px solid #555555;
 }
 
 .unavailable {
@@ -309,17 +348,6 @@ mat-grid-tile mat-card {
 
 .mat-card-content {
   height: auto;
-}
-
-.welcomeMessage {
-  line-height: 1.15;
-  font-size: 30px;
-  font-weight: lighter;
-  font-style: italic;
-}
-
-.welcomeMessage div {
-  margin: 5px 0;
 }
 
 .roomStatus mat-icon, #default-selector mat-icon {

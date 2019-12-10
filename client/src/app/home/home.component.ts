@@ -145,8 +145,10 @@ export class HomeComponent implements OnInit {
   }
 
   public updateCookies(id: string, name: string): void {
-    this.cookieService.set('room_id', id);
-    this.cookieService.set('room_name', name);
+    this.cookieService.set('room_id', id, undefined, '/');
+    this.cookieService.set('room_id', id, undefined, '/home');
+    this.cookieService.set('room_name', name, undefined, '/');
+    this.cookieService.set('room_name', name, undefined, '/home');
   }
 
   public defaultSet(name: string): boolean {
