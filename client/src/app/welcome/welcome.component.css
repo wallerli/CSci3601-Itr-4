@@ -1,84 +1,24 @@
-.room  {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: transparent;
-  border: 2px solid;
-  border-radius: 20px;
-}
-.logotop {
-  width: 250px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 30px;
-  padding-bottom: 10px;
+.room {
+  background: transparent;
 }
 
-/*.logobottom {*/
-/*  display: block;*/
-/*  padding-top: 30px;*/
-/*  padding-bottom: 30px;*/
-/*  position: absolute;*/
-/*  margin-left: auto;*/
-/*}*/
-
-.welcomeRoom {
-  height: 40px;
-  border-radius: 20px;
-}
-
-#welcomeGreetings {
-  font-family: 'Libre Baskerville', serif;
-  text-align: center;
-  border-radius: 10px;
-  font-size: medium;
-  width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.5;
-}
 .morrisAddress {
+  display: block;
   text-align: center;
-  bottom: 0;
-  padding-bottom: 40px;
-  position: fixed;
-  left: 50%;
-  margin-left: -116px;
-  width: 232px;
 }
 
-.welcomeSelect{
-  font-family: 'Libre Baskerville', serif;
-  font-size: medium;
-  z-index: 5;
+#welcomeTitle {
+  display: block;
+  text-align: center;
 }
 
-/*@media screen and (min-width: 500px) {*/
-
-/*  .logobottom {*/
-/*    display: block;*/
-/*    bottom: 0;*/
-/*    position: fixed;*/
-/*    left: 50%;*/
-/*    margin-left: -90px;*/
-/*    padding-bottom: 50px;*/
-/*    padding-top: 200px;*/
-/*    z-index: -1;*/
-/*  }*/
-/*}*/
-
-@media screen and (max-width: 500px){
-  #welcomeGreetings{
-    width: 80%;
-  }
-  .welcomeRoom{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 182px;
-  }
-}
-
-.room.mat-card {
+.welcomeSelect {
   text-align: center !important;
+  font-size: 15px !important;
+}
+
+@media screen and (max-width: 500px) {
+  .room button {
+    display: block !important;
+  }
 }

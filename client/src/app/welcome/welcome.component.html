@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Morris Laundry Facilities</title>
+  <meta charset="UTF-8">
+  <title>Morris Laundry Facilities</title>
 </head>
 <body>
 
 <!--<img class="logotop" src="https://i.imgur.com/AWVK4eh.png" alt="UMM Tricolor Logo" style="padding-top: 150px">-->
-<div id="welcomeGreetings">
-  <div style="font-size: xx-large; padding-bottom: 120px; padding-top: 150px"><b>Morris Laundry Facilities</b></div>
+<div id="welcomeTitle">
+  Morris Laundry Facilities
 </div>
-<mat-card class="room" >
+<mat-card class="room">
   <mat-card-title class="welcomeSelect" style="padding-bottom: 10px">Please Select a Room Below</mat-card-title>
   <mat-accordion *ngIf="rooms; else roomsError">
     <a class="roomHolder">
@@ -31,16 +31,15 @@
 
   </mat-accordion>
   <ng-template #roomsError>
-    <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; color:#999">Cannot find
-      any room currently. Please try again later.
+    <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; color:#999">
+      Cannot find any room currently. Please try again later.
     </div>
   </ng-template>
 </mat-card>
 
-</body>
 <div class="morrisAddress">
   Morris Laundry Facilities<br>
   600 E 4th St., Morris, MN 56267-2132
 </div>
-
+</body>
 </html>
