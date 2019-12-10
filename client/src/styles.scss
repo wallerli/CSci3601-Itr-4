@@ -31,25 +31,77 @@
     background-color: #EBE1E0;
   }
 
+  .morrisAddress{
+    color: mat-color($mat-umn-maroon, 500);
+  }
+
   .roomHeading.mat-card {
     background: #EBE1E0;
     //color: $light-primary-text !important;
   }
 
-  #default-mark {
-    color: mat-color($warn);
+  .welcomeSelect{
+    background: #ebe1e0 !important;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 8px;
+    font-weight: normal;
+    font-size: 15px;
+    position: absolute;
+    left: 8px;
+    top: -25px;
+    text-align: left;
+    width: fit-content;
   }
+
+  #default-mark, .defaultCheck, #loadingSpinner{
+    color: mat-color($mat-umn-maroon, 300);
+  }
+
+  #loadCover{
+    z-index: 2;
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    background: rgba(30,30,30,0.75);
+  }
+
+  #all-rooms{
+    background-color: mat-color($mat-umn-maroon, 300);
+    color: white;
+  }
+  #welcomeGreetings, .welcomeSelect{
+    color: #881818;
+    text-shadow: 1px 1px 3px grey;
+  }
+
 
   .detailButton {
     background-color: #fff;
   }
 
   @if $is-dark {
+
+    .welcomeSelect{
+      background: #212121 !important;
+      border: 2px solid white;
+    }
+
+    #welcomeGreetings, .welcomeSelect{
+      color: #b81a1a;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    .morrisAddress{
+      color: #b81a1a;
+    }
     .detailButton {
       background-color: #424242;
     }
-
-    #app-title button {
+    #app-title button{
       font-style: italic;
       font-weight: 400;
     }
@@ -81,6 +133,9 @@
       bottom: 10px;
     }
 
+    //.welcomeRoom {
+    //  background-color: #8C1919;
+    //}
     .unavailable {
       color: #aaaaaa !important;
     }

@@ -5,20 +5,29 @@
     <title>Morris Laundry Facilities</title>
 </head>
 <body>
-<mat-card class="room" style="background-color: transparent">
+
+<!--<img class="logotop" src="https://i.imgur.com/AWVK4eh.png" alt="UMM Tricolor Logo" style="padding-top: 150px">-->
+<div id="welcomeGreetings">
+  <div style="font-size: xx-large; padding-bottom: 120px; padding-top: 150px"><b>Morris Laundry Facilities</b></div>
+</div>
+<mat-card class="room" >
+  <mat-card-title class="welcomeSelect" style="padding-bottom: 10px">Please Select a Room Below</mat-card-title>
   <mat-accordion *ngIf="rooms; else roomsError">
+    <a class="roomHolder">
+      <button class="welcomeRoom" mat-raised-button
+              *ngFor="let room of this.rooms" (click)="navigateTo(room.id)">
+        <a class="roomName" [id]="room.id">
+          <a id="{{room.id + 'Id'}}">{{room.name}}</a><br>
+        </a>
+      </button>
+    </a>
 
-    <button id="roomSelector" mat-stroked-button
-            *ngFor="let room of this.rooms" (click)="navigateTo(room.id)">
-      <a class="roomName" [id]="room.id">
-        <a id="{{room.id + 'Id'}}">{{room.name}}</a><br>
-      </a>
-    </button>
-
-    <button id="allRooms" mat-stroked-button
-            (click)="navigateTo('all')">
-      <a class="roomName" [id]="'empty'">All Rooms</a><br>
-    </button>
+    <a class="roomHolder">
+      <button class="welcomeRoom" mat-raised-button
+              (click)="navigateTo('all')">
+        <a class="roomName" [id]="'empty'">All Rooms</a><br>
+      </button>
+    </a>
 
   </mat-accordion>
   <ng-template #roomsError>
@@ -27,5 +36,11 @@
     </div>
   </ng-template>
 </mat-card>
+
 </body>
+<div class="morrisAddress">
+  Morris Laundry Facilities<br>
+  600 E 4th St., Morris, MN 56267-2132
+</div>
+
 </html>
