@@ -21,7 +21,6 @@ import {Location} from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   /*
    * This is a switch for the E2E test
    * before running the tests
@@ -54,14 +53,11 @@ export class HomeComponent implements OnInit {
   public numOfVacant: number;
   public numOfAll: number;
 
-  public mapWidth: number;
-  public mapHeight: number;
-
   public isSubscribed: boolean;
   public subscriptionDisabled: boolean;
 
   public history: History[];
-  // public filteredHistory: History[];
+
   canvas: any;
   ctx: any;
   myChart: any;
@@ -217,8 +213,6 @@ export class HomeComponent implements OnInit {
       this.numOfBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
       this.numOfWashers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'washer').length;
       this.numOfDryers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'dryer').length;
-      // this.mapHeight = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.y), this.filteredMachines[0].position.y);
-      // this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
     }
   }
 
@@ -345,12 +339,7 @@ export class HomeComponent implements OnInit {
             },
             tooltips: {
               enabled: false,
-              // callbacks: {
-              //   label: function(tooltipItem) {
-              //     console.log(tooltipItem);
-              //     return tooltipItem.yLabel;
-              //   }
-              // }
+
             },
             scales: {
               xAxes: [{
@@ -574,15 +563,6 @@ export class HomeComponent implements OnInit {
     document.getElementById('all-rooms').style.bottom = '-50px';
   }
 
-  // fakePositions() {
-  //   const w = 5;
-  //   const machines = this.filteredMachines;
-  //   for (let i = 0; i < machines.length; ++i) {
-  //     machines[i].position.x = i % w * 50;
-  //     machines[i].position.y = Math.floor(i / w) * 50;
-  //   }
-  // }
-
   translateRoomId(roomId: string): string {
     const room = this.rooms.filter(r => r.id === roomId)[0];
     return room.name;
@@ -638,5 +618,3 @@ export class HomeComponent implements OnInit {
     return Math.round(Math.min(window.innerWidth / 680, 2)) === 2;
   }
 }
-
-
