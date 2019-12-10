@@ -88,6 +88,7 @@
     .detailButton {
       background-color: #424242;
     }
+
     #app-title button{
       font-style: italic;
       font-weight: 400;
@@ -125,7 +126,7 @@
     }
 
     .unavailable mat-card {
-      border-left: 4px solid #aaaaaa !important;
+      border-left: 8px solid #aaaaaa !important;
     }
   }
 
@@ -138,11 +139,11 @@
   }
 
   .vacant mat-card {
-    border-left: 4px solid mat-color($accent);
+    border-left: 8px solid mat-color($accent);
   }
 
   .inUse mat-card {
-    border-left: 4px solid mat-color($warn);
+    border-left: 8px solid mat-color($warn);
   }
 
   .roomHeading {
@@ -275,7 +276,7 @@ mat-icon {
 }
 
 .unavailable mat-card {
-  border-left: 4px solid #555555;
+  border-left: 8px solid #555555;
 }
 
 .unavailable {
