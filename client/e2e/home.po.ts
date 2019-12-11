@@ -1,6 +1,27 @@
 import {browser, element, by, promise, ElementFinder} from 'protractor';
 
 export class HomePage {
+
+  Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  getDateToday() {
+    let today = new Date();
+    let dd: number = today.getDay();
+    return this.Days[dd];
+  }
+
+  getNextDay() {
+    let today = new Date();
+    let dd: number = today.getDay();
+    return this.Days[dd];
+  }
+
+  getPreviousDay() {
+    let today = new Date();
+    let dd: number = today.getDay();
+    return this.Days[dd];
+  }
+
   navigateTo(): promise.Promise<any> {
     return browser.get('/');
   }
@@ -15,6 +36,7 @@ export class HomePage {
       });
       return 'highlighted';
     }
+
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
   }
 
@@ -53,36 +75,36 @@ export class HomePage {
   }
 
 
-  clickGayHall(){
+  clickGayHall() {
     this.click('gayId');
   }
 
-  clickPineHall(){
+  clickPineHall() {
     this.click('pineId');
   }
 
-  clickApartment(){
+  clickApartment() {
     this.click('the_apartmentsId');
   }
 
-  clickRoomPanel(){
+  clickRoomPanel() {
     this.click('home-rooms-card');
   }
 
-  clickAllRooms(){
+  clickAllRooms() {
     this.click('allRooms');
   }
 
 
-  buttonClickable(Id: string){
+  buttonClickable(Id: string) {
     return element(by.id(Id)).isEnabled();
   }
 
-  boxChecked(Id: string){
+  boxChecked(Id: string) {
     return element(by.id(Id));
   }
 
-  getTextWithID(Id: string){
+  getTextWithID(Id: string) {
     const text = element(by.id(Id)).getText();
     return text;
   }
@@ -155,5 +177,6 @@ export class HomePage {
     this.highlightElement(by.className(cssOfElement));
     return element(by.className(cssOfElement)).getText();
   }
+
 
 }

@@ -110,8 +110,86 @@ describe('Home Page(Gay Hall)', () => {
     });
   });
 
+  xdescribe('Cookie for default page', () => {
+
+    it('should have a make default button with correct explanation', () => {
+      expect(page.elementExistsWithId('defaultRoomButton'));
+      expect(page.getTextFromClassName('default-selector-text')).toEqual('Remember current room on your next visit');
+    });
+
+    it('should have an unset default button with correct explanation after you make the page as default', () => {
+      page.click('defaultRoomButton');
+      expect(page.elementExistsWithId('unsetDefaultRoomButton'));
+      expect(page.getTextFromClassName('default-selector-text')).toEqual('Remember current room on your next visit');
+    });
+
+    it('should set gay hall as default room', () => {
+      page.click('defaultRoomButton');
+      expect(page.elementExistsWithId('default-mark'));
+      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall default');
+      page.navigateTo();
+      browser.getCurrentUrl().then(function (url) {
+        expect(url).toEqual('http://localhost:9000/home/gay');
+      })
+    });
+
+    it('should set independence hall as default if we set it to be default after set any other before', () => {
+      page.click('defaultRoomButton');
+      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall default');
+      page.navigateTo();
+      browser.getCurrentUrl().then(function (url) {
+        expect(url).toEqual('http://localhost:9000/home/gay');
+      })
+      page.click('all-rooms');
+      page.click('independenceId');
+      expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall');
+      page.click('defaultRoomButton');
+      expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall default');
+      page.click('all-rooms');
+      page.click('gayId');
+      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall');
+      page.navigateTo();
+      browser.getCurrentUrl().then(function (url) {
+        expect(url).toEqual('http://localhost:9000/home/independence');
+      })
+    });
+
+    it('should stay at the same room after refresh the page with other room set to be default', () => {
+      page.click('defaultRoomButton');
+      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall default');
+      page.click('all-rooms');
+      page.click('independenceId');
+      expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall');
+      browser.refresh();
+      browser.getCurrentUrl().then(function (url) {
+        expect(url).toEqual('http://localhost:9000/home/independence');
+      })
+    });
+  });
+
+  describe('Graph on Home Page', () => {
+
+    xit('should get and display a graph', () => {
+      expect(page.elementExistsWithId('predictionGraphTitle'));
+    });
+
+    xit('should get and display the correct title for the graph', () => {
+      expect(page.getTextFromField('predictionGraphTitle')).toEqual('Busy Time on ' + page.getDateToday());
+    });
+
+    xit('should show the next day\'s data when you click the button with navigate_next icon', () => {
+      page.click('next-day');
+      expect(page.getTextFromField('predictionGraphTitle')).toEqual('Busy Time on ' + page.getNextDay());
+    });
+
+    xit('should show the previous day\'s data when you click the button with navigate_before icon', () => {
+      page.click('next-day');
+      expect(page.getTextFromField('predictionGraphTitle')).toEqual('Busy Time on ' + page.getPreviousDay());
+    });
+
+  });
+
   xit('should display a graph when a room is selected', () => {
-    page.clickGayHall();
     expect(page.elementExistsWithId('predictionGraphTitle'));
   });
 
@@ -178,47 +256,6 @@ describe('Home Page(Gay Hall)', () => {
     const b = page.getUniqueMachine('69dacaa7-ee11-11e9-8256-56000218142a');
     expect(a).not.toEqual(b);
   }, 100000);
-
-  xdescribe('Cookie default page', () => {
-
-    it('should have a make default button when you select a specific room', () => {
-      page.navigateTo();
-      page.clickGayHall();
-      expect(page.elementExistsWithId('defaultRoomButton'));
-    });
-
-    it('should have an unset default button when you set a room to be default', () => {
-      page.navigateTo();
-      page.clickGayHall();
-      page.click('defaultRoomButton');
-      expect(page.elementExistsWithId('unsetDefaultRoomButton'));
-    });
-
-    it('should set gay hall as default room', () => {
-      page.navigateTo();
-      page.click('gayId');
-      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall');
-      page.click('defaultRoomButton');
-      page.navigateTo();
-      expect(page.elementExistsWithId('default-mark'));
-      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall default');
-    });
-
-    it('should set independence hall as default if we set it to be default after set any other before', () => {
-      page.navigateTo();
-      page.click('gayId');
-      page.click('defaultRoomButton');
-      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall default');
-      page.click('all-rooms');
-      page.click('independenceId');
-      expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall');
-      page.click('defaultRoomButton');
-      expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall default');
-      page.click('all-rooms');
-      page.click('gayId');
-      expect(page.getTextFromField('roomTitle')).toEqual('Gay Hall');
-    });
-  });
 
   xdescribe('Validation of subscription of rooms', () => {
 
