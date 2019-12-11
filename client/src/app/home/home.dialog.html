@@ -23,7 +23,7 @@
         <p style="bottom: 50px; top: auto; text-align: right">
           Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{data.machine.vacantTime}}</a> min
         </p>
-        <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
+        <mat-progress-bar  class="vacant" mode="determinate" value="0"></mat-progress-bar>
       </div>
     </mat-card>
   </mat-dialog-content>
@@ -48,7 +48,7 @@
                             style="font-size: 300%; font-weight: lighter">{{data.machine.remainingTime}}</a>
           min
         </p>
-        <mat-progress-bar color="warn" mode="determinate"
+        <mat-progress-bar  mode="determinate"
                           value="{{100-data.machine.remainingTime / 0.35}}"></mat-progress-bar>
       </div>
     </mat-card>
@@ -71,7 +71,7 @@
         <p style="bottom: 50px; top: auto; text-align: right">
           <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
         </p>
-        <mat-progress-bar color="dark-red" mode="determinate" value="100"></mat-progress-bar>
+        <mat-progress-bar class="unavailable" mode="determinate" value="0"></mat-progress-bar>
       </div>
     </mat-card>
   </mat-dialog-content>
@@ -94,7 +94,7 @@
         <p style="bottom: 50px; top: auto; text-align: right">
           Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{data.machine.vacantTime}}</a> min
         </p>
-        <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
+        <mat-progress-bar class="vacant" mode="determinate" value="0"></mat-progress-bar>
       </div>
     </mat-card>
   </mat-dialog-content>
@@ -119,7 +119,7 @@
                             style="font-size: 300%; font-weight: lighter">{{data.machine.remainingTime}}</a>
           min
         </p>
-        <mat-progress-bar color="warn" mode="determinate"
+        <mat-progress-bar  mode="determinate"
                           value="{{100-data.machine.remainingTime / 0.6}}"></mat-progress-bar>
       </div>
     </mat-card>
@@ -142,7 +142,7 @@
         <p style="bottom: 50px; top: auto; text-align: right">
           <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
         </p>
-        <mat-progress-bar color="dark-red" mode="determinate" value="100"></mat-progress-bar>
+        <mat-progress-bar class="unavailable"  mode="determinate" value="0"></mat-progress-bar>
       </div>
 
     </mat-card>
@@ -179,7 +179,7 @@
           </mat-error>
         </mat-form-field>
         <button mat-raised-button id="confirmAddSubButton" type="button"
-                color="warn" (click)="addNewSubscription()"
+                color="primary" (click)="addNewSubscription()"
                 [disabled]="!addSubForm.valid ">Subscribe
         </button>
       </form>
