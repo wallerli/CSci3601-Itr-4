@@ -5,13 +5,13 @@
     <p class="sub-title">
       Notify me when one type of the machines in {{this.name}} is available
     </p>
-    <form [formGroup]="options" style="display: inline">
+    <form [formGroup]="options"style="display: inline">
       <mat-radio-group #input id="typeField" [(ngModel)]="data.subscription.type" formControlName="type" required>
         <mat-radio-button [id]="'sub-washer'" class="subTypeButton" [value]="'washer'" [checked]="this.outOfWashers && !this.outOfDryers"
-                          [disabled]="!this.outOfWashers" color="warn">Washer
+                          [disabled]="!this.outOfWashers" color="primary">Washer
         </mat-radio-button>
         <mat-radio-button [id]="'sub-dryer'" class="subTypeButton" [value]="'dryer'" [checked]="!this.outOfWashers && this.outOfDryers"
-                          [disabled]="!this.outOfDryers" color="warn">Dryer
+                          [disabled]="!this.outOfDryers" color="primary">Dryer
         </mat-radio-button>
       </mat-radio-group>
     </form>
