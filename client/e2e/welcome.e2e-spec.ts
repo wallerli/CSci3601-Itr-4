@@ -1,7 +1,7 @@
 import {WelcomePage} from './welcome.po';
 import {browser} from "protractor";
 
-xdescribe('Welcome Page', () => {
+describe('Welcome Page', () => {
   let page: WelcomePage;
 
   beforeEach(() => {
@@ -15,12 +15,12 @@ xdescribe('Welcome Page', () => {
     })
   });
 
-  it('should get and highlight Home title attribute ', () => {
+  it('should get and highlight Main title attribute ', () => {
     page.navigateTo();
     expect(page.getTextFromField('app-title')).toEqual('Morris Laundry Facilities');
   });
 
-  it('should still be on welcome page when click the home title ', () => {
+  it('should still be on welcome page when click the Main Title ', () => {
     page.navigateTo();
     expect(page.elementExistsWithId('app-title'));
     page.click('app-title');

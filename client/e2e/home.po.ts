@@ -1,6 +1,4 @@
 import {browser, element, by, promise, ElementFinder} from 'protractor';
-import {Key} from 'selenium-webdriver';
-import {getUrlScheme} from "@angular/compiler";
 
 export class HomePage {
   navigateTo(): promise.Promise<any> {
@@ -20,33 +18,9 @@ export class HomePage {
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
   }
 
-  getHomePanelTitle() {
-    const title = element(by.id('home-rooms-card')).getText();
-    this.highlightElement(by.id('home-rooms-card'));
-    return title;
-  }
-
   getUniqueRoomTitle() {
     const title = element(by.id('machines-grid')).getText();
     this.highlightElement(by.id('machines-grid'));
-    return title;
-  }
-
-  getGayHallTitleInHomePanel() {
-    const title = element(by.id('gayId')).getText();
-    this.highlightElement(by.id('gayId'));
-    return title;
-  }
-
-  getIndependenceHallTitleInHomePanel() {
-    const title = element(by.id('independenceId')).getText();
-    this.highlightElement(by.id('independenceId'));
-    return title;
-  }
-
-  getEntrance() {
-    const title = element(by.id('roomEntrance')).getText();
-    this.highlightElement(by.id('roomEntrance'));
     return title;
   }
 
@@ -72,84 +46,11 @@ export class HomePage {
     return null;
   }
 
-  getBlakelyHallTitleInHomePanel() {
-    const title = element(by.id('blakelyId')).getText();
-    this.highlightElement(by.id('blakelyId'));
-    return title;
-  }
-
-  getSpoonerHallTitleInHomePanel() {
-    const title = element(by.id('spoonerId')).getText();
-    this.highlightElement(by.id('spoonerId'));
-    return title;
-  }
-
-  getGreenPrairieHallTitleInHomePanel() {
-    const title = element(by.id('green_prairieId')).getText();
-    this.highlightElement(by.id('green_prairieId'));
-    return title;
-  }
-
-  getPineHallTitleInHomePanel() {
-    const title = element(by.id('pineId')).getText();
-    this.highlightElement(by.id('pineId'));
-    return title;
-  }
-
-  getApartmentHallTitleInHomePanel() {
-    const title = element(by.id('the_apartmentsId')).getText();
-    this.highlightElement(by.id('the_apartmentsId'));
-    return title;
-  }
-
-  getGayHallAvailability() {
-    const availability = element(by.id('gayAvailability')).getText();
-    this.highlightElement(by.id('gayAvailability'));
-    return availability;
-  }
-
-  getIndependenceHallAvailability() {
-    const availability = element(by.id('independenceAvailability')).getText();
-    this.highlightElement(by.id('independenceAvailability'));
-    return availability;
-  }
-
-  getBlakelyHallAvailability() {
-    const availability = element(by.id('blakelyAvailability')).getText();
-    this.highlightElement(by.id('blakelyAvailability'));
-    return availability;
-  }
-
-  getSpoonerHallAvailability() {
-    const availability = element(by.id('spoonerAvailability')).getText();
-    this.highlightElement(by.id('spoonerAvailability'));
-    return availability;
-  }
-
-  getGreenPrairieHallAvailability() {
-    const availability = element(by.id('green_prairieAvailability')).getText();
-    this.highlightElement(by.id('green_prairieAvailability'));
-    return availability;
-  }
-
-  getPineHallAvailability() {
-    const availability = element(by.id('pineAvailability')).getText();
-    this.highlightElement(by.id('pineAvailability'));
-    return availability;
-  }
-
-  getApartmentHallAvailability() {
-    const availability = element(by.id('the_apartmentsAvailability')).getText();
-    this.highlightElement(by.id('the_apartmentsAvailability'));
-    return availability;
-  }
-
   getUniqueMachine(Id: string) {
     this.highlightElement(by.id(Id));
     const title = element(by.id(Id)).getText();
     return title;
   }
-
 
 
   clickGayHall(){
@@ -224,11 +125,11 @@ export class HomePage {
     return element(by.id(idOfElement)).isPresent();
   }
 
-  elementExistsWithCss(cssOfElement: string): promise.Promise<boolean> {
-    if (element(by.id(cssOfElement)).isPresent()) {
-      this.highlightElement(by.id(cssOfElement));
+  elementExistsWithClassName(cssOfElement: string): promise.Promise<boolean> {
+    if (element(by.className(cssOfElement)).isPresent()) {
+      this.highlightElement(by.className(cssOfElement));
     }
-    return element(by.css(cssOfElement)).isPresent();
+    return element(by.className(cssOfElement)).isPresent();
   }
 
   click(idOfButton: string): promise.Promise<void> {
