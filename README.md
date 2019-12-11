@@ -81,6 +81,8 @@ colors of machine status/theme
 
 
 ## ToDo List & Known Issues:
+using cookies to remember which machines that have been subscribed to and prevent users subscribing again within a short amount of time.
+after refreshing page, still display machine with notifications turned on.
 
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
