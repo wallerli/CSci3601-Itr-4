@@ -41,8 +41,11 @@
     color: mat-color($light-primary);
   }
 
-  #default-mark, .defaultCheck, #loadingSpinner{
-    color: mat-color($mat-umn-maroon, 300);
+  #default-mark, #defaultCheck{
+    color: mat-color($mat-umn-maroon, 300)!important;
+  }
+  .mat-progress-spinner circle, .mat-spinner circle{
+    stroke: mat-color($mat-umn-maroon, 300)!important;
   }
 
   #loadCover{
@@ -69,7 +72,34 @@
     color: mat-color($light-primary)
   }
 
+  .unavailable .mat-progress-bar-buffer {
+    background-color: #555 !important;
+  }
+
+  .vacant mat-card {
+    border-left: 8px solid mat-color($mat-green, 700);
+  }
+
+  .vacant{
+    color: mat-color($mat-green, 700);
+  }
+
   @if $is-dark {
+    .vacant{
+      color: mat-color($mat-green, 400);
+    }
+    .subTypeButton{
+      border-color: mat-color($mat-umn-maroon, 300);
+    }
+
+    #default-mark, #defaultCheck{
+      color: mat-color($mat-umn-maroon, 300)!important;
+    }
+
+    .mat-progress-spinner circle, .mat-spinner circle{
+      stroke: mat-color($mat-umn-maroon, 300)!important;
+    }
+
     .welcomeSelect div {
       background: #212121 !important;
       color: #bbb !important;
@@ -125,13 +155,43 @@
       color: #aaaaaa !important;
     }
 
+    .unavailable .mat-progress-bar-buffer {
+      background-color: #aaa !important;
+    }
+
     .unavailable mat-card {
       border-left: 8px solid #aaaaaa !important;
     }
+    .mat-icon.vacant{
+      color: mat-color($mat-green, 700);
+    }
+    .vacant .mat-progress-bar-buffer{
+      background-color: mat-color($mat-green, 700)!important;
+    }
+
+    .mat-icon.inUse{
+      color: mat-color($mat-umn-gold, 800)!important;
+    }
+    .runningMachine mat-progress-bar.mat-progress-bar-fill{
+    background-color: mat-color($mat-umn-gold, 800)!important;
+    }
+    .inUse mat-card {
+      border-left: 8px solid mat-color($mat-umn-gold, 800);
+    }
   }
 
-  .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
-    color: mat-color($accent);
+  .mat-icon.vacant{        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+    color: mat-color($mat-green, 400);
+  }
+  .vacant .mat-progress-bar-buffer{
+    background-color: mat-color($mat-green, 400)!important;
+  }
+
+  .mat-icon.inUse{
+    color: mat-color($mat-umn-gold, 900)!important;
+  }
+  .runningMachine mat-progress-bar.mat-progress-bar-fill{
+    background-color: mat-color($mat-umn-gold, 900)!important;
   }
 
   .mat-icon.inUse {
@@ -139,11 +199,11 @@
   }
 
   .vacant mat-card {
-    border-left: 8px solid mat-color($accent);
+    border-left: 8px solid mat-color($mat-green, 400);
   }
 
   .inUse mat-card {
-    border-left: 8px solid mat-color($warn);
+    border-left: 8px solid mat-color($mat-umn-gold, 900);
   }
 
   .roomHeading {
@@ -255,8 +315,8 @@ mat-icon {
   margin: 5px;
 }
 
-.allMachinesPanel.mat-expansion-panel {
-  box-shadow: none;
+.washerMachinesPanel, .dryerMachinesPanel {
+  margin-bottom: 70px !important;
 }
 
 .machines.mat-expansion-panel {
