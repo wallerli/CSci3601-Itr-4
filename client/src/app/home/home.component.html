@@ -174,7 +174,7 @@
 
             <mat-accordion *ngFor="let machine of this.filteredMachines">
               <mat-grid-tile class="unavailable" *ngIf="machine.status==='broken'&& machine.type==='washer'">
-                <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
+                <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
                   <div class="machineInfo">
                     <mat-icon class="unavailable" style="position: absolute; top: 15px; left: 12px; font-size: 275%">
                       local_laundry_service

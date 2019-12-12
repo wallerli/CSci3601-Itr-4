@@ -12,14 +12,14 @@ export class HomePage {
 
   getNextDay() {
     let today = new Date();
-    let dd: number = today.getDay();
-    return this.Days[dd];
+    let dd: number = today.getDay() + 1;
+    return this.Days[dd % 7];
   }
 
   getPreviousDay() {
     let today = new Date();
-    let dd: number = today.getDay();
-    return this.Days[dd];
+    let dd: number = today.getDay() - 1;
+    return this.Days[dd % 7];
   }
 
   navigateTo(): promise.Promise<any> {
@@ -36,36 +36,7 @@ export class HomePage {
       });
       return 'highlighted';
     }
-
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
-  }
-
-  getUniqueRoomTitle() {
-    const title = element(by.id('machines-grid')).getText();
-    this.highlightElement(by.id('machines-grid'));
-    return title;
-  }
-
-  getDialogTitle() {
-    const title = element(by.id('dTitle')).getText();
-    this.highlightElement(by.id('dTitle'));
-    return title;
-  }
-
-  getRoomTitle() {
-    const title = element(by.id('roomTitle')).getText();
-    return title;
-  }
-
-  getUrl(): string {
-    if (window
-      && 'location' in window
-      && 'protocol' in window.location
-      && 'pathname' in window.location
-      && 'host' in window.location) {
-      return window.location.protocol + '//' + window.location.host + window.location.pathname;
-    }
-    return null;
   }
 
   getUniqueMachine(Id: string) {
@@ -74,71 +45,14 @@ export class HomePage {
     return title;
   }
 
-
-  clickGayHall() {
-    this.click('gayId');
+  getAll(cssOfElement: string){
+    return element.all(by.className(cssOfElement));
   }
 
-  clickPineHall() {
-    this.click('pineId');
+  getTwo(cssOfElement1: string, cssOfElement2: string){
+    let items = element.all(by.className(cssOfElement1));
+    return items.all(by.className(cssOfElement2));
   }
-
-  clickApartment() {
-    this.click('the_apartmentsId');
-  }
-
-  clickRoomPanel() {
-    this.click('home-rooms-card');
-  }
-
-  clickAllRooms() {
-    this.click('allRooms');
-  }
-
-
-  buttonClickable(Id: string) {
-    return element(by.id(Id)).isEnabled();
-  }
-
-  boxChecked(Id: string) {
-    return element(by.id(Id));
-  }
-
-  getTextWithID(Id: string) {
-    const text = element(by.id(Id)).getText();
-    return text;
-  }
-
-  getCardName() {
-    const title = element(by.id('{{machine.room_id)}}')).getText();
-    this.highlightElement(by.id('{{machine.room_id)}}'));
-    return title;
-  }
-
-  getWashersTitle() {
-    const title = element(by.id('home-machines-card-washer')).getText();
-    this.highlightElement(by.id('home-machines-card-washer'));
-    return title;
-  }
-
-  getDyersTitle() {
-    const title = element(by.id('home-machines-card-dryer')).getText();
-    this.highlightElement(by.id('home-machines-card-dryer'));
-    return title;
-  }
-
-  getWashers() {
-    return element.all(by.className('washer'));
-  }
-
-  getDryers() {
-    return element.all(by.className('dryer'));
-  }
-
-  getBrokens() {
-    return element.all(by.className('broken'));
-  }
-
 
   elementExistsWithId(idOfElement: string): promise.Promise<boolean> {
     if (element(by.id(idOfElement)).isPresent()) {

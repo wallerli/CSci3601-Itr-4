@@ -1,7 +1,7 @@
 import {AppPage} from './app.po';
 import {browser} from "protractor";
 
-xdescribe('App Component', () => {
+describe('App Component', () => {
   let page: AppPage;
 
   beforeEach(() => {
