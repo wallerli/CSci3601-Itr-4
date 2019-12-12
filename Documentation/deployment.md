@@ -7,7 +7,7 @@
 ##Main Differences from the Default Setup Instructions
 
 ###Very Important First Step (Setting Server Local Time)
-For this project, it is very important that the servers local time is set correctly. This is important because 
+For this project, it is very important that the servers local time is set correctly. This is important because
 if the server is not set to the right local time, your charts are going to be displaying the data incorrectly,
 in our case it was six hours in the future. This can be done by the following commands:
 
