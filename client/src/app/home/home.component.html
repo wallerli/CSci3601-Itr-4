@@ -410,7 +410,7 @@
               </mat-card>
             </mat-card-content>
             <a id="roomSubHolder " *ngIf="this.roomId !== ''">
-              <button mat-button color="primary" id="subscribeButton" class="subscribeButton"
+              <button mat-button color="accent" id="subscribeButton" class="subscribeButton"
                       [disabled]="subscriptionDisabled" (click)="openSubscription(this.roomId)">
                 <mat-accordion class="subscribeButtonText" *ngIf="isSubscribed && this.moveHeader()">Subscribed
                 </mat-accordion>
