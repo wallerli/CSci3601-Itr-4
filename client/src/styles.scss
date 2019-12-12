@@ -41,7 +41,7 @@
     color: mat-color($light-primary);
   }
 
-  #default-mark, #defaultCheck{
+  #default-mark, #defaultCheck, #defaultCheck-2nd {
     color: mat-color($mat-umn-maroon, 300)!important;
   }
   .mat-progress-spinner circle, .mat-spinner circle{
@@ -92,7 +92,7 @@
       border-color: mat-color($mat-umn-maroon, 300);
     }
 
-    #default-mark, #defaultCheck{
+    #default-mark, #defaultCheck, #defaultCheck-2nd {
       color: mat-color($mat-umn-maroon, 300)!important;
     }
 
@@ -401,7 +401,7 @@ mat-grid-tile mat-card {
   height: auto;
 }
 
-.roomStatus mat-icon, #default-selector mat-icon {
+.roomStatus mat-icon, #default-selector mat-icon, #default-selector-2nd mat-icon {
   font-size: 16px;
   margin-right: 0;
   text-align: end;
@@ -509,7 +509,7 @@ mat-dialog-container .reportButton {
   border-radius: 10px !important;
 }
 
-#default-selector {
+#default-selector, #default-selector-2nd {
   height: 20px;
   margin-left: 13px;
   margin-bottom: 5px;
@@ -521,7 +521,7 @@ mat-dialog-container .reportButton {
   font-weight: 400;
 }
 
-#default-selector .mat-ripple-element {
+#default-selector .mat-ripple-element, #default-selector-2nd .mat-ripple-element {
   display: none;
 }
 
@@ -562,7 +562,7 @@ mat-dialog-container .reportButton {
     margin-left: 22px;
     text-align: end;
   }
-  #default-selector mat-icon{
+  #default-selector mat-icon, #default-selector-2nd mat-icon {
     font-size: 16px;
     margin-right: 0;
     margin-left: 10px;
@@ -626,5 +626,9 @@ mat-dialog-container .reportButton {
   .subscribeButtonText {
     display: none;
   }
+}
+
+.defaultRoomButton {
+  padding-right: 10px !important;
 }
 
