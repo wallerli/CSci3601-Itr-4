@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class MailingController {
 
+  // Put your send grid key here
   private final String SEND_KEY = "a_fake_key";
   private final String APP_BASE = "https://ummlaundry.software/";
   private final String EMAIL_FROM = "laundry_facilities@morris.umn.edu";
