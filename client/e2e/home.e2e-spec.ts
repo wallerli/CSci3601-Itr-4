@@ -39,7 +39,7 @@ describe('Home Page(Gay Hall)', () => {
   it('should have the correct url', () => {
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/gay');
-    })
+    });
   });
 
   describe('Main Title on Home Page', () => {
@@ -53,7 +53,7 @@ describe('Home Page(Gay Hall)', () => {
       page.click('app-title');
       browser.getCurrentUrl().then(function (url) {
         expect(url).toEqual('http://localhost:9000/welcome');
-      })
+      });
     });
   });
 
@@ -114,13 +114,13 @@ describe('Home Page(Gay Hall)', () => {
 
     it('should have a make default button with correct explanation', () => {
       expect(page.elementExistsWithId('defaultRoomButton'));
-      expect(page.getTextFromClassName('default-selector-text')).toEqual('Remember current room on your next visit');
+      expect(page.getTextFromClassName('default-selector-text')).toEqual('remember current room on next visit');
     });
 
     it('should have an unset default button with correct explanation after you make the page as default', () => {
       page.click('defaultRoomButton');
       expect(page.elementExistsWithId('unsetDefaultRoomButton'));
-      expect(page.getTextFromClassName('default-selector-text')).toEqual('Remember current room on your next visit');
+      expect(page.getTextFromClassName('default-selector-text')).toEqual('remember current room on next visit');
     });
 
     it('should set gay hall as default room', () => {
@@ -130,7 +130,7 @@ describe('Home Page(Gay Hall)', () => {
       page.navigateTo();
       browser.getCurrentUrl().then(function (url) {
         expect(url).toEqual('http://localhost:9000/home/gay');
-      })
+      });
     });
 
     it('should set independence hall as default if we set it to be default after set any other before', () => {
@@ -139,7 +139,7 @@ describe('Home Page(Gay Hall)', () => {
       page.navigateTo();
       browser.getCurrentUrl().then(function (url) {
         expect(url).toEqual('http://localhost:9000/home/gay');
-      })
+      });
       page.click('all-rooms');
       page.click('independenceId');
       expect(page.getTextFromField('roomTitle')).toEqual('Independence Hall');
@@ -151,7 +151,7 @@ describe('Home Page(Gay Hall)', () => {
       page.navigateTo();
       browser.getCurrentUrl().then(function (url) {
         expect(url).toEqual('http://localhost:9000/home/independence');
-      })
+      });
     });
 
     it('should stay at the same room after refresh the page with other room set to be default', () => {
@@ -163,7 +163,7 @@ describe('Home Page(Gay Hall)', () => {
       browser.refresh();
       browser.getCurrentUrl().then(function (url) {
         expect(url).toEqual('http://localhost:9000/home/independence');
-      })
+      });
     });
   });
 
@@ -191,8 +191,8 @@ describe('Home Page(Gay Hall)', () => {
   describe('Machines Panel on Home Page', () => {
 
     it('should get and have correct title for washers and dryers panel', () => {
-      expect(page.getTextFromField('washer-grid')).toEqual('Washers Within Gay Hall');
-      expect(page.getTextFromField('dryer-grid')).toEqual('Dryers Within Gay Hall');
+      expect(page.getTextFromField('washer-grid')).toEqual('Washers at Gay Hall');
+      expect(page.getTextFromField('dryer-grid')).toEqual('Dryers at Gay Hall');
     });
 
     it('should get and have specific machines', () => {
@@ -213,28 +213,28 @@ describe('Home Page(Gay Hall)', () => {
     });
 
     it('should get and have correct number of broken machines for each type', () => {
-      page.getTwo('washer', 'unavailable').then((washer) => {
+      page.getTwo('unavailable', 'washer').then((washer) => {
         expect(washer.length).toBe(0);
       });
-      page.getTwo('dryer', 'unavailable').then((dryer) => {
+      page.getTwo('unavailable', 'dryer').then((dryer) => {
         expect(dryer.length).toBe(0);
       });
     });
 
     it('should get and have correct number of running machines for each types', () => {
-      page.getTwo('washer', 'inUse').then((washers) => {
+      page.getTwo('inUse', 'washer').then((washers) => {
         expect(washers.length).toBe(0);
       });
-      page.getTwo('dryer', 'inUse').then((dryer) => {
+      page.getTwo('inUse', 'dryer').then((dryer) => {
         expect(dryer.length).toBe(7);
       });
     });
 
     it('should get and have correct number of vacant machines for each types', () => {
-      page.getTwo('washer', 'vacant').then((washers) => {
+      page.getTwo('vacant', 'washer').then((washers) => {
         expect(washers.length).toBe(2);
       });
-      page.getTwo('dryer', 'vacant').then((dryer) => {
+      page.getTwo('vacant', 'dryer').then((dryer) => {
         expect(dryer.length).toBe(0);
       });
     });
@@ -278,7 +278,7 @@ describe('Home Page(Gay Hall)', () => {
 
     it('should allow user to subscribe for an in-used machine', () => {
       page.click('machineSubIcon-dorky-gamboge-dog');
-      expect(page.getTextFromClassName('sub-title')).toContain('Notify me when it is available');
+      expect(page.getTextFromClassName('sub-title')).toContain('Notify when available');
       // tslint:disable-next-line:max-line-length
       expect(page.getTextFromClassName('sub-detail')).toContain('Subscribe to receive an email when the dryer is vacant. We will only send the notification once.');
     });
@@ -289,6 +289,7 @@ describe('Home Page(Gay Hall)', () => {
       expect(page.elementExistsWithClassName('reportButton'));
       page.click('reportButton');
       // browser.getCurrentUrl().then(function (url) {
+      // tslint:disable-next-line:max-line-length
       //   expect(url).toEqual('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton%20A.%20Gay&entry.1000005=Laundry%20room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue%20with%20washer%20bumpy%20cerulean%20molly:');
       // });
     });
@@ -405,13 +406,13 @@ describe('Home Page(Gay Hall)', () => {
     it('should have a disabled subscribe button when you select green prairie hall', () => {
       page.click('green_prairie');
       expect(page.button('subscribeButton').isEnabled()).toBeFalsy();
-      expect(page.getTextFromField('subscribeButton')).toEqual('Subscribe notifications_none');
+      expect(page.getTextFromField('subscribeButton')).toEqual('Notify me notifications_none');
     });
 
     it('should have a enabled subscribe button when you select gay hall', () => {
       page.click('gay');
       expect(page.button('subscribeButton').isEnabled()).toBeTruthy();
-      expect(page.getTextFromField('subscribeButton')).toEqual('Subscribe notifications_none');
+      expect(page.getTextFromField('subscribeButton')).toEqual('Notify me notifications_none');
     });
 
     it('should open a dialog when click an enabled subscribe button in the apartment', () => {
@@ -463,7 +464,7 @@ describe('Home Page(Gay Hall)', () => {
       page.field('emailField').clear();
       page.field('emailField').sendKeys('123@a.b');
       page.click('confirmAddSubButton');
-      expect(page.button('subscribeButton').isEnabled()).toBe(false);
+      expect(page.button('subscribeButton').isEnabled()).toBeFalsy();
       expect(page.getTextFromField('subscribeButton')).toEqual('Subscribed notifications_active');
     });
 
@@ -474,7 +475,7 @@ describe('Home Page(Gay Hall)', () => {
       page.field('emailField').sendKeys('123@a.b');
       expect(page.button('subscribeButton').isEnabled()).toBe(true);
       page.click('exitWithoutAddingButton');
-      expect(page.getTextFromField('subscribeButton')).toEqual('Subscribe notifications_none');
+      expect(page.getTextFromField('subscribeButton')).toEqual('Notify me notifications_none');
     });
 
     describe('Subscribe (Validation)', () => {
