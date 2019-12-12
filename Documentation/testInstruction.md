@@ -1,4 +1,4 @@
-#Important Things to Note Before Running Tests
+# Important Things to Note Before Running Tests
 
 **To run the E2E tests**, because the E2E tests is based on a fixed data and the auto updating should be turn off, **please set the "autoRefresh" false** at line 24 of client/src/app/home/home.component.ts, and **set the "seedLocalSourse" true** at line 31 of server/src/main/java/umm3601/laundry/LaundryController.java to use the local test data. 
 
