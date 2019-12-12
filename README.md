@@ -53,8 +53,8 @@ following information auto-filled: Building, Apartment/Room/Area, Are you a Resi
 
 ## DOCUMENTATION!
 1. [HTTPS: How to secure your connection between client and Cloudflare as HTTPS, with notes on what may be done to secure Cloudflare to server](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
-2. [Important Things to Note Before Running Tests](https://github.com/UMM-CSci-3601-F19//blob/master/Documentation/testInstruction.md)
-3. [Deploying Your Project on DigitalOcean (HTTTPS, server ports, MailingController)](https://github.com/UMM-CSci-3601-F19//blob/master/Documentation/deployment.md)
+2. [Important Things to Note Before Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction)
+3. [Deploying Your Project on DigitalOcean (HTTTPS, server ports, MailingController)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment)
 
 ## ToDo List & Known Issues:
 To be able to use cookies to remember if a machine has been subscribed to or not. Currently the issue is that if you subscribe to a 
