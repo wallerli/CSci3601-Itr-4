@@ -17,9 +17,8 @@ export class AppPage {
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
   }
 
-  getPageTitle() {
-    const title = element(by.id('app-title')).getText();
-    this.highlightElement(by.id('app-title'));
-    return title;
+  getTextFromField(idOfField: string) {
+    this.highlightElement(by.id(idOfField));
+    return element(by.id(idOfField)).getText();
   }
 }

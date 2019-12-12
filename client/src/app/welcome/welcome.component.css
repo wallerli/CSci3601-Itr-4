@@ -1,3 +1,143 @@
-.room mat-card {
-  background-color: transparent !important;
+.morrisAddress {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  color: #777;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.room {
+  background: transparent;
+  text-align: center;
+  border-radius: 38px;
+  border-style: dashed;
+  border-width: 3px;
+  border-color: #aaa;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 12px 24px 10px;
+  max-width: 750px !important;
+}
+
+.welcomeSelect {
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  left: 0;
+  top: -12px;
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+}
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+}
+
+.room button {
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 500px) {
+  .room button {
+    display: block !important;
+    width: 100%;
+  }
+
+  .room button {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+.welcomeSelect div {
+  min-width: 220px;
+  background: #ebe1e0;
+  color: #777;
+}
+
+.room {
+  max-width: 685px !important;
+}
+
+button {
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 750px) {
+  .room button {
+    display: block !important;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .room {
+    margin-right: auto;
+    margin-left: auto;
+    width: 82% !important;
+    max-width: 320px !important;
+  }
+
+  .morrisAddress {
+    font-size: 95%;
+  }
+
+  @media screen and (min-height: 685px) {
+    .morrisAddress {
+      width: 99.25%;
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .room {
+    margin-top: 80px;
+    margin-bottom: 70px;
+    padding-top: 22px;
+    padding-bottom: 20px;
+  }
+
+  .room button {
+    margin: 8px;
+  }
+
+  @media screen and (min-height: 480px) {
+    .morrisAddress {
+      width: 99.25%;
+      text-align: center;
+      position: absolute;
+      bottom: 35px;
+    }
+  }
+
+  @media screen and (min-height: 550px) {
+    .room {
+      margin-top: 180px;
+    }
+  }
+
+  @media screen and (min-height: 750px) {
+    .room {
+      margin-top: 250px;
+    }
+  }
+
+  @media screen and (min-height: 1000px) {
+    .room {
+      margin-top: 320px;
+    }
+  }
+
+  @media screen and (min-height: 1250px) {
+    .room {
+      margin-top: 360px;
+    }
+  }
 }

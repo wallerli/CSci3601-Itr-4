@@ -27,26 +27,117 @@
   $is-dark: map-get($theme, is-dark);
 
   // Define any styles affected by the theme.
-  mat-sidenav-content {
+  mat-sidenav-content, .roomHeading.mat-card {
     background-color: #EBE1E0;
   }
 
-  .roomHeading.mat-card {
-    background: #EBE1E0;
-    //color: $light-primary-text !important;
+  #roomInfo .statusHolder {
+    border-style: dashed;
+    border-width: 3px;
+    border-color: #EBE1E0;
   }
 
-  #default-mark {
-    color: mat-color($warn);
+  .statusHolderTitle {
+    margin-left: 2px;
+    color: mat-color($light-primary);
+  }
+
+  #default-mark, #defaultCheck, #defaultCheck-2nd {
+    color: mat-color($mat-umn-maroon, 300) !important;
+  }
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: mat-color($mat-umn-maroon, 300) !important;
+  }
+
+  #loadCover {
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    background: rgba(30, 30, 30, 0.75);
+  }
+
+  #all-rooms {
+    background-color: mat-color($mat-umn-maroon, 400);
+    color: white;
+  }
+
+  .machineHolder .mat-expansion-panel-header {
+    border-bottom-color: white;
   }
 
   .detailButton {
-    background-color: #fff;
+    background-color: white;
+  }
+
+  #welcomeTitle {
+    color: mat-color($light-primary)
+  }
+
+  .unavailable .mat-progress-bar-buffer {
+    background-color: #555 !important;
+  }
+
+  .vacant mat-card {
+    border-left: 8px solid mat-color($mat-green, 700);
+  }
+
+  .vacant {
+    color: mat-color($mat-green, 700);
+  }
+
+  .statusHolder mat-card-title {
+    font-weight: 500 !important;
   }
 
   @if $is-dark {
+    .statusHolder mat-card-title {
+      color: mat-color($mat-umn-maroon, 100) !important;
+    }
+
+    .vacant {
+      color: mat-color($mat-green, 400);
+    }
+
+    .room {
+      border-color: #555 !important;
+    }
+
+    .subTypeButton {
+      border-color: mat-color($mat-umn-maroon, 300);
+    }
+
+    #default-mark, #defaultCheck, #defaultCheck-2nd {
+      color: mat-color($mat-umn-maroon, 400) !important;
+    }
+
+    .mat-progress-spinner circle, .mat-spinner circle {
+      stroke: mat-color($mat-umn-maroon, 400) !important;
+    }
+
+    .welcomeSelect div {
+      background: #212121 !important;
+      font-style: italic;
+    }
+
+    .morrisAddress {
+      color: #bbb !important;
+      font-style: italic;
+    }
+
+    .statusHolderTitle {
+      color: white !important;
+    }
+
     .detailButton {
       background-color: #424242;
+    }
+
+    .machineHolder .mat-expansion-panel-header {
+      border-bottom-color: #424242;
     }
 
     #app-title button {
@@ -54,13 +145,8 @@
       font-weight: 400;
     }
 
-    mat-sidenav-content {
-      background-color: mat-color($background, 1000);
-    }
-
     .roomHeading.mat-card {
       background: unset;
-      //color: $light-primary-text !important;
     }
 
     .topMenu, .roomHeading {
@@ -76,6 +162,10 @@
       background: mat-color($background, app-bar);
     }
 
+    #roomInfo .statusHolder {
+      border-color: mat-color($background, app-bar);
+    }
+
     .indicator {
       color: $light-secondary-text !important;
       bottom: 10px;
@@ -84,25 +174,59 @@
     .unavailable {
       color: #aaaaaa !important;
     }
+
+    .unavailable .mat-progress-bar-buffer {
+      background-color: #aaa !important;
+    }
+
+    .unavailable mat-card {
+      border-left: 8px solid #aaaaaa !important;
+    }
+    .mat-icon.vacant {
+      color: mat-color($mat-green, 700);
+    }
+    .vacant .mat-progress-bar-buffer {
+      background-color: mat-color($mat-green, 700) !important;
+    }
+
+    .mat-icon.inUse {
+      color: mat-color($mat-umn-gold, 800) !important;
+    }
+
+    .inUse mat-card {
+      border-left: 8px solid mat-color($mat-umn-gold, 800);
+    }
   }
 
-  .mat-icon.vacant {        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
-    color: mat-color($accent);
+  .mat-icon.vacant { // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+    color: mat-color($mat-green, 400);
+  }
+  .vacant .mat-progress-bar-buffer {
+    background-color: mat-color($mat-green, 400) !important;
   }
 
   .mat-icon.inUse {
-    color: mat-color($warn)
+    color: mat-color($mat-umn-gold, 900) !important;
+  }
+
+  .vacant mat-card {
+    border-left: 8px solid mat-color($mat-green, 400);
+  }
+
+  .inUse mat-card {
+    border-left: 8px solid mat-color($mat-umn-gold, 900);
   }
 
   .roomHeading {
     padding-top: 5px !important;
-    margin: 0 -5px 10px -5px !important;
+    margin: 0 -5px 0 -5px !important;
     font-style: italic;
     border-radius: 0 !important;
     position: sticky !important;
     top: 60px;
     z-index: 1;
     box-shadow: none !important;
+    padding-bottom: 20px !important;
   }
 
   .topMenu {
@@ -111,7 +235,7 @@
     margin-right: -5px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 20px;
+    padding-bottom: 18px;
   }
 
   .drawer-list-item-active {
@@ -130,7 +254,6 @@
     }
   }
 }
-
 
 // Sets up the theming for built in material components with the light theme
 @include angular-material-theme($light-theme);
@@ -203,10 +326,6 @@ mat-icon {
   margin: 5px;
 }
 
-.allMachinesPanel.mat-expansion-panel {
-  box-shadow: none;
-}
-
 .machines.mat-expansion-panel {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -221,6 +340,10 @@ mat-icon {
 
 .menuLabel.mat-icon.notranslate.material-icons.mat-icon-no-color {
   margin-left: 9px;
+}
+
+.unavailable mat-card {
+  border-left: 8px solid #555555;
 }
 
 .unavailable {
@@ -253,7 +376,7 @@ mat-grid-tile mat-card {
   margin: 10px;
 }
 
-.reportButton {
+.reportButton, .detailTextButton {
   padding: 0 0 !important;
   font-style: italic;
   font-size: 90%;
@@ -264,7 +387,11 @@ mat-grid-tile mat-card {
   border-radius: 18px !important;
 }
 
-.reportButton:hover {
+.detailTextButton {
+  min-width: unset !important;
+}
+
+.reportButton:hover, .detailTextButton:hover {
   text-decoration-line: underline;
 }
 
@@ -286,27 +413,11 @@ mat-grid-tile mat-card {
   white-space: nowrap;
 }
 
-.roomHeading mat-card {
-  padding: 30px 0 !important;
-  height: auto;
-}
-
 .mat-card-content {
   height: auto;
 }
 
-.welcomeMessage {
-  line-height: 1.15;
-  font-size: 30px;
-  font-weight: lighter;
-  font-style: italic;
-}
-
-.welcomeMessage div {
-  margin: 5px 0;
-}
-
-.roomStatus mat-icon, #default-selector mat-icon {
+.roomStatus mat-icon, #default-selector mat-icon, #default-selector-2nd mat-icon {
   font-size: 16px;
   margin-right: 0;
   text-align: end;
@@ -315,7 +426,7 @@ mat-grid-tile mat-card {
 .roomStatus {
   font-style: italic;
   font-size: 16px;
-  margin-right: 5px;
+  margin: 0 5px;
   display: inline-block;
 }
 
@@ -414,7 +525,7 @@ mat-dialog-container .reportButton {
   border-radius: 10px !important;
 }
 
-#default-selector {
+#default-selector, #default-selector-2nd {
   height: 20px;
   margin-left: 13px;
   margin-bottom: 5px;
@@ -426,10 +537,170 @@ mat-dialog-container .reportButton {
   font-weight: 400;
 }
 
-#default-selector .mat-ripple-element {
+#default-selector .mat-ripple-element, #default-selector-2nd .mat-ripple-element {
   display: none;
 }
 
-.mat-card, .mat-expansion-panel, #all-rooms {
+.mat-card, .mat-expansion-panel, #all-rooms, .mat-raised-button {
   box-shadow: none !important;
+}
+
+.statusHolder {
+  margin-top: 18px !important;
+  padding: 10px !important;
+  height: 20px;
+  border-radius: 20px;
+  margin-left: -3px !important;
+}
+
+#dryerAvail mat-card.statusHolder {
+  margin-top: 45px !important;
+}
+
+.statusHolderTitle {
+  font-weight: normal;
+  font-size: 15px;
+  position: absolute;
+  left: 8px;
+  top: -11px;
+  text-align: left;
+  width: fit-content;
+}
+
+.roomNamer {
+  left: -10px !important;
+}
+
+@media only screen and (min-width: 1020px) {
+  .roomStatus mat-icon {
+    font-size: 16px;
+    margin-right: 0;
+    margin-left: 22px;
+    text-align: end;
+  }
+  #default-selector mat-icon, #default-selector-2nd mat-icon {
+    font-size: 16px;
+    margin-right: 0;
+    margin-left: 10px;
+    text-align: end;
+  }
+}
+
+#roomContentEmpty {
+  margin-bottom: -10px;
+}
+
+.subscribeButton {
+  margin-right: 12px !important;
+}
+
+.statusHolder {
+  text-align: center !important;
+}
+
+#roomInfo {
+  padding: 16px 25px !important;
+}
+
+#roomInfo .roomHeading {
+  background: transparent !important;
+  top: 0 !important;
+  padding: 0;
+  position: initial;
+  z-index: 0;
+  margin-left: 2px !important;
+  margin-right: -11px !important;
+}
+
+#roomInfo #roomTitle {
+  font-size: 32px !important;
+}
+
+#roomInfo #default-selector {
+  z-index: 1;
+  margin-left: 0;
+}
+
+#roomInfo .statusHolder {
+  text-align: right !important;
+  margin-left: -6px !important;
+  padding-right: 10px !important;
+}
+
+#roomInfo mat-icon {
+  margin: 0 !important;
+}
+
+#roomInfo .roomStatus {
+  margin: 0 20px;
+}
+
+#roomInfo .subscribeButton {
+  margin: 0 !important;
+  top: -10px !important;
+  right: -9px !important;
+  font-weight: 500 !important;
+}
+
+#roomInfo .defaultRoomButton {
+  margin-top: 5px;
+}
+
+#roomInfo .defaultRoomButton mat-icon {
+  height: 19px !important;
+}
+
+#roomInfo #roomTitleEmpty {
+  margin-left: 0 !important;
+  margin-top: 55px !important;
+  font-size: 350% !important;
+}
+
+#roomInfo #roomContentEmpty {
+  margin-left: 0 !important;
+  font-size: 180% !important;
+}
+
+#roomInfo .statusHolderTitle {
+  font-weight: 500;
+  font-size: 110%;
+  top: unset;
+  margin-left: 5px;
+}
+
+#roomInfo .roomStatus {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .subscribeButtonText {
+    display: none;
+  }
+}
+
+.defaultRoomButton {
+  padding-right: 10px !important;
+}
+
+.machineHolder .mat-expansion-panel-header {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0 16px !important;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+}
+
+.machineHolder .mat-expansion-panel-header.mat-expanded {
+  border-bottom-style: none;
+}
+
+.dryerMachinesPanel {
+  margin-bottom: 60px !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .washerMachinesPanel {
+    margin-bottom: 60px !important;
+  }
 }

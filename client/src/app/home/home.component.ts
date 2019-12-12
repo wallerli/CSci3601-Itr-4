@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Room} from './room';
 import {History} from './history';
 import {Machine} from './machine';
@@ -8,12 +8,11 @@ import {HomeService} from './home.service';
 import {CookieService} from 'ngx-cookie-service';
 
 import * as Chart from 'chart.js';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {HomeDialog} from './home.dialog';
 import {SubscriptionDialog} from './home.subscription';
 
 import {Subscription} from './subscription';
-import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -22,7 +21,6 @@ import {Location} from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   /*
    * This is a switch for the E2E test
    * before running the tests
@@ -42,9 +40,12 @@ export class HomeComponent implements OnInit {
   public numOfWashers: number;
   public numOfDryers: number;
 
-  public roomVacant: number;
-  public roomRunning: number;
-  public roomBroken: number;
+  public roomWasherVacant: number;
+  public roomWasherRunning: number;
+  public roomWasherBroken: number;
+  public roomDryerVacant: number;
+  public roomDryerRunning: number;
+  public roomDryerBroken: number;
 
   public roomId = '';
   public roomName = 'All rooms';
@@ -52,14 +53,11 @@ export class HomeComponent implements OnInit {
   public numOfVacant: number;
   public numOfAll: number;
 
-  public mapWidth: number;
-  public mapHeight: number;
-
   public isSubscribed: boolean;
   public subscriptionDisabled: boolean;
 
   public history: History[];
-  // public filteredHistory: History[];
+
   canvas: any;
   ctx: any;
   myChart: any;
@@ -77,7 +75,6 @@ export class HomeComponent implements OnInit {
     {value: 7, name: 'Saturday'},
   ];
 
-  // tslint:disable-next-line:max-line-length
   constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog
               , private cookieService: CookieService, private activatedRoute: ActivatedRoute, private location: Location) {
     this.subscriptionDisabled = true;
@@ -86,10 +83,10 @@ export class HomeComponent implements OnInit {
   }
 
   openSubscription(room_id: string) {
-    // tslint:disable-next-line:max-line-length
-    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
-    // tslint:disable-next-line:max-line-length
-    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
+    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal'
+      && m.type === 'washer' && !m.running).length === 0;
+    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal'
+      && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', id: room_id};
     const dialogRef = this.subscription.open(SubscriptionDialog, {
       width: '500px',
@@ -101,11 +98,9 @@ export class HomeComponent implements OnInit {
       },
     });
 
-
     // tslint:disable-next-line:no-shadowed-variable
     dialogRef.afterClosed().subscribe(newSub => {
       if (newSub != null) {
-        // console.log(newSub);
         this.homeService.addNewSubscription(newSub).subscribe(
           () => {
             this.rooms.filter(m => m.id === this.roomId)[0].isSubscribed = true;
@@ -146,20 +141,17 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.machines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
       this.filteredMachines.filter(m => m.id === thisMachine.id)[0].isSubscribed = thisMachine.isSubscribed;
-      // console.log(thisMachine.isSubscribed);
-      // console.log('The dialog was closed');
     });
   }
 
   public updateCookies(id: string, name: string): void {
-    this.cookieService.set('room_id', id);
-    this.cookieService.set('room_name', name);
+    this.cookieService.set('room_id', id, undefined, '/');
+    this.cookieService.set('room_id', id, undefined, '/home');
+    this.cookieService.set('room_name', name, undefined, '/');
+    this.cookieService.set('room_name', name, undefined, '/home');
   }
 
   public defaultSet(name: string): boolean {
-    // if (this.cookieService.check('room_id')) {
-    //   return this.cookieService.get('room_id') !== '';
-    // }
     return this.cookieService.get('room_name') === name;
   }
 
@@ -185,28 +177,34 @@ export class HomeComponent implements OnInit {
         r.isSubscribed = false;
       }
     });
-    this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
-    this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
-    this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
+    this.updateIndicators();
     if (this.roomId !== undefined && this.roomId !== '') {
-      // tslint:disable-next-line:max-line-length
-      const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer' && m.status === 'normal' && m.running === false).length;
-      // tslint:disable-next-line:max-line-length
-      const dryerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'dryer' && m.status === 'normal' && m.running === false).length;
+      const washerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'washer'
+        && m.status === 'normal' && m.running === false).length;
+      const dryerVacant = this.machines.filter(m => m.room_id === this.roomId && m.type === 'dryer'
+        && m.status === 'normal' && m.running === false).length;
       this.isSubscribed = this.rooms.filter(r => r.id === this.roomId)[0].isSubscribed;
       this.subscriptionDisabled = this.isSubscribed || (washerVacant !== 0 && dryerVacant !== 0);
     }
     this.buildChart();
-    this.fakePositions();
+    // this.fakePositions();
     this.setSelector(1);
-    // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
     this.scroll('mainBody');
+    if (newId === '') {newId = 'all'; }
     this.location.replaceState('/home/' + newId);
   }
 
+  private updateIndicators(): void {
+    this.roomWasherVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
+    this.roomWasherBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
+    this.roomDryerVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
+    this.roomDryerBroken = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
+  }
+
   private updateMachines(): void {
-    // console.log(this.inputRoom);
     if (this.roomId == null || this.roomId === '') {
       this.filteredMachines = this.machines;
     } else {
@@ -217,27 +215,8 @@ export class HomeComponent implements OnInit {
       this.numOfBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
       this.numOfWashers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'washer').length;
       this.numOfDryers = this.filteredMachines.filter(m => m.status === 'normal' && m.type === 'dryer').length;
-      this.mapHeight = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.y), this.filteredMachines[0].position.y);
-      this.mapWidth = this.filteredMachines.reduce((max, b) => Math.max(max, b.position.x), this.filteredMachines[0].position.x);
     }
   }
-
-  // filterGraphData() {
-  //   if (this.inputRoom !== 'all') {
-  //     this.filteredHistory = this.history.filter(history => history.room_id === this.inputRoom);
-  //
-  //   } else {
-  //
-  //     this.gayHistory = this.history.filter(history => history.room_id === 'gay');
-  //     this.independenceHistory = this.history.filter(history => history.room_id === 'independence');
-  //     this.blakelyHistory = this.history.filter(history => history.room_id === 'blakely');
-  //     this.spoonerHistory = this.history.filter(history => history.room_id === 'spooner');
-  //     this.greenPrairieHistory = this.history.filter(history => history.room_id === 'green_prairie');
-  //     this.pineHistory = this.history.filter(history => history.room_id === 'pine');
-  //     this.theApartmentsHistory = this.history.filter(history => history.room_id === 'the_apartments');
-  //   }
-  // }
-
 
   updateDayByButton(num: number) {
     this.inputDay = (+this.inputDay + +num) % 7;
@@ -338,7 +317,6 @@ export class HomeComponent implements OnInit {
 
       let xlabel;
       let xlabel2;
-      // this.filterGraphData();
 
       xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
         '6p', '7p', '8p', '9p', '10p', '11p'];
@@ -352,7 +330,7 @@ export class HomeComponent implements OnInit {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              backgroundColor: '#a24d5e'
+              backgroundColor: '#8e263c'
             }]
           },
           options: {
@@ -363,12 +341,7 @@ export class HomeComponent implements OnInit {
             },
             tooltips: {
               enabled: false,
-              // callbacks: {
-              //   label: function(tooltipItem) {
-              //     console.log(tooltipItem);
-              //     return tooltipItem.yLabel;
-              //   }
-              // }
+
             },
             scales: {
               xAxes: [{
@@ -525,9 +498,12 @@ export class HomeComponent implements OnInit {
         this.updateTime();
         this.activatedRoute.params.subscribe((params) => {
           if (params['room']) {
-            const name = this.rooms.filter(r => r.id === params['room'])[0].name;
-            if (name !== undefined) {
-              this.updateRoom(params['room'], name);
+            const targetRoom = this.rooms.filter(r => r.id === params['room'])[0];
+            if (targetRoom !== undefined) {
+              this.updateRoom(params['room'], targetRoom.name);
+              readCookie = false;
+            } else if (params['room'] === 'all') {
+              this.updateRoom('', 'All Rooms');
               readCookie = false;
             }
           }
@@ -536,14 +512,12 @@ export class HomeComponent implements OnInit {
           this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
         }
       }
-      await this.delay(500); // wait 0.5s for loading data
       if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
-        await this.delay(5000); // loading error retry every 5s
+        await this.delay(2000); // loading errored, retry after 2s
         console.log('Retry');
         this.ngOnInit();
       } else {
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart();
       }
     }) ();
   }
@@ -554,6 +528,7 @@ export class HomeComponent implements OnInit {
       this.homeService.updateRunningStatus(this.filteredMachines, this.machines);
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
+      this.updateIndicators();
       if (this.autoRefresh) {
         await this.delay(60000); // hold 60s for the next refresh
         console.log('Refresh');
@@ -588,15 +563,6 @@ export class HomeComponent implements OnInit {
 
   hideSelector() {
     document.getElementById('all-rooms').style.bottom = '-50px';
-  }
-
-  fakePositions() {
-    const w = 5;
-    const machines = this.filteredMachines;
-    for (let i = 0; i < machines.length; ++i) {
-      machines[i].position.x = i % w * 50;
-      machines[i].position.y = Math.floor(i / w) * 50;
-    }
   }
 
   translateRoomId(roomId: string): string {
@@ -639,15 +605,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // getX(machine: Machine) {
-  //   const x = machine.position.x * 20;
-  //   return x + 'px';
-  // }
-
-  // getY(machine: Machine) {
-  //   const y = machine.position.y * 20;
-  //   return y + 'px';
-  // }
   getGridCols() {
     if (window.innerWidth >= 1200) {
       return Math.min(window.innerWidth / 800, 2);
@@ -658,7 +615,8 @@ export class HomeComponent implements OnInit {
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
   }
+
+  moveHeader() {
+    return Math.round(Math.min(window.innerWidth / 680, 2)) === 2;
+  }
 }
-
-
-

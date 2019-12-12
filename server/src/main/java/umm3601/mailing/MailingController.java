@@ -16,7 +16,11 @@ import java.io.IOException;
 
 public class MailingController {
 
-  private final String EMAIL_FROM = "laundry@facility.morris.com";
+  // Put your send grid key here
+  private final String SEND_KEY = "a_fake_key";
+  private final String APP_BASE = "https://ummlaundry.software/";
+  private final String EMAIL_FROM = "laundry_facilities@morris.umn.edu";
+  private final String EMAIL_NAME = "Laundry Service (do not reply)";
 
   public final MongoCollection<Document> subscriptionCollection;
   private final MongoCollection<Document> machineCollection;
@@ -41,10 +45,11 @@ public class MailingController {
         && vacantMachine.getString("status").equals("normal")) {
 
         String machineName = transformId(vacantMachine.getString("name"));
-        String roomName = transformId(vacantMachine.getString("room_id"));
+        String roomId = vacantMachine.getString("room_id");
+        String roomName = transformId(roomId);
         String type = vacantMachine.getString("type");
         subscriptionCollection.deleteOne(s);
-        sendMachineNotification(s.getString("email"), roomName, machineName, type);
+        sendMachineNotification(s.getString("email"), roomName, machineName, type, roomId);
       }
     }
 
@@ -60,17 +65,19 @@ public class MailingController {
       if (vacantMachine != null) {
 
         String machineName = transformId(vacantMachine.getString("name"));
-        String roomName = transformId(vacantMachine.getString("room_id"));
+        String roomId = vacantMachine.getString("room_id");
+        String roomName = transformId(roomId);
         String type = vacantMachine.getString("type");
         subscriptionCollection.deleteOne(s);
-        sendRoomNotification(s.getString("email"), roomName, machineName, type);
+        sendRoomNotification(s.getString("email"), roomName, machineName, type, roomId);
       }
     }
     System.out.println("[update] INFO mailing.MailingController - Checked machine and room subscriptions");
   }
 
-  private void sendMachineNotification(String email, String roomName, String machineName, String type) throws IOException {
-    String subject = "A " + type + " is now available!";
+  private void sendMachineNotification(String email, String roomName, String machineName, String type, String roomId) throws IOException {
+    String subject = "Status change of the " + type + " you subscribed";
+    String address = APP_BASE + "home/" + roomId;
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
@@ -225,7 +232,7 @@ public class MailingController {
       "  <li style=\"text-align: inherit\"><span style=\"color: #81686d; font-family: verdana,geneva,sans-serif\">Please do not reply to this email.</span></li>\n" +
       "</ul><div></div></div></td>\n" +
       "      </tr>\n" +
-      "    </tbody></table><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"module\" data-role=\"module-button\" data-type=\"button\" role=\"module\" style=\"table-layout:fixed\" width=\"100%\" data-muid=\"hthYAt191yTdg6FPWYKodF\"><tbody><tr><td align=\"center\" bgcolor=\"#ffffff\" class=\"outer-td\" style=\"padding:0px 0px 40px 0px; background-color:#ffffff;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"button-css__deep-table___2OZyb wrapper-mobile\" style=\"text-align:center\"><tbody><tr><td align=\"center\" bgcolor=\"#7A0019\" class=\"inner-td\" style=\"border-radius:6px; font-size:16px; text-align:center; background-color:inherit;\"><a style=\"background-color:#7A0019; border:1px solid #993300; border-color:#993300; border-radius:0px; border-width:1px; color:#ffffff; display:inline-block; font-family:verdana,geneva,sans-serif; font-size:16px; font-weight:normal; letter-spacing:1px; line-height:30px; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid;\" href=\"http://206.189.163.212:4567/\" target=\"_blank\">Find This Machine</a></td></tr></tbody></table></td></tr></tbody></table><table class=\"module\" role=\"module\" data-type=\"spacer\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout: fixed;\" data-muid=\"h5Act64miE4yjzNnz1YMGs\">\n" +
+      "    </tbody></table><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"module\" data-role=\"module-button\" data-type=\"button\" role=\"module\" style=\"table-layout:fixed\" width=\"100%\" data-muid=\"hthYAt191yTdg6FPWYKodF\"><tbody><tr><td align=\"center\" bgcolor=\"#ffffff\" class=\"outer-td\" style=\"padding:0px 0px 40px 0px; background-color:#ffffff;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"button-css__deep-table___2OZyb wrapper-mobile\" style=\"text-align:center\"><tbody><tr><td align=\"center\" bgcolor=\"#7A0019\" class=\"inner-td\" style=\"border-radius:6px; font-size:16px; text-align:center; background-color:inherit;\"><a style=\"background-color:#7A0019; border:1px solid #993300; border-color:#993300; border-radius:0px; border-width:1px; color:#ffffff; display:inline-block; font-family:verdana,geneva,sans-serif; font-size:16px; font-weight:normal; letter-spacing:1px; line-height:30px; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid;\" href=\"" + address + "\" target=\"_blank\">Find This Machine</a></td></tr></tbody></table></td></tr></tbody></table><table class=\"module\" role=\"module\" data-type=\"spacer\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout: fixed;\" data-muid=\"h5Act64miE4yjzNnz1YMGs\">\n" +
       "      <tbody><tr>\n" +
       "        <td style=\"padding:0px 0px 50px 0px;\" role=\"module-content\" bgcolor=\"\">\n" +
       "        </td>\n" +
@@ -265,12 +272,15 @@ public class MailingController {
       "  \n" +
       "</body></html>");
 
-    Mail mail = new Mail(new Email(EMAIL_FROM), subject, new Email(email), content);
-    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status " + send(mail));
+    Mail mail = new Mail(new Email(EMAIL_FROM, EMAIL_NAME), subject, new Email(email), content);
+//  String key = System.getenv("SENDGRID_API_KEY");
+    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status "
+      + send(mail, SEND_KEY));
   }
 
-  private void sendRoomNotification(String email, String roomName, String machineName, String type) throws IOException {
-    String subject = "A " + type + " is now available in " + roomName + "!";
+  private void sendRoomNotification(String email, String roomName, String machineName, String type, String roomId) throws IOException {
+    String subject = "Status change of the " + type + " you subscribed";
+    String address = APP_BASE + "home/" + roomId;
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
@@ -425,7 +435,7 @@ public class MailingController {
       "  <li style=\"text-align: inherit\"><span style=\"color: #81686d; font-family: verdana,geneva,sans-serif\">Please do not reply to this email.</span></li>\n" +
       "</ul><div></div></div></td>\n" +
       "      </tr>\n" +
-      "    </tbody></table><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"module\" data-role=\"module-button\" data-type=\"button\" role=\"module\" style=\"table-layout:fixed\" width=\"100%\" data-muid=\"hthYAt191yTdg6FPWYKodF\"><tbody><tr><td align=\"center\" bgcolor=\"#ffffff\" class=\"outer-td\" style=\"padding:0px 0px 40px 0px; background-color:#ffffff;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"button-css__deep-table___2OZyb wrapper-mobile\" style=\"text-align:center\"><tbody><tr><td align=\"center\" bgcolor=\"#7A0019\" class=\"inner-td\" style=\"border-radius:6px; font-size:16px; text-align:center; background-color:inherit;\"><a style=\"background-color:#7A0019; border:1px solid #993300; border-color:#993300; border-radius:0px; border-width:1px; color:#ffffff; display:inline-block; font-family:verdana,geneva,sans-serif; font-size:16px; font-weight:normal; letter-spacing:1px; line-height:30px; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid;\" href=\"http://206.189.163.212:4567/\" target=\"_blank\">Find This Room</a></td></tr></tbody></table></td></tr></tbody></table><table class=\"module\" role=\"module\" data-type=\"spacer\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout: fixed;\" data-muid=\"noXVUxSTfKbdSVM2Xrua2t\">\n" +
+      "    </tbody></table><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"module\" data-role=\"module-button\" data-type=\"button\" role=\"module\" style=\"table-layout:fixed\" width=\"100%\" data-muid=\"hthYAt191yTdg6FPWYKodF\"><tbody><tr><td align=\"center\" bgcolor=\"#ffffff\" class=\"outer-td\" style=\"padding:0px 0px 40px 0px; background-color:#ffffff;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"button-css__deep-table___2OZyb wrapper-mobile\" style=\"text-align:center\"><tbody><tr><td align=\"center\" bgcolor=\"#7A0019\" class=\"inner-td\" style=\"border-radius:6px; font-size:16px; text-align:center; background-color:inherit;\"><a style=\"background-color:#7A0019; border:1px solid #993300; border-color:#993300; border-radius:0px; border-width:1px; color:#ffffff; display:inline-block; font-family:verdana,geneva,sans-serif; font-size:16px; font-weight:normal; letter-spacing:1px; line-height:30px; padding:12px 20px 12px 20px; text-align:center; text-decoration:none; border-style:solid;\" href=\"" + address + "\" target=\"_blank\">Find This Room</a></td></tr></tbody></table></td></tr></tbody></table><table class=\"module\" role=\"module\" data-type=\"spacer\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout: fixed;\" data-muid=\"noXVUxSTfKbdSVM2Xrua2t\">\n" +
       "      <tbody><tr>\n" +
       "        <td style=\"padding:0px 0px 50px 0px;\" role=\"module-content\" bgcolor=\"\">\n" +
       "        </td>\n" +
@@ -465,13 +475,13 @@ public class MailingController {
       "  \n" +
       "</body></html>");
 
-    Mail mail = new Mail(new Email(EMAIL_FROM), subject, new Email(email), content);
-    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status " + send(mail));
+    Mail mail = new Mail(new Email(EMAIL_FROM, EMAIL_NAME), subject, new Email(email), content);
+//  String key = System.getenv("SENDGRID_API_KEY");
+    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status "
+      + send(mail, SEND_KEY));
   }
 
-  private int send(Mail mail) throws IOException {
-    final String key = "a_fake_key";
-//  String key = System.getenv("SENDGRID_API_KEY");
+  private int send(Mail mail, String key) throws IOException {
     SendGrid sg = new SendGrid(key);
     Request request = new Request();
     request.setMethod(Method.POST);

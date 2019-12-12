@@ -3,15 +3,15 @@
   <form [formGroup]="addSubForm">
     <h2 id="sub-title" mat-dialog-title>New Subscription</h2>
     <p class="sub-title">
-      Notify me when one type of the machines in {{this.name}} is available
+      Notify me when one type of the machines in {{this.name}} is available.
     </p>
-    <form [formGroup]="options" style="display: inline">
+    <form [formGroup]="options"style="display: inline">
       <mat-radio-group #input id="typeField" [(ngModel)]="data.subscription.type" formControlName="type" required>
         <mat-radio-button [id]="'sub-washer'" class="subTypeButton" [value]="'washer'" [checked]="this.outOfWashers && !this.outOfDryers"
-                          [disabled]="!this.outOfWashers" color="warn">Washer
+                          [disabled]="!this.outOfWashers" color="primary">Washer
         </mat-radio-button>
         <mat-radio-button [id]="'sub-dryer'" class="subTypeButton" [value]="'dryer'" [checked]="!this.outOfWashers && this.outOfDryers"
-                          [disabled]="!this.outOfDryers" color="warn">Dryer
+                          [disabled]="!this.outOfDryers" color="primary">Dryer
         </mat-radio-button>
       </mat-radio-group>
     </form>
@@ -32,7 +32,7 @@
       <mat-dialog-actions layout="row" style="display: inline; height: 50px !important;">
 
         <button mat-raised-button id="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button"
-                color="warn"
+                color="primary"
                 [disabled]="!addSubForm.valid || data.subscription.type === '' ">Subscribe
         </button><br>
         <button mat-icon-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button"><mat-icon style="margin: auto !important">close</mat-icon></button>

@@ -494,12 +494,12 @@ describe('Home page', () => {
     // query for the link (<a> tag) by CSS element selector
     de = fixture.debugElement.query(By.css('#home-rooms-card'));
     df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
-    dg = fixture.debugElement.query(By.css('#roomMap'));
+    // dg = fixture.debugElement.query(By.css('#roomMap'));
     di = fixture.debugElement.query(By.css('#washer-grid'));
     dj = fixture.debugElement.query(By.css('#dryer-grid'));
     el = de.nativeElement;
     fl = df.nativeElement;
-    gl = dg.nativeElement;
+    // gl = dg.nativeElement;
     il = di.nativeElement;
     jl = dj.nativeElement;
 
@@ -517,19 +517,14 @@ describe('Home page', () => {
     expect(fl.textContent).toContain('Busy Time on ');
   });
 
-  it('displays a text of the room\'s map', () => {
+  it('displays a text of broken machines', () => {
     fixture.detectChanges();
-    expect(gl.textContent).toContain('Laundry Room Map');
+    expect(il.textContent).toContain('Washers at All rooms');
   });
 
   it('displays a text of broken machines', () => {
     fixture.detectChanges();
-    expect(il.textContent).toContain('Washers Within All rooms');
-  });
-
-  it('displays a text of broken machines', () => {
-    fixture.detectChanges();
-    expect(jl.textContent).toContain('Dryers Within All rooms');
+    expect(jl.textContent).toContain('Dryers at All rooms');
   });
 
   it('load all the machines', () => {

@@ -1,6 +1,7 @@
 import {AppPage} from './app.po';
+import {browser} from 'protractor';
 
-describe('angular-spark-lab', () => {
+describe('App Component', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -11,8 +12,15 @@ describe('angular-spark-lab', () => {
     page.navigateTo();
   });
 
+  it('should have the correct url', () => {
+    page.navigateTo();
+    browser.getCurrentUrl().then(function (url) {
+      expect(url).toEqual('http://localhost:9000/welcome');
+    });
+  });
+
   it('should get and highlight Home title attribute ', () => {
     page.navigateTo();
-    expect(page.getPageTitle()).toEqual('Morris Laundry Facilities');
+    expect(page.getTextFromField('app-title')).toEqual('Morris Laundry Facilities');
   });
 });
