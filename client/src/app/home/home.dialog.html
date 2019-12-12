@@ -151,8 +151,8 @@
   <mat-dialog-content layout="row">
 
     <mat-accordion id="canSub" *ngIf="data.machine.running && data.machine.status === 'normal'">
-      <div class="sub-title">Notify me when it is available</div>
-      <a class="sub-detail">Subscribe to receive an email when the dryer is vacant. We will only send the notification
+      <div class="sub-title">Notify when available</div>
+      <a class="sub-detail">Subscribe to receive an email when the {{data.machine.type}} is vacant. We will only send the notification
         once.</a>
     </mat-accordion>
 

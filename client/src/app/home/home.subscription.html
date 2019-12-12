@@ -3,7 +3,7 @@
   <form [formGroup]="addSubForm">
     <h2 id="sub-title" mat-dialog-title>New Subscription</h2>
     <p class="sub-title">
-      Notify me when one type of the machines in {{this.name}} is available
+      Notify me when one type of the machines in {{this.name}} is available.
     </p>
     <form [formGroup]="options"style="display: inline">
       <mat-radio-group #input id="typeField" [(ngModel)]="data.subscription.type" formControlName="type" required>

@@ -89,7 +89,15 @@
     color: mat-color($mat-green, 700);
   }
 
+  .statusHolder mat-card-title {
+    font-weight: 500 !important;
+  }
+
   @if $is-dark {
+    .statusHolder mat-card-title {
+      color: mat-color($mat-umn-maroon, 100) !important;
+    }
+
     .vacant {
       color: mat-color($mat-green, 400);
     }
@@ -103,11 +111,11 @@
     }
 
     #default-mark, #defaultCheck, #defaultCheck-2nd {
-      color: mat-color($mat-umn-maroon, 300) !important;
+      color: mat-color($mat-umn-maroon, 400) !important;
     }
 
     .mat-progress-spinner circle, .mat-spinner circle {
-      stroke: mat-color($mat-umn-maroon, 300) !important;
+      stroke: mat-color($mat-umn-maroon, 400) !important;
     }
 
     .welcomeSelect div {
@@ -418,7 +426,7 @@ mat-grid-tile mat-card {
 .roomStatus {
   font-style: italic;
   font-size: 16px;
-  margin: 0 7px;
+  margin: 0 5px;
   display: inline-block;
 }
 
@@ -538,7 +546,7 @@ mat-dialog-container .reportButton {
 }
 
 .statusHolder {
-  margin-top: 15px !important;
+  margin-top: 18px !important;
   padding: 10px !important;
   height: 20px;
   border-radius: 20px;
@@ -629,8 +637,9 @@ mat-dialog-container .reportButton {
 
 #roomInfo .subscribeButton {
   margin: 0 !important;
-  top: -9px !important;
+  top: -10px !important;
   right: -9px !important;
+  font-weight: 500 !important;
 }
 
 #roomInfo .defaultRoomButton {
