@@ -1,24 +1,24 @@
-import {browser, element, by, promise, ElementFinder} from 'protractor';
+import {browser, by, element, promise} from 'protractor';
 
 export class HomePage {
 
   Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   getDateToday() {
-    let today = new Date();
-    let dd: number = today.getDay();
+    const today = new Date();
+    const dd: number = today.getDay();
     return this.Days[dd];
   }
 
   getNextDay() {
-    let today = new Date();
-    let dd: number = today.getDay() + 1;
+    const today = new Date();
+    const dd: number = today.getDay() + 1;
     return this.Days[dd % 7];
   }
 
   getPreviousDay() {
-    let today = new Date();
-    let dd: number = today.getDay() - 1;
+    const today = new Date();
+    const dd: number = today.getDay() - 1;
     return this.Days[dd % 7];
   }
 
@@ -28,6 +28,7 @@ export class HomePage {
 
   // http://www.assertselenium.com/protractor/highlight-elements-during-your-protractor-test-run/
   highlightElement(byObject) {
+    // tslint:disable-next-line:no-shadowed-variable
     function setStyle(element, style) {
       const previous = element.getAttribute('style');
       element.setAttribute('style', style);
@@ -39,18 +40,12 @@ export class HomePage {
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
   }
 
-  getUniqueMachine(Id: string) {
-    this.highlightElement(by.id(Id));
-    const title = element(by.id(Id)).getText();
-    return title;
-  }
-
-  getAll(cssOfElement: string){
+  getAll(cssOfElement: string) {
     return element.all(by.className(cssOfElement));
   }
 
-  getTwo(cssOfElement1: string, cssOfElement2: string){
-    let items = element.all(by.className(cssOfElement1));
+  getTwo(cssOfElement1: string, cssOfElement2: string) {
+    const items = element.all(by.className(cssOfElement1));
     return items.all(by.className(cssOfElement2));
   }
 
@@ -91,6 +86,4 @@ export class HomePage {
     this.highlightElement(by.className(cssOfElement));
     return element(by.className(cssOfElement)).getText();
   }
-
-
 }

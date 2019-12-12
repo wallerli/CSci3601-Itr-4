@@ -1,5 +1,5 @@
 import {WelcomePage} from './welcome.po';
-import {browser} from "protractor";
+import {browser} from 'protractor';
 
 describe('Welcome Page', () => {
   let page: WelcomePage;
@@ -12,7 +12,7 @@ describe('Welcome Page', () => {
     page.navigateTo();
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/welcome');
-    })
+    });
   });
 
   it('should get and highlight Main title attribute ', () => {
@@ -26,7 +26,7 @@ describe('Welcome Page', () => {
     page.click('app-title');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/welcome');
-    })
+    });
   });
 
   it('should have correct room selector title', () => {
@@ -41,7 +41,7 @@ describe('Welcome Page', () => {
     page.click('gay');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/gay');
-    })
+    });
   });
 
   it('should have Independence Hall button and direct to the correct page', () => {
@@ -51,7 +51,7 @@ describe('Welcome Page', () => {
     page.click('independence');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/independence');
-    })
+    });
   });
 
   it('should have Blakely Ball button and direct to the correct page', () => {
@@ -61,7 +61,7 @@ describe('Welcome Page', () => {
     page.click('blakely');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/blakely');
-    })
+    });
   });
 
   it('should have Spooner Hall button and direct to the correct page', () => {
@@ -71,7 +71,7 @@ describe('Welcome Page', () => {
     page.click('spooner');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/spooner');
-    })
+    });
   });
 
   it('should have Pine Hall button and direct to the correct page', () => {
@@ -81,7 +81,7 @@ describe('Welcome Page', () => {
     page.click('pine');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/pine');
-    })
+    });
   });
 
   it('should have The Apartments button and direct to the correct page', () => {
@@ -91,7 +91,7 @@ describe('Welcome Page', () => {
     page.click('the_apartments');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/the_apartments');
-    })
+    });
   });
 
   it('should have Green Prairie Hall button and direct to the correct page', () => {
@@ -101,7 +101,7 @@ describe('Welcome Page', () => {
     page.click('green_prairie');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/green_prairie');
-    })
+    });
   });
 
   it('should have All Rooms button and direct to the correct page', () => {
@@ -111,7 +111,7 @@ describe('Welcome Page', () => {
     page.click('empty');
     browser.getCurrentUrl().then(function (url) {
       expect(url).toEqual('http://localhost:9000/home/all');
-    })
+    });
   });
 
   it('should have correct address information', () => {
@@ -120,7 +120,7 @@ describe('Welcome Page', () => {
     expect(page.getTextFromClassName('morrisAddress'))
       .toEqual(
         'Morris Laundry Facilities\n' +
-      'University of Minnesota Morris\n' +
-      '600 E 4th St., Morris, MN 56267-2132');
+        'University of Minnesota Morris\n' +
+        '600 E 4th St., Morris, MN 56267-2132');
   });
 });
