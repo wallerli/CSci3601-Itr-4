@@ -61,7 +61,7 @@
   }
 
   #all-rooms {
-    background-color: mat-color($mat-umn-maroon, 300);
+    background-color: mat-color($mat-umn-maroon, 400);
     color: white;
   }
 
@@ -318,10 +318,6 @@ mat-icon {
   margin: 5px;
 }
 
-.machineHolder {
-  margin-bottom: 60px !important;
-}
-
 .machines.mat-expansion-panel {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -422,7 +418,7 @@ mat-grid-tile mat-card {
 .roomStatus {
   font-style: italic;
   font-size: 16px;
-  margin-right: 5px;
+  margin: 0 7px;
   display: inline-block;
 }
 
@@ -590,6 +586,10 @@ mat-dialog-container .reportButton {
   margin-right: 12px !important;
 }
 
+.statusHolder {
+  text-align: center !important;
+}
+
 #roomInfo {
   padding: 16px 25px !important;
 }
@@ -629,8 +629,8 @@ mat-dialog-container .reportButton {
 
 #roomInfo .subscribeButton {
   margin: 0 !important;
-  top: -8px !important;
-  right: -8px !important;
+  top: -9px !important;
+  right: -9px !important;
 }
 
 #roomInfo .defaultRoomButton {
@@ -684,4 +684,14 @@ mat-dialog-container .reportButton {
 
 .machineHolder .mat-expansion-panel-header.mat-expanded {
   border-bottom-style: none;
+}
+
+.dryerMachinesPanel {
+  margin-bottom: 60px !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .washerMachinesPanel {
+    margin-bottom: 60px !important;
+  }
 }

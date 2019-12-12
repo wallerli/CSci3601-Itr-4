@@ -18,13 +18,14 @@
 }
 
 #all-rooms {
-  height: 40px;
+  font-weight: 500;
+  height: 38px !important;
   top: auto;
   right: 15px;
   bottom: -50px;
   left: auto;
   position: fixed;
-  border-radius: 20px;
+  border-radius: 19px;
   z-index: 1;
   transition: bottom 1s;
 }
@@ -81,4 +82,13 @@
 
 .mat-progress-bar{
   border-radius: 2px;
+}
+
+.noMachineFoundMessage {
+  margin-left: 8px;
+  font-size: 125%;
+}
+
+.noRoomFoundMessage {
+  font-size: 140%;
 }
