@@ -93,6 +93,11 @@
     .vacant {
       color: mat-color($mat-green, 400);
     }
+
+    .room {
+      border-color: #555 !important;
+    }
+
     .subTypeButton {
       border-color: mat-color($mat-umn-maroon, 300);
     }
@@ -107,7 +112,6 @@
 
     .welcomeSelect div {
       background: #212121 !important;
-      color: #bbb !important;
       font-style: italic;
     }
 
@@ -671,8 +675,8 @@ mat-dialog-container .reportButton {
 }
 
 .machineHolder .mat-expansion-panel-header {
-  margin-left: 11px;
-  margin-right: 11px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding: 0 16px !important;
   border-bottom-style: solid;
   border-bottom-width: 3px;
