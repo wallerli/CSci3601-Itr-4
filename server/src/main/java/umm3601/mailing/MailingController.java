@@ -279,7 +279,7 @@ public class MailingController {
   }
 
   private void sendRoomNotification(String email, String roomName, String machineName, String type, String roomId) throws IOException {
-    String subject = "Status change of the " + type + "s in " + roomName;
+    String subject = "Status change of the " + type + " you subscribed";
     String address = APP_BASE + "home/" + roomId;
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
