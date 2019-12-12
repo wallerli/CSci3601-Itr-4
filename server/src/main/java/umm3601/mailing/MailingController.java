@@ -20,7 +20,7 @@ public class MailingController {
   private final String SEND_KEY = "a_fake_key";
   private final String APP_BASE = "https://ummlaundry.software/";
   private final String EMAIL_FROM = "laundry_facilities@morris.umn.edu";
-  private final String EMAIL_NAME = "Laundry Notification (do not reply)";
+  private final String EMAIL_NAME = "Laundry Service (do not reply)";
 
   public final MongoCollection<Document> subscriptionCollection;
   private final MongoCollection<Document> machineCollection;
