@@ -517,19 +517,14 @@ describe('Home page', () => {
     expect(fl.textContent).toContain('Busy Time on ');
   });
 
-  // it('displays a text of the room\'s map', () => {
-  //   fixture.detectChanges();
-  //   expect(gl.textContent).toContain('Laundry Room Map');
-  // });
-
   it('displays a text of broken machines', () => {
     fixture.detectChanges();
-    expect(il.textContent).toContain('Washers Within All rooms');
+    expect(il.textContent).toContain('Washers at All rooms');
   });
 
   it('displays a text of broken machines', () => {
     fixture.detectChanges();
-    expect(jl.textContent).toContain('Dryers Within All rooms');
+    expect(jl.textContent).toContain('Dryers at All rooms');
   });
 
   it('load all the machines', () => {

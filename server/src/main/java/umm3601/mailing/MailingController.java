@@ -16,8 +16,11 @@ import java.io.IOException;
 
 public class MailingController {
 
-  private final String EMAIL_FROM = "laundry@facility.morris.com";
-  private final String APP_ADDRESS = "http://206.189.163.212:4567/";
+  // Put your send grid key here
+  private final String SEND_KEY = "a_fake_key";
+  private final String APP_BASE = "https://ummlaundry.software/";
+  private final String EMAIL_FROM = "laundry_facilities@morris.umn.edu";
+  private final String EMAIL_NAME = "Morris Laundry Facilities (do not reply)";
 
   public final MongoCollection<Document> subscriptionCollection;
   private final MongoCollection<Document> machineCollection;
@@ -73,8 +76,8 @@ public class MailingController {
   }
 
   private void sendMachineNotification(String email, String roomName, String machineName, String type, String roomId) throws IOException {
-    String subject = "A " + type + " is now available!";
-    String address = APP_ADDRESS + "home/" + roomId;
+    String subject = "Status change of the " + type + " you subscribed";
+    String address = APP_BASE + "home/" + roomId;
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
@@ -269,13 +272,15 @@ public class MailingController {
       "  \n" +
       "</body></html>");
 
-    Mail mail = new Mail(new Email(EMAIL_FROM), subject, new Email(email), content);
-    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status " + send(mail));
+    Mail mail = new Mail(new Email(EMAIL_FROM, EMAIL_NAME), subject, new Email(email), content);
+//  String key = System.getenv("SENDGRID_API_KEY");
+    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status "
+      + send(mail, SEND_KEY));
   }
 
   private void sendRoomNotification(String email, String roomName, String machineName, String type, String roomId) throws IOException {
-    String subject = "A " + type + " is now available in " + roomName + "!";
-    String address = APP_ADDRESS + "home/" + roomId;
+    String subject = "Status change of the " + type + "s in " + roomName;
+    String address = APP_BASE + "home/" + roomId;
     Content content = new Content("text/html", "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html data-editor-version=\"2\" class=\"sg-campaigns\" xmlns=\"http://www.w3.org/1999/xhtml\"><head>\n" +
       "      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
       "      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\">\n" +
@@ -470,13 +475,13 @@ public class MailingController {
       "  \n" +
       "</body></html>");
 
-    Mail mail = new Mail(new Email(EMAIL_FROM), subject, new Email(email), content);
-    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status " + send(mail));
+    Mail mail = new Mail(new Email(EMAIL_FROM, EMAIL_NAME), subject, new Email(email), content);
+//  String key = System.getenv("SENDGRID_API_KEY");
+    System.out.println("[subscribe] INFO mailing.MailingController - Sent notification to " + email + " status "
+      + send(mail, SEND_KEY));
   }
 
-  private int send(Mail mail) throws IOException {
-    final String key = "a_fake_key";
-//  String key = System.getenv("SENDGRID_API_KEY");
+  private int send(Mail mail, String key) throws IOException {
     SendGrid sg = new SendGrid(key);
     Request request = new Request();
     request.setMethod(Method.POST);

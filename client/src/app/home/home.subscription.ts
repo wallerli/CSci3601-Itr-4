@@ -1,9 +1,10 @@
-import {Component, Inject} from "@angular/core";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {Subscription} from "./subscription";
+import {Component, Inject} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Subscription} from './subscription';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'home.subscription',
   templateUrl: 'home.subscription.html',
 })
@@ -30,14 +31,10 @@ export class SubscriptionDialog {
     } else {
       data.subscription.type = 'dryer';
     }
-    // data.subscription.type = 'dryer';
 
     this.options = fb.group({
       type: data.subscription.type,
     });
-
-    // console.log(this.outOfDryers);
-    // console.log(this.outOfWashers);
 
     this.ngOnInit();
   }
@@ -50,8 +47,6 @@ export class SubscriptionDialog {
   };
 
   createForms() {
-
-    // add user form validations
     this.addSubForm = this.fb.group({
       // We don't need a special validator just for our app here, but there is a default one for email.
       email: new FormControl('email', Validators.compose([
@@ -60,8 +55,6 @@ export class SubscriptionDialog {
       ])),
 
     });
-
-    // console.log(this.addSubForm);
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
