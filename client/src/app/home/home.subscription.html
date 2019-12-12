@@ -32,7 +32,7 @@
       <mat-dialog-actions layout="row" style="display: inline; height: 50px !important;">
 
         <button mat-raised-button id="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button"
-                color="warn"
+                color="primary"
                 [disabled]="!addSubForm.valid || data.subscription.type === '' ">Subscribe
         </button><br>
         <button mat-icon-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button"><mat-icon style="margin: auto !important">close</mat-icon></button>
