@@ -1,11 +1,12 @@
-import {Component, Inject} from "@angular/core";
-import {HomeService} from "./home.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {Machine} from "./machine";
-import {Subscription} from "./subscription";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, Inject} from '@angular/core';
+import {HomeService} from './home.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Machine} from './machine';
+import {Subscription} from './subscription';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'home.dialog',
   templateUrl: 'home.dialog.html',
   styleUrls: ['./home.dialog.css']
@@ -54,26 +55,27 @@ export class HomeDialog {
     this.ngOnInit();
   }
 
-  generateCustomLink(machineRoomID: string, machineType: string, machineID: string): string {
-    if (machineRoomID === 'The Apartments') {
+  generateCustomLink(roomName: string, machineType: string, machineID: string): string {
+    // matching room name is necessary to get the correct selection id for autofill-in
+    if (roomName === 'The Apartments') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Gay Hall') {
+    } else if (roomName === 'Gay Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Clayton A. Gay&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Green Prairie Hall') {
+    } else if (roomName === 'Green Prairie Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Green Prairie Community&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Pine Hall') {
+    } else if (roomName === 'Pine Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Pine&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Independence Hall') {
+    } else if (roomName === 'Independence Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=David C. Johnson Independence&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Spooner Hall') {
+    } else if (roomName === 'Spooner Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Spooner&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
-    } else if (machineRoomID === 'Blakely Hall') {
+    } else if (roomName === 'Blakely Hall') {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
     } else {
@@ -90,10 +92,7 @@ export class HomeDialog {
         Validators.required,
         Validators.email
       ])),
-
     });
-
-    // console.log(this.addSubForm);
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
