@@ -89,10 +89,13 @@
     color: mat-color($mat-green, 700);
   }
 
+  .statusHolder mat-card-title {
+    font-weight: 500 !important;
+  }
+
   @if $is-dark {
     .statusHolder mat-card-title {
       color: mat-color($mat-umn-maroon, 100) !important;
-      font-weight: 500 !important;
     }
 
     .vacant {
