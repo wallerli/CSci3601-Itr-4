@@ -27,13 +27,14 @@
   $is-dark: map-get($theme, is-dark);
 
   // Define any styles affected by the theme.
-  mat-sidenav-content {
+  mat-sidenav-content, .roomHeading.mat-card {
     background-color: #EBE1E0;
   }
 
-  .roomHeading.mat-card {
-    background: #EBE1E0;
-    //color: $light-primary-text !important;
+  #roomInfo .statusHolder {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #EBE1E0;
   }
 
   .statusHolderTitle {
@@ -42,30 +43,34 @@
   }
 
   #default-mark, #defaultCheck, #defaultCheck-2nd {
-    color: mat-color($mat-umn-maroon, 300)!important;
+    color: mat-color($mat-umn-maroon, 300) !important;
   }
-  .mat-progress-spinner circle, .mat-spinner circle{
-    stroke: mat-color($mat-umn-maroon, 300)!important;
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: mat-color($mat-umn-maroon, 300) !important;
   }
 
-  #loadCover{
+  #loadCover {
     z-index: 2;
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     display: block;
-    background: rgba(30,30,30,0.75);
+    background: rgba(30, 30, 30, 0.75);
   }
 
-  #all-rooms{
+  #all-rooms {
     background-color: mat-color($mat-umn-maroon, 300);
     color: white;
   }
 
+  .machineHolder .mat-expansion-panel-header {
+    border-bottom-color: white;
+  }
+
   .detailButton {
-    background-color: #fff;
+    background-color: white;
   }
 
   #welcomeTitle {
@@ -80,24 +85,24 @@
     border-left: 8px solid mat-color($mat-green, 700);
   }
 
-  .vacant{
+  .vacant {
     color: mat-color($mat-green, 700);
   }
 
   @if $is-dark {
-    .vacant{
+    .vacant {
       color: mat-color($mat-green, 400);
     }
-    .subTypeButton{
+    .subTypeButton {
       border-color: mat-color($mat-umn-maroon, 300);
     }
 
     #default-mark, #defaultCheck, #defaultCheck-2nd {
-      color: mat-color($mat-umn-maroon, 300)!important;
+      color: mat-color($mat-umn-maroon, 300) !important;
     }
 
-    .mat-progress-spinner circle, .mat-spinner circle{
-      stroke: mat-color($mat-umn-maroon, 300)!important;
+    .mat-progress-spinner circle, .mat-spinner circle {
+      stroke: mat-color($mat-umn-maroon, 300) !important;
     }
 
     .welcomeSelect div {
@@ -119,18 +124,17 @@
       background-color: #424242;
     }
 
-    #app-title button{
+    .machineHolder .mat-expansion-panel-header {
+      border-bottom-color: #424242;
+    }
+
+    #app-title button {
       font-style: italic;
       font-weight: 400;
     }
 
-    mat-sidenav-content {
-      background-color: mat-color($background, 1000);
-    }
-
     .roomHeading.mat-card {
       background: unset;
-      //color: $light-primary-text !important;
     }
 
     .topMenu, .roomHeading {
@@ -144,6 +148,10 @@
 
     mat-sidenav-content {
       background: mat-color($background, app-bar);
+    }
+
+    #roomInfo .statusHolder {
+      border-color: mat-color($background, app-bar);
     }
 
     .indicator {
@@ -162,15 +170,15 @@
     .unavailable mat-card {
       border-left: 8px solid #aaaaaa !important;
     }
-    .mat-icon.vacant{
+    .mat-icon.vacant {
       color: mat-color($mat-green, 700);
     }
-    .vacant .mat-progress-bar-buffer{
-      background-color: mat-color($mat-green, 700)!important;
+    .vacant .mat-progress-bar-buffer {
+      background-color: mat-color($mat-green, 700) !important;
     }
 
-    .mat-icon.inUse{
-      color: mat-color($mat-umn-gold, 800)!important;
+    .mat-icon.inUse {
+      color: mat-color($mat-umn-gold, 800) !important;
     }
 
     .inUse mat-card {
@@ -178,15 +186,15 @@
     }
   }
 
-  .mat-icon.vacant{        // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+  .mat-icon.vacant { // main idea from iteration 3 the groovy gravies (https://github.com/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
     color: mat-color($mat-green, 400);
   }
-  .vacant .mat-progress-bar-buffer{
-    background-color: mat-color($mat-green, 400)!important;
+  .vacant .mat-progress-bar-buffer {
+    background-color: mat-color($mat-green, 400) !important;
   }
 
-  .mat-icon.inUse{
-    color: mat-color($mat-umn-gold, 900)!important;
+  .mat-icon.inUse {
+    color: mat-color($mat-umn-gold, 900) !important;
   }
 
   .vacant mat-card {
@@ -206,7 +214,7 @@
     top: 60px;
     z-index: 1;
     box-shadow: none !important;
-    padding-bottom: 25px !important;
+    padding-bottom: 20px !important;
   }
 
   .topMenu {
@@ -215,7 +223,7 @@
     margin-right: -5px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 20px;
+    padding-bottom: 18px;
   }
 
   .drawer-list-item-active {
@@ -306,8 +314,8 @@ mat-icon {
   margin: 5px;
 }
 
-.washerMachinesPanel, .dryerMachinesPanel {
-  margin-bottom: 70px !important;
+.machineHolder {
+  margin-bottom: 60px !important;
 }
 
 .machines.mat-expansion-panel {
@@ -525,7 +533,7 @@ mat-dialog-container .reportButton {
   display: none;
 }
 
-.mat-card, .mat-expansion-panel, #all-rooms {
+.mat-card, .mat-expansion-panel, #all-rooms, .mat-raised-button {
   box-shadow: none !important;
 }
 
@@ -556,7 +564,7 @@ mat-dialog-container .reportButton {
 }
 
 @media only screen and (min-width: 1020px) {
-  .roomStatus mat-icon{
+  .roomStatus mat-icon {
     font-size: 16px;
     margin-right: 0;
     margin-left: 22px;
@@ -570,18 +578,30 @@ mat-dialog-container .reportButton {
   }
 }
 
+#roomContentEmpty {
+  margin-bottom: -10px;
+}
+
+.subscribeButton {
+  margin-right: 12px !important;
+}
+
 #roomInfo {
-  background: transparent !important;
-  padding: 0 !important;
+  padding: 16px 25px !important;
 }
 
 #roomInfo .roomHeading {
-  top: 35px !important;
+  background: transparent !important;
+  top: 0 !important;
   padding: 0;
   position: initial;
   z-index: 0;
   margin-left: 2px !important;
   margin-right: -11px !important;
+}
+
+#roomInfo #roomTitle {
+  font-size: 32px !important;
 }
 
 #roomInfo #default-selector {
@@ -590,7 +610,9 @@ mat-dialog-container .reportButton {
 }
 
 #roomInfo .statusHolder {
-  text-align: center !important;
+  text-align: right !important;
+  margin-left: -6px !important;
+  padding-right: 10px !important;
 }
 
 #roomInfo mat-icon {
@@ -601,12 +623,14 @@ mat-dialog-container .reportButton {
   margin: 0 20px;
 }
 
-.subscribeButton {
-  margin-right: 12px !important;
-}
-
 #roomInfo .subscribeButton {
   margin: 0 !important;
+  top: -8px !important;
+  right: -8px !important;
+}
+
+#roomInfo .defaultRoomButton {
+  margin-top: 5px;
 }
 
 #roomInfo .defaultRoomButton mat-icon {
@@ -614,12 +638,26 @@ mat-dialog-container .reportButton {
 }
 
 #roomInfo #roomTitleEmpty {
-  margin-top: 45px !important;
+  margin-left: 0 !important;
+  margin-top: 55px !important;
   font-size: 350% !important;
 }
 
 #roomInfo #roomContentEmpty {
-  font-size: 200% !important;
+  margin-left: 0 !important;
+  font-size: 180% !important;
+}
+
+#roomInfo .statusHolderTitle {
+  font-weight: 500;
+  font-size: 110%;
+  top: unset;
+  margin-left: 5px;
+}
+
+#roomInfo .roomStatus {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 500px) {
@@ -632,3 +670,14 @@ mat-dialog-container .reportButton {
   padding-right: 10px !important;
 }
 
+.machineHolder .mat-expansion-panel-header {
+  margin-left: 11px;
+  margin-right: 11px;
+  padding: 0 16px !important;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+}
+
+.machineHolder .mat-expansion-panel-header.mat-expanded {
+  border-bottom-style: none;
+}
