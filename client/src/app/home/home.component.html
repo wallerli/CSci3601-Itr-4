@@ -119,7 +119,7 @@
                       Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.vacantTime}}</a>
                       min
                     </p>
-                    <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
+                    <mat-progress-bar class="vacant" mode="determinate" value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
                      (click)="openDialog(machine)">Details..</a>
@@ -190,7 +190,7 @@
                     <p style="bottom: 20px; top: auto; text-align: right">
                       <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
                     </p>
-                    <mat-progress-bar color="dark-red" mode="determinate" bufferValue="100"
+                    <mat-progress-bar class="brokenMachines" mode="determinate" bufferValue="100"
                                       value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
@@ -236,7 +236,7 @@
                       Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.vacantTime}}</a>
                       min
                     </p>
-                    <mat-progress-bar color="accent" mode="determinate" value="100"></mat-progress-bar>
+                    <mat-progress-bar  mode="determinate" value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
                      (click)="openDialog(machine)">Details..</a>
@@ -269,7 +269,7 @@
                       Time remaining <a class="time"
                                         style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                     </p>
-                    <mat-progress-bar class="runninMachine" color="warn" mode="determinate"
+                    <mat-progress-bar class="runningMachine"  color="warn" mode="determinate"
                                       value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
                   <a id="reportId" class="detailTextButton" mat-button
@@ -307,7 +307,7 @@
                     <p style="bottom: 20px; top: auto; text-align: right">
                       <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
                     </p>
-                    <mat-progress-bar color="dark-red" mode="determinate" bufferValue="100"
+                    <mat-progress-bar class="brokenMachines" mode="determinate" bufferValue="100"
                                       value="0"></mat-progress-bar>
                   </div>
                   <a class="detailTextButton" mat-button
@@ -385,7 +385,7 @@
               </mat-card>
             </mat-card-content>
             <a id="roomSubHolder " *ngIf="this.roomId !== ''">
-              <button mat-button color="warn" id="subscribeButton" class="subscribeButton"
+              <button mat-button color="primary" id="subscribeButton" class="subscribeButton"
                       [disabled]="subscriptionDisabled" (click)="openSubscription(this.roomId)">
                 <mat-accordion class="subscribeButtonText" *ngIf="isSubscribed && this.moveHeader()">Subscribed</mat-accordion>
                 <mat-accordion class="subscribeButtonText" *ngIf="!isSubscribed && this.moveHeader()">Subscribe</mat-accordion>
@@ -429,7 +429,7 @@
           </button>
           <button *ngIf="defaultSet(roomName)" mat-button id="unsetDefaultRoomButton" class="defaultRoomButton"
                   (click)="updateCookies('','All Rooms')">
-            <mat-icon color="primary" style="margin-top: 7px">check_box</mat-icon>
+            <mat-icon id="defaultCheck" style="margin-top: 7px">check_box</mat-icon>
             <a class="default-selector-text">Remember current room on your next visit</a>
           </button>
         </div>

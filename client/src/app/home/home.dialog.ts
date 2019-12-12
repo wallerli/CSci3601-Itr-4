@@ -8,6 +8,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 @Component({
   selector: 'home.dialog',
   templateUrl: 'home.dialog.html',
+  styleUrls: ['./home.dialog.css']
 })
 // tslint:disable-next-line:component-class-suffix
 export class HomeDialog {

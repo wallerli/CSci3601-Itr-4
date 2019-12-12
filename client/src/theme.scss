@@ -75,15 +75,15 @@ $mat-umn-gold: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$light-primary: mat-palette($mat-umn-maroon, 400); // 500 is the base hue of a Material color
+$light-primary: mat-palette($mat-umn-maroon, 500); // 500 is the base hue of a Material color
 
 // The 200 here makes the indigo color lighter
 // Material Design dark themes should use a desaturated versions of primary and accent colors
 // See: https://material.io/design/color/dark-theme.html
-$dark-primary: mat-palette($mat-umn-maroon, 200);
+$dark-primary: mat-palette($mat-umn-maroon, 300);
 
-$light-accent: mat-palette($mat-green, 700);
-$dark-accent: mat-palette($mat-green, 400);
+$light-accent: mat-palette($mat-umn-maroon, 400);
+$dark-accent: mat-palette($mat-umn-maroon, 200);
 
 // The warn palette is optional (defaults to red).
 $light-warn: mat-palette($mat-umn-gold, 900); // Without a hue given, it defaults to 500
