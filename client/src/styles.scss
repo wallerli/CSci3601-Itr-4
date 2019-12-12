@@ -172,9 +172,7 @@
     .mat-icon.inUse{
       color: mat-color($mat-umn-gold, 800)!important;
     }
-    .runningMachine mat-progress-bar.mat-progress-bar-fill{
-    background-color: mat-color($mat-umn-gold, 800)!important;
-    }
+
     .inUse mat-card {
       border-left: 8px solid mat-color($mat-umn-gold, 800);
     }
@@ -189,13 +187,6 @@
 
   .mat-icon.inUse{
     color: mat-color($mat-umn-gold, 900)!important;
-  }
-  .runningMachine mat-progress-bar.mat-progress-bar-fill{
-    background-color: mat-color($mat-umn-gold, 900)!important;
-  }
-
-  .mat-icon.inUse {
-    color: mat-color($warn)
   }
 
   .vacant mat-card {
