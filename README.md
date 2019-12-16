@@ -59,10 +59,58 @@ following information auto-filled: Building, Apartment/Room/Area, Are you a Resi
 5. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
 
 ## ToDo List & Known Issues:
-To be able to use cookies to remember if a machine has been subscribed to or not. Currently the issue is that if you subscribe to a 
-machine, the icon changes and will not allow you to subscribe again, but if you refresh the page it will allow you to just
-subscribe again if you wanted to.
 
+#### To be able to use cookies to remember if a machine has been subscribed to or not
+
+Currently the issue is that if you subscribe to a machine, the icon changes and will not allow you to subscribe again, but if you refresh the page it will allow you to just subscribe again if you wanted to.
+
+#### To check the css compatibility on different phlatforms and devices
+
+Currently the room header only work on ios version 13+. There may exist other unknown css compatibility problems. A cross phlatform test tool like browserstack can help to accomplish this.
+
+#### To break the current client-side components into smaller pieces for better maintainability
+
+Currently we have a huge home.component.ts in our client side. Breaking it into smaller pieces will help to simplify the html and make future development easier.
+
+#### To simplify the css
+
+Currently there exists a lot of styling in html and diferent level of css files. Using simplification tools to reduce the overwrites and duplicates can make future styling easier. Some unnecesssary padding and margins in the current project may have increased the overall complexity of the overall styling, locating and removing the unnecesssary css may help a lot to resolve this problem.
+
+#### To check if the chart displays reasonable if the devices is in a another time zone
+
+Currently it is unknown what info will be displaied when the client runs in a different time zone other than the Chicago time.
+
+#### To add aditional info to help users better understand the "Buzy time"
+
+Current our busy time follows the design of Google map's busy time. Further analysis on what should be displaied on the chart may help users better understand the usage of the laundry machines.
+
+#### To add mat-tool-tip to different elements
+
+Currently only a few buttons have corresponding mat tool tips. Adding more tool tips can help users better understand different features of the web app.
+
+#### To make server's suscription feature more efficient and more stable
+
+Currently the server cannot detect the failure in sending email, the duplicates of the same subscription, or the invalid subscription with falsy room / machines. Adding these features to the server can make it run more stably and more efficiently.
+
+#### Setup environment variable access in of the server
+
+Currently we have to change the code manually if we want to: 1) switch between reading remote data or local test data. 2) Update the base_url (used in sending email) and the sendgrid key on deployment. Setting up environment variable access in the server can makeing testing and deploying easier.
+
+#### To enable the client only receive the machine into of a single room
+
+Currently because there is not too much machines, the client will receive the info of all the machines add calculate how much machines are running in each room after that. Adding a new API for different room's machine info, moving the calculation of the # of running / available machines to the server and only send the requested room's machines together with the numerical summary of other rooms running / available machines numbers can help the client run more efficiently.
+
+#### To add a loading progress bar for potential longer loading delay
+
+Currently a rotating loading spinner is displaied when loading the app. Showing a loading progress bar on the top of the page can provide users a more intuitive feeling when users access the app.
+
+#### To test the dialog componsnts more throughly
+
+For some reasons the current have some diffifulty to find a efficient way to test the dialog functions through Krama and Jasmine. Adding these tests can help to maintain the quality of futural development.
+
+#### Add e2e tests for different screen layouts
+
+The current e2e tests only work on wider screens (width >= 1200px). Prviding different tests for different screen screens can help to improve the stabbility of futural development.
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
