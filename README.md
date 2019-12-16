@@ -45,7 +45,7 @@ A report functionality was implemented for the case when a user discovers a prob
 
 1. [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
 2. [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
-3. [Known Issues and To-dos](#ToDo-List-&-Known-Issues)
+3. [Todo List & Known Issues](#todo-list--known-issues)
 4. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
 5. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
 6. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
@@ -54,11 +54,11 @@ A report functionality was implemented for the case when a user discovers a prob
 
 #### To fix the redirection when top-level/home/ is requested
 
-Currently the history chart cannot update currectly when "top-level/home/" is requested. The initialization function of the home component should be fixed to resolve this problem.
+Currently the history chart cannot update currectly when "top-level/home/" is requested. The initialization function of the home component needs to be modified to resolve this problem.
 
 #### To be able to use cookies to remember if a machine has been subscribed to or not
 
-Currently the issue is that if you subscribe to a machine, the icon changes and will not allow you to subscribe again, but if you refresh the page it will allow you to just subscribe again if you wanted to.
+Currently the issue is that if you subscribe to a machine, the icon changes and will not allow you to subscribe again, but if you refresh the page it will allow you to just subscribe again which can causes duplicate subscriptions.
 
 #### To check the compatibility of the app on different phlatforms and devices
 
@@ -74,15 +74,27 @@ Currently there exists a lot of styling in html and diferent level of css files.
 
 #### To check if the chart displays reasonable if the devices is in a another time zone
 
-Currently it is unknown what info will be displaied when the client runs in a different time zone other than the Chicago time.
+Currently it is unknown what info will be displayed when the client runs in a different time zone other than the Chicago time.
 
 #### To add aditional info to help users better understand the "Buzy time"
 
 Current our busy time follows the design of Google map's busy time. Further analysis on what should be displaied on the chart may help users better understand the usage of the laundry machines.
 
+#### To test the dialog componsnts more throughly
+
+For some reasons the current have some diffifulty to find a efficient way to test the dialog functions through Krama and Jasmine. Adding these tests can help to maintain the quality of futural development.
+
+#### To provide e2e tests for different size of screens
+
+The current e2e tests only work on wider screens (width >= 1200px). Prviding different tests for different screens can help to improve the stabbility of futural development.
+
 #### To add mat-tool-tip to different elements
 
 Currently only a few buttons have corresponding mat tool tips. Adding more tool tips can help users better understand different features of the web app.
+
+#### To switch to Java 13 and use text block to simplify to email content in mailing controller
+
+Java 13 supports using text block to add text inside the java file and Intellij supports switching multiple line of codes into a code block when using Java 13. Using code block to store the email content can improve the maintainability of the email content.
 
 #### To make server's suscription feature more efficient and more stable
 
@@ -99,14 +111,6 @@ Currently because there is not too much machines, the client will receive the in
 #### To add a loading progress bar for potential longer loading delay
 
 Currently a rotating loading spinner is displaied when loading the app. Showing a loading progress bar on the top of the page can provide users a more intuitive feeling when users access the app.
-
-#### To test the dialog componsnts more throughly
-
-For some reasons the current have some diffifulty to find a efficient way to test the dialog functions through Krama and Jasmine. Adding these tests can help to maintain the quality of futural development.
-
-#### To provide e2e tests for different screen sizes
-
-The current e2e tests only work on wider screens (width >= 1200px). Prviding different tests for different screens can help to improve the stabbility of futural development.
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
