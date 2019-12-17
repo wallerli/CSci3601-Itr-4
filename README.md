@@ -6,16 +6,32 @@
 
 ## About
 
-A list of tools, languages, and technologies the project uses.
+### A list of tools, languages, and technologies this project uses.
+
+* [Angular Material][AngMat] - Used for our UI.
+* [Sendgrid][SendGrid] - Used for our subscription service.
+* [Chart.js][CHARTjs] - Used for displaying historical data in a nice graph.
+* [ngx-cookie-service][NGXCookie] - The cookie servivce we used.
+* [Yarn][yarn] - The dependency management system we used.
+* [Angular CLI][AngCli] - Made using Angular easier.
+* [TypeScript][TS] - The type of JavaScript we used.
+* [Java Spark][spark] - We used Java Spark for our server.
+* [Travis-ci][travis] - Travis helped make sure all our builds were passing.
+* [Karma][karma] - Used for testing.
+* [Jasmine][jasmine] - Used for testing.
+* [mongoDB][mongo] - The database we used for this project.
+* [Digital Ocean][DO] - Used for deploying the project on the web.
+* [Cloudflare][CF] - Needed for making this project HTTPS.
+* [BrowserStack][BS] - Used when testing compatibility of different devices and platforms.
 
 ### Look at Each Machine Status
 
-When any room is selected by the user, there is a display of washers and dryers for that selected room. Washers and dryers are distinguishable through the separated menus as well as different icons. Each machine is then color coded, green for vacant, yellow for in use, and grey for broken machines. This color coding is represented with a left border on each machine as well each machines own progress bar, which can be
+When any room is selected by the user, there is a display of washers and dryers for that selected room. Washers and dryers are distinguishable through the separated menus as well as different icons. Each machine is then color-coded, green for vacant, yellow for in use, and grey for broken machines. This color-coding is represented with a left border on each machine as well each machines own progress bar, which can be
 a more helpful visual.
  
 ### See Busy-times of the Laundry Rooms
 
-Two different types of graphs have been implemented through [Chart.js][CHARTjs], one a line graph and one a bar graph, as well as a drop down menu to select which day you would like to look at. The line graph is a visual representation of machine usage for all halls with different colored buttons corresponding to each hall that toggles on or off that line on the graph. When you select a specific room, you will notice that the line graph has now changed to a bar graph to show more specifically when machines in that hall are at their most busy.
+Two different types of graphs have been implemented through [Chart.js][CHARTjs], one a line graph and one a bar graph, as well as a drop-down menu to select which day you would like to look at. The line graph is a visual representation of machine usage for all halls with different colored buttons corresponding to each hall that toggles on or off that line on the graph. When you select a specific room, you will notice that the line graph has now changed to a bar graph to show more specifically when machines in that hall are at their most busy.
 
 ### Check Out Machine Details (see subscribe)
 
@@ -27,11 +43,11 @@ With the implementation of () mailing service, users have the ability to make a 
 
 ### Choose a Room of Your Liking (button, dropdown)
 
-If you are already on a specific page for a hall, you have two options of selecting different halls to view. If you scroll to the top of the hall's page you will find a drop down menu displaying buttons for every hall as well as a machine vacancy ratio. You may also click the button that may appear in the bottom right that says "Switch Rooms", which just redirects you to the first dropdown at the top of the page.
+If you are already on a specific page for a hall, you have two options for selecting different halls to view. If you scroll to the top of the hall's page you will find a drop-down menu displaying buttons for every hall as well as a machine vacancy ratio. You may also click the button that may appear in the bottom right that says "Switch Rooms", which just redirects you to the first dropdown at the top of the page.
 
 ### Welcome Page Redirection
 
-When you load the website for the first time you will be show a welcome page with a list of buttons for every hall on campus. Each button then redirects you to a separate page specifically for viewing that room's machines.
+When you load the website for the first time you will be shown a welcome page with a list of buttons for every hall on campus. Each button then redirects you to a separate page specifically for viewing that room's machines.
 
 ### Set Default Room (using cookies)
 
@@ -45,72 +61,26 @@ A report functionality was implemented for the case when a user discovers a prob
 
 1. [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
 2. [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
-3. [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
+3. [Todo List & Known Issues](#https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
 4. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
 5. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
 6. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
 
 ## ToDo List & Known Issues
-
-#### To fix the redirection when top-level/home/ is requested
-
-Currently the history chart cannot update currectly when "top-level/home/" is requested. The initialization function of the home component needs to be modified to resolve this problem.
-
-#### To be able to use cookies to remember if a machine has been subscribed to or not
-
-Currently the issue is that if you subscribe to a machine, the icon changes and will not allow you to subscribe again, but if you refresh the page it will allow you to just subscribe again which can causes duplicate subscriptions.
-
-#### To check the compatibility of the app on different phlatforms and devices
-
-Currently the sticky small-screen room header only work on IOS 13+. There may exist other unknown css compatibility problems. A cross phlatform test tool like Browserstack can help to accomplish the problem.
-
-#### To break the current client-side components into smaller pieces for better maintainability
-
-Currently we have a huge home.component.ts in our client side. Breaking it into smaller pieces will help to simplify the html and make future development easier.
-
-#### To simplify the styling in html and css files
-
-Currently there exists a lot of styling in html and diferent level of css files. Using simplification tools to reduce the overwrites and duplicates can make future styling easier. Some unnecesssary padding and margins in the current project may have increased the overall complexity of the overall styling, locating and removing the unnecesssary css may help a lot to resolve this problem.
-
-#### To check if the chart displays reasonable if the devices is in a another time zone
-
-Currently it is unknown what info will be displayed when the client runs in a different time zone other than the Chicago time.
-
-#### To add aditional info to help users better understand the "Buzy time"
-
-Current our busy time follows the design of Google map's busy time. Further analysis on what should be displaied on the chart may help users better understand the usage of the laundry machines.
-
-#### To test the dialog componsnts more throughly
-
-For some reasons the current have some diffifulty to find a efficient way to test the dialog functions through Krama and Jasmine. Adding these tests can help to maintain the quality of futural development.
-
-#### To provide e2e tests for different size of screens
-
-The current e2e tests only work on wider screens (width >= 1200px). Prviding different tests for different screens can help to improve the stabbility of futural development.
-
-#### To add mat-tool-tip to different elements
-
-Currently only a few buttons have corresponding mat tool tips. Adding more tool tips can help users better understand different features of the web app.
-
-#### To switch to Java 13 and use text block to simplify to email content in mailing controller
-
-Java 13 supports using text block to add text inside the java file and Intellij supports switching multiple line of codes into a code block when using Java 13. Using code block to store the email content can improve the maintainability of the email content.
-
-#### To make server's suscription feature more efficient and more stable
-
-Currently the server cannot detect the failure in sending email, the duplicates of the same subscription, or the invalid subscription with falsy room / machines. Adding these features to the server can make it run more stably and more efficiently.
-
-#### Setup environment variable access in of the server
-
-Currently we have to change the code manually if we want to: 1) switch between reading remote data or local test data. 2) Update the base_url (used in sending email) and the sendgrid key on deployment. Setting up environment variable access in the server can makeing testing and deploying easier.
-
-#### To enable the client only receive the machine into of a single room
-
-Currently because there is not too much machines, the client will receive the info of all the machines add calculate how much machines are running in each room after that. Adding a new API for different room's machine info, moving the calculation of the # of running / available machines to the server and only send the requested room's machines together with the numerical summary of other rooms running / available machines numbers can help the client run more efficiently.
-
-#### To add a loading progress bar for potential longer loading delay
-
-Currently a rotating loading spinner is displaied when loading the app. Showing a loading progress bar on the top of the page can provide users a more intuitive feeling when users access the app.
+To see a list of ToDos and known issues, please take a look at our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add.
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
+[AngMat]: https://material.angular.io/
+[SendGrid]: https://sendgrid.com/
+[yarn]: https://yarnpkg.com/lang/en/
+[AngCli]: https://cli.angular.io/
+[TS]: https://www.typescriptlang.org/
+[spark]: http://sparkjava.com/
+[travis]: https://travis-ci.org/
+[karma]: https://karma-runner.github.io/latest/index.html
+[jasmine]: https://jasmine.github.io/
+[mongo]: https://www.mongodb.com/
+[DO]: https://www.digitalocean.com/
+[CF]: https://www.cloudflare.com/
+[BS]: https://www.browserstack.com/
