@@ -4,25 +4,26 @@
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer)
 
-## About
+## Tools, Languages, & Technologies
 
-### A list of tools, languages, and technologies this project uses.
-
-* [Angular Material][AngMat] - Used for our UI.
-* [Sendgrid][SendGrid] - Used for our subscription service.
+* [Sendgrid][SendGrid] - Used as our Email-sending service.
 * [Chart.js][CHARTjs] - Used for displaying historical data in a nice graph.
 * [ngx-cookie-service][NGXCookie] - The cookie servivce we used.
 * [Yarn][yarn] - The dependency management system we used.
+* [Angular][Ang] - A helpful tool to build our client.
 * [Angular CLI][AngCli] - Made using Angular easier.
-* [TypeScript][TS] - The type of JavaScript we used.
+* [Angular Material][AngMat] - Used for our UI.
+* [TypeScript][TS] - We used TypeScript for our client.
 * [Java Spark][spark] - We used Java Spark for our server.
-* [Travis-ci][travis] - Travis helped make sure all our builds were passing.
+* [Travis-ci][travis] - Used for continuous integration.
 * [Karma][karma] - Used for testing.
 * [Jasmine][jasmine] - Used for testing.
 * [mongoDB][mongo] - The database we used for this project.
-* [Digital Ocean][DO] - Used for deploying the project on the web.
+* [Digital Ocean][DO] - Used for deployment.
 * [Cloudflare][CF] - Needed for making this project HTTPS.
 * [BrowserStack][BS] - Used when testing compatibility of different devices and platforms.
+
+## Key Features
 
 ### Look at Each Machine Status
 
@@ -67,13 +68,16 @@ A report functionality was implemented for the case when a user discovers a prob
 6. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
 
 ## ToDo List & Known Issues
-To see a list of ToDos and known issues, please take a look at our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add.
+To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. 
+
+If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
 [AngMat]: https://material.angular.io/
 [SendGrid]: https://sendgrid.com/
 [yarn]: https://yarnpkg.com/lang/en/
+[Ang]: https://angular.io/
 [AngCli]: https://cli.angular.io/
 [TS]: https://www.typescriptlang.org/
 [spark]: http://sparkjava.com/
