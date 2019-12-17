@@ -61,7 +61,7 @@ A report functionality was implemented for the case when a user discovers a prob
 
 1. [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
 2. [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
-3. [Todo List & Known Issues](#https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
+3. [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
 4. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
 5. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
 6. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
