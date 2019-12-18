@@ -41,7 +41,13 @@ This project has the ability to set your favorite/default room. This is done wit
 
 A report functionality was implemented for the case when a user discovers a problem with a machine. The user can find the machine that has a problem and can click the machine details button. This will bring up a machine dialog with a "Report an issue" button located at the bottom. This brings the user to 'The Office of Residential Life' work request form. The report page will have the following information auto-filled: Building, Apartment/Room/Area, Are you a Resident of... , the Request type and Request Details.
 
+### Cross Device Compatibility and Dark Mode
+
+The web app applies responsive design and always display items in an optimized view. The app used Angular Material’s color module and supports dark mode.
+
+
 ## ToDo List & Known Issues
+
 To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
 
 ## Tools, Languages, & Technologies
