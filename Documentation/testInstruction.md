@@ -28,6 +28,8 @@ There are 2 skipped e2e tests, we provide some reasons as comments before the co
 
 **To run other tests**, please **set the "autoRefresh" true** and **set the "seedLocalSource" false.**
 
+Do not use actual key to run any test!
+
 There are 5 skipped client tests, we provide some reasons as comments before the code of these tests.
 
 We did not remove the modules of users' functionality in the client and the server because they will be helpful as a template for future iterations.
