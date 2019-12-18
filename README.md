@@ -1,5 +1,5 @@
 # Morris Laundry Facilities
-### A Software Design Project (CSci-3601-F19)
+### A Software Design Project for UMM-CSci-3601-F19 
 ##### Iteration 4 Contributors: Robert Beane, Michael Fairbanks, Christian Thielke, Machi Iwata, Kai Zang, and Waller Li
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer)
