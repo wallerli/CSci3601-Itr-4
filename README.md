@@ -1,6 +1,6 @@
 # Morris Laundry Facilities
-##### CSCI 3601 F19 Iteration 4
-##### Contributors: Robert Beane, Michael Fairbanks, Christian Thielke, Machi Iwata, Kai Zang, and Waller Li
+### A Software Design Project (CSci-3601-F19)
+##### Iteration 4 Contributors: Robert Beane, Michael Fairbanks, Christian Thielke, Machi Iwata, Kai Zang, and Waller Li
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer)
 
@@ -23,7 +23,7 @@ For every machine in every hall, there are three different buttons, the three ve
 
 ### Subscribe to Rooms and Machines
 
-With the implementation of () mailing service, users have the ability to make a subscription to a room or machine and receive an email. Users can click on the details button within a machine card and if the machine is in use then the user is able to enter their email to be notified when the machine is done. After the user enters their email, a request is sent to the mailing service and then an email will be sent.
+With the implementation of the mailing service, users have the ability to make a subscription to a room or machine and receive an email. Users can click on the details button within a machine card and if the machine is in use then the user is able to enter their email to be notified when the machine is done. After the user enters their email, a request is sent to the mailing service and then an email will be sent.
 
 ### Choose a Room of Your Liking (button, dropdown)
 
@@ -40,6 +40,9 @@ This project has the ability to set your favorite/default room. This is done wit
 ### Report Malfunctioning Machines
 
 A report functionality was implemented for the case when a user discovers a problem with a machine. The user can find the machine that has a problem and can click the machine details button. This will bring up a machine dialog with a "Report an issue" button located at the bottom. This brings the user to 'The Office of Residential Life' work request form. The report page will have the following information auto-filled: Building, Apartment/Room/Area, Are you a Resident of... , the Request type and Request Details.
+
+## ToDo List & Known Issues
+To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
 
 ## Tools, Languages, & Technologies
 
@@ -62,18 +65,15 @@ A report functionality was implemented for the case when a user discovers a prob
 * [Cloudflare][CF] - Needed for making this project HTTPS.
 * [BrowserStack][BS] - Used when testing compatibility of different devices and platforms.
 
-## ToDo List & Known Issues
-To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
-
 ## Documentation
 
-1. [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
-2. [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
-3. [Get your key for the email service](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/emailKey.md)
-4. [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
-5. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
-6. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
-7. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
+* [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
+* [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
+* [Get your key for the email service](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/emailKey.md)
+* [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
+* [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
+* [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
+* [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
