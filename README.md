@@ -1,29 +1,12 @@
 # Morris Laundry Facilities
-### CSCI 3601 F19 Iteration 4
-##### Authors: Robert Beane, Michael Fairbanks, Christian Thielke, Machi Iwata, Kai Zang, and Waller Li
+##### CSCI 3601 F19 Iteration 4
+##### Contributors: Robert Beane, Michael Fairbanks, Christian Thielke, Machi Iwata, Kai Zang, and Waller Li
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-rockin-reindeer)
 
-## Tools, Languages, & Technologies
+## About
 
-* [Sendgrid][SendGrid] - Used as our Email-sending service.
-* [Chart.js][CHARTjs] - Used for displaying historical data in a nice graph.
-* [ngx-cookie-service][NGXCookie] - The cookie servivce we used.
-* [Yarn][yarn] - The dependency management system we used.
-* [Angular][Ang] - A helpful tool to build our client.
-* [Angular CLI][AngCli] - Made using Angular easier.
-* [Angular Material][AngMat] - Used for our UI.
-* [TypeScript][TS] - We used TypeScript for our client.
-* [Java Spark][spark] - We used Java Spark for our server.
-* [Travis-ci][travis] - Used for continuous integration.
-* [Karma][karma] - Used for testing.
-* [Jasmine][jasmine] - Used for testing.
-* [mongoDB][mongo] - The database we used for this project.
-* [Digital Ocean][DO] - Used for deployment.
-* [Cloudflare][CF] - Needed for making this project HTTPS.
-* [BrowserStack][BS] - Used when testing compatibility of different devices and platforms.
-
-## Key Features
+This project was designed for people doing laundry at the University of Minnesota Morris Campus. Its main purpose was to develop an supervision-free web app to provide an easy-to-use online access to campus laundry facilities and send helpful notification to users who want to get the status update of the laundry facilities through email subscription.
 
 ### Look at Each Machine Status
 
@@ -58,30 +41,51 @@ This project has the ability to set your favorite/default room. This is done wit
 
 A report functionality was implemented for the case when a user discovers a problem with a machine. The user can find the machine that has a problem and can click the machine details button. This will bring up a machine dialog with a "Report an issue" button located at the bottom. This brings the user to 'The Office of Residential Life' work request form. The report page will have the following information auto-filled: Building, Apartment/Room/Area, Are you a Resident of... , the Request type and Request Details.
 
+## Tools, Languages, & Technologies
+
+* [Sendgrid][SendGrid] - Used as our Email-sending service.
+* [Chart.js][CHARTjs] - Used for displaying historical data in a nice graph.
+* [ngx-cookie-service][NGXCookie] - The cookie servivce we used.
+* [Yarn][yarn] - The dependency management system we used.
+* [Gradle][GD] - The build tool of the project.
+* [Angular][Ang] - A helpful tool to build our client.
+* [Angular CLI][AngCli] - Made using Angular easier.
+* [Angular Material][AngMat] - Used for our UI.
+* [TypeScript][TS] - We used TypeScript for our client.
+* [Java Spark][spark] - We used Java Spark for our server.
+* [JUnit][JU] - We used JUnit for server-side tests.
+* [Travis-ci][travis] - Used for continuous integration.
+* [Karma][karma] - Used for testing.
+* [Jasmine][jasmine] - Used for testing.
+* [mongoDB][mongo] - The database we used for this project.
+* [Digital Ocean][DO] - Used for deployment.
+* [Cloudflare][CF] - Needed for making this project HTTPS.
+* [BrowserStack][BS] - Used when testing compatibility of different devices and platforms.
+
+## ToDo List & Known Issues
+To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
+
 ## Documentation
 
 1. [Important Notes for Running Tests](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/testInstruction.md)
 2. [Deployment Guide (HTTPS, server ports and necesssary configurations)](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/deployment.md)
-3. [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
-4. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
-5. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
-6. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
-7. [How to Get Key for Email](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/emailKey.md)
-
-## ToDo List & Known Issues
-To see the list of ToDos and known issues, please take a look at our [issue page](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues). Known issues are within ```New Issues``` and ToDos are in the ```Icebox```. Each issue/ToDo comes with a brief description describing what the issue is or what we wanted to add. 
-
-If you have installed the ZenHub browser plug-in, you may check out our [ZenHub](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer#zenhub) for more details.
+3. [Get your key for the email service](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/emailKey.md)
+4. [Todo List & Known Issues](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/issues)
+5. [Promotional Pamphlet](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/softDesignBrochure.jpg)
+6. [HTTPS: secure the connection between client and Cloudflare](https://github.com/UMM-CSci-3601-S19/iteration-4-endgame/blob/master/Documentation/HTTPS.md)
+7. [How Cookies is Currently Used](https://github.com/UMM-CSci-3601-F19/iteration-4-rockin-reindeer/blob/master/Documentation/cookies.md)
 
 [NGXCookie]: https://www.npmjs.com/package/ngx-cookie-service
 [CHARTjs]: https://www.chartjs.org/
 [AngMat]: https://material.angular.io/
 [SendGrid]: https://sendgrid.com/
 [yarn]: https://yarnpkg.com/lang/en/
+[GD]: https://gradle.org/
 [Ang]: https://angular.io/
 [AngCli]: https://cli.angular.io/
 [TS]: https://www.typescriptlang.org/
 [spark]: http://sparkjava.com/
+[JU]: https://junit.org/junit5/
 [travis]: https://travis-ci.org/
 [karma]: https://karma-runner.github.io/latest/index.html
 [jasmine]: https://jasmine.github.io/
